@@ -1,0 +1,24 @@
+# 데이터 — setup.sh 로 복원하므로 커밋하지 않는다
+proxy_tasks/*/data/
+*.pickle
+*.zip
+*.tar.gz
+
+# 체크포인트 — 용량이 커서 제외 (필요하면 GitHub Release)
+*.pt
+*.pth
+*.ckpt
+
+# 실행 산출물 — results/ 의 history.json 만 커밋한다
+proxy_tasks/runs/
+proxy_tasks/logs/
+*.log
+
+# 비밀정보
+.env
+.env.*
+
+# 파이썬
+__pycache__/
+*.py[cod]
+.venv/

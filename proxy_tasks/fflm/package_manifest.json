@@ -1,0 +1,302 @@
+[
+  {
+    "path": "README.md",
+    "bytes": 3503,
+    "sha256": "5a955077f6b4943e79a31e155a77d026eaa2223e83ec5c3828e2b2cb0999dd6c"
+  },
+  {
+    "path": "data/dense.npy",
+    "bytes": 1536128,
+    "sha256": "80fa73b6b7751983185b72ec4644bdf371e0f01ba98a9ceaa415979f2b7d627d"
+  },
+  {
+    "path": "data/id.npy",
+    "bytes": 512128,
+    "sha256": "b165f68f737735b332dab2df2809b20a5977aa96927dd7e71eb9a7cf3e37233e"
+  },
+  {
+    "path": "data/manifest.json",
+    "bytes": 1240,
+    "sha256": "3df7f2e0e69a5d59ae4a463d76fce770a68651e544c862b8c943614471b04c13"
+  },
+  {
+    "path": "data/sparse.npy",
+    "bytes": 51200128,
+    "sha256": "7d0089504645654dad4510d9060c83cf4e9b3ed199cc1b2a99622b77d12c1424"
+  },
+  {
+    "path": "local_validation.json",
+    "bytes": 623,
+    "sha256": "45ae9d6ce6afc23ff79e96ea33c417652b9cd7f24a5625d8c81b48740cb0eb5e"
+  },
+  {
+    "path": "run_fflm.py",
+    "bytes": 12233,
+    "sha256": "21fe328e60f39081dc07248fc675d9f8423f04862f55371b8e2ca8b0ef248b50"
+  },
+  {
+    "path": "start_server.sh",
+    "bytes": 1161,
+    "sha256": "eb039f51cb28867ed1e6f22d1d1b5365c17ef03f4a9caee2fae56b8488acfbbd"
+  },
+  {
+    "path": "vendor/einops/__init__.py",
+    "bytes": 388,
+    "sha256": "92688570ae7d200011ef2a1605e23371aeaf42a5345ff213c2dfceafa5da911a"
+  },
+  {
+    "path": "vendor/einops/_backends.py",
+    "bytes": 19693,
+    "sha256": "7bb7da159d43ad81061c60be2613c804cd7f9e90a7620aeec3333ca46e8172a1"
+  },
+  {
+    "path": "vendor/einops/_torch_specific.py",
+    "bytes": 4138,
+    "sha256": "73d57fa6a53f6b2775504f22d426824e439231e45d9432e6dd60c3e6ad20b2f6"
+  },
+  {
+    "path": "vendor/einops/array_api.py",
+    "bytes": 5211,
+    "sha256": "ae1b53d7f9cc0e3f4860c9af74665dd2892d62f57daf5386ef0f9d0221907948"
+  },
+  {
+    "path": "vendor/einops/einops.py",
+    "bytes": 36808,
+    "sha256": "d58e005b886d9f6ae4d23032071a16f82b40c592c06f1984783650171f358cdd"
+  },
+  {
+    "path": "vendor/einops/experimental/__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "vendor/einops/experimental/data_api_packing.py",
+    "bytes": 4690,
+    "sha256": "08a0b1b6a31e9354fa06504ce8e906e18bdaca716675681512f6cf4c367a0ea1"
+  },
+  {
+    "path": "vendor/einops/experimental/indexing.py",
+    "bytes": 14777,
+    "sha256": "7f877795556e4b46f318a61cce5a64dd8e54fe493afc05adf3cee2ff6ab38efe"
+  },
+  {
+    "path": "vendor/einops/layers/__init__.py",
+    "bytes": 3747,
+    "sha256": "9f9148e2fd99b36a8b788d45bae2bfec07f26ae46256db27413c3473f9abd083"
+  },
+  {
+    "path": "vendor/einops/layers/_einmix.py",
+    "bytes": 8578,
+    "sha256": "b336b241662f2730b03a175f5c963bd80ec4b4162b35cf759f3bce9beb8c444b"
+  },
+  {
+    "path": "vendor/einops/layers/chainer.py",
+    "bytes": 1981,
+    "sha256": "04fbf3a8657dfb7c69a171ec55f908479c1bb2f98dd109cf25763f99db03d839"
+  },
+  {
+    "path": "vendor/einops/layers/flax.py",
+    "bytes": 2621,
+    "sha256": "ad38069781ef0b0848a0960b863a421bf9c1dda582df118757bbfbabc6b6a9ef"
+  },
+  {
+    "path": "vendor/einops/layers/keras.py",
+    "bytes": 212,
+    "sha256": "453b11f9a8a6d52728e555c8d96d50b3adfd849449d215888a54d90acdc5b67e"
+  },
+  {
+    "path": "vendor/einops/layers/oneflow.py",
+    "bytes": 2046,
+    "sha256": "5e566e833586800a7778664b33f52cbaca14fb9330b3641fc309fccb2c0b616b"
+  },
+  {
+    "path": "vendor/einops/layers/paddle.py",
+    "bytes": 2063,
+    "sha256": "fa7beaf63262b59f1058ddf549d7043d7b63ce1db18e92462dd89f392382ff8f"
+  },
+  {
+    "path": "vendor/einops/layers/tensorflow.py",
+    "bytes": 3299,
+    "sha256": "c4415b354ebcd49bdae90cb80231f0c259b17497c4dbcb135c37e1631a45e638"
+  },
+  {
+    "path": "vendor/einops/layers/torch.py",
+    "bytes": 2595,
+    "sha256": "1a3ded67cb129eb9c2f91be52bfeb34e9812f3d8dd4287e296cdf4be29145671"
+  },
+  {
+    "path": "vendor/einops/packing.py",
+    "bytes": 7668,
+    "sha256": "cfd55f3fc49680d4ef8bbe9ab6662c970eb4f004e47fcbca64749351af6caeb2"
+  },
+  {
+    "path": "vendor/einops/parsing.py",
+    "bytes": 6717,
+    "sha256": "0a1474b0a066376cfefa5c84a59bc4c4dee065d8d3826e15ddc7ab6b461fe003"
+  },
+  {
+    "path": "vendor/einops/py.typed",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "vendor/einops-0.7.0.dist-info/INSTALLER",
+    "bytes": 4,
+    "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+  },
+  {
+    "path": "vendor/einops-0.7.0.dist-info/METADATA",
+    "bytes": 13078,
+    "sha256": "8a21ae539fb67d2c1f6c2e2af119b46c4bda03558ddeab2514c409c673d448a8"
+  },
+  {
+    "path": "vendor/einops-0.7.0.dist-info/RECORD",
+    "bytes": 3087,
+    "sha256": "3272a984e47dbb7e1aa924a5e3929846b3d12c66074136f65e17b2ee3e0fc54c"
+  },
+  {
+    "path": "vendor/einops-0.7.0.dist-info/REQUESTED",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "vendor/einops-0.7.0.dist-info/WHEEL",
+    "bytes": 87,
+    "sha256": "f5006e1e183a14d5bb969a5ba05daf2956c2193573b05ca48114238e56a3ae10"
+  },
+  {
+    "path": "vendor/einops-0.7.0.dist-info/licenses/LICENSE",
+    "bytes": 1073,
+    "sha256": "30d984364296f51ffaecad4b01ee127e95250c5068918d4b66fc96206723e434"
+  },
+  {
+    "path": "vendor/einops_exts/__init__.py",
+    "bytes": 232,
+    "sha256": "153d00a1c46f002edb8115629e88254d8e2e363599c1f49fbbdc596071305789"
+  },
+  {
+    "path": "vendor/einops_exts/einops_exts.py",
+    "bytes": 2131,
+    "sha256": "1c77906c981972e03fd3847d3694519411404826fdc4136d830966b0005c53b5"
+  },
+  {
+    "path": "vendor/einops_exts/torch.py",
+    "bytes": 1045,
+    "sha256": "034a2b7afe3172fe35aa9dc49978838d615c5dc94d0acf641e469da9888ea6ff"
+  },
+  {
+    "path": "vendor/einops_exts-0.0.4.dist-info/INSTALLER",
+    "bytes": 4,
+    "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+  },
+  {
+    "path": "vendor/einops_exts-0.0.4.dist-info/LICENSE",
+    "bytes": 1066,
+    "sha256": "c590e42ada471364cf0807aa29ed5f8dda4a7ab9e5d585be774d63ff596d9005"
+  },
+  {
+    "path": "vendor/einops_exts-0.0.4.dist-info/METADATA",
+    "bytes": 621,
+    "sha256": "c8853911f790773ce1f0373e15e83cfdaea9e0b5478fc2753ab0c55876ef39dc"
+  },
+  {
+    "path": "vendor/einops_exts-0.0.4.dist-info/RECORD",
+    "bytes": 992,
+    "sha256": "7e0d66d7008a9a90b3765bfca42892d787a04a58b267e7117cca9cded85538d9"
+  },
+  {
+    "path": "vendor/einops_exts-0.0.4.dist-info/REQUESTED",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "vendor/einops_exts-0.0.4.dist-info/WHEEL",
+    "bytes": 92,
+    "sha256": "db07a93359e4e034b8785a58ad6d534ea3dca0635f1e184efe2e66e1c3a299ba"
+  },
+  {
+    "path": "vendor/einops_exts-0.0.4.dist-info/top_level.txt",
+    "bytes": 12,
+    "sha256": "49c91c76e694a87a5f9fbabf1f8f623e52843db2974f029c09ccdcf34eaacdeb"
+  },
+  {
+    "path": "vendor/x_transformers/__init__.py",
+    "bytes": 673,
+    "sha256": "d3eda6d0bb4ba59899606c0efba38c617a1fc7985b15bfc524e1ccc4806a42be"
+  },
+  {
+    "path": "vendor/x_transformers/attend.py",
+    "bytes": 10163,
+    "sha256": "2fbbdcb472743e7102a21bb8714bbccaf63c714ad5c89c4798c151d1118bd33e"
+  },
+  {
+    "path": "vendor/x_transformers/autoregressive_wrapper.py",
+    "bytes": 9618,
+    "sha256": "818288379466f1d3184935f9c87a60f6c3d8c997fdaec45324236b611749f96c"
+  },
+  {
+    "path": "vendor/x_transformers/continuous.py",
+    "bytes": 6192,
+    "sha256": "7691cae0d48c0d000943f377523f6b8a9d1f6065f2bb440208efce7c475b446b"
+  },
+  {
+    "path": "vendor/x_transformers/dpo.py",
+    "bytes": 3450,
+    "sha256": "2e3bd680292a4e5f94b9e86bcd0f27917e60b8baf8c21630b269bb48a4b0765b"
+  },
+  {
+    "path": "vendor/x_transformers/nonautoregressive_wrapper.py",
+    "bytes": 10432,
+    "sha256": "cacfe9f286dcee54de7a8742aaf9112b13974350bd4f78f9270afe25b5609d79"
+  },
+  {
+    "path": "vendor/x_transformers/x_transformers.py",
+    "bytes": 63641,
+    "sha256": "8515372fef1fc8af9fb456faf58af5c6b3b056b6aa82b6a6ffa98d11615c28d8"
+  },
+  {
+    "path": "vendor/x_transformers/xl_autoregressive_wrapper.py",
+    "bytes": 4117,
+    "sha256": "0c2c789f4fdcd6d15a8b89cea9a5959eac76a7d7aeb6c66c0cc88c3f5724c4d5"
+  },
+  {
+    "path": "vendor/x_transformers/xval.py",
+    "bytes": 8147,
+    "sha256": "ba510f7a9ea2e4797b1fe1fdbc67ddb261dda6b5262bc6a3077d3a8d58b25767"
+  },
+  {
+    "path": "vendor/x_transformers-1.27.19.dist-info/INSTALLER",
+    "bytes": 4,
+    "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+  },
+  {
+    "path": "vendor/x_transformers-1.27.19.dist-info/LICENSE",
+    "bytes": 1066,
+    "sha256": "02cf6ed7df17f94fafa61e67a089ee51faac006db35ffa173c70e6763c253cf6"
+  },
+  {
+    "path": "vendor/x_transformers-1.27.19.dist-info/METADATA",
+    "bytes": 662,
+    "sha256": "00307bdf99bd8eaf01a24fccaf01fbe219b4e0df8dd0c916d71b7b84b1e67f08"
+  },
+  {
+    "path": "vendor/x_transformers-1.27.19.dist-info/RECORD",
+    "bytes": 1972,
+    "sha256": "ea15703e55782205f2cf1dc3525c288f917b034449f81d127a1f12ceb7958ee3"
+  },
+  {
+    "path": "vendor/x_transformers-1.27.19.dist-info/REQUESTED",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "vendor/x_transformers-1.27.19.dist-info/WHEEL",
+    "bytes": 92,
+    "sha256": "a2241587fe4f9d033413780f762cf4f5608d9b08870cc6867abfde96a0777283"
+  },
+  {
+    "path": "vendor/x_transformers-1.27.19.dist-info/top_level.txt",
+    "bytes": 15,
+    "sha256": "84ee8a1a916e1ae711344b517e67b803fac670ce7700ac063fb4559512314b94"
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "local_torch": "2.12.0",
+  "generator_oracle_batches": {
+    "each_p_ignore": [
+      0.8,
+      0.98,
+      0.1
+    ],
+    "samples_each": 256
+  },
+  "causal_max_abs_difference": {
+    "lstm": 0.0,
+    "transformer": 0.0
+  },
+  "actual_parameters": {
+    "lstm": 133381,
+    "transformer": 19163648
+  },
+  "gpu_run_started": false,
+  "local_smoke_completed": [
+    {
+      "arch": "lstm",
+      "status": "done",
+      "note": "reduced-size 3-step smoke, not task performance"
+    },
+    {
+      "arch": "transformer",
+      "status": "done",
+      "note": "reduced-size 3-step smoke, not task performance"
+    }
+  ]
+}

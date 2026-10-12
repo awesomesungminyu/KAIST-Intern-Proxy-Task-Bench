@@ -1,0 +1,8 @@
+SAN -pos_encode -d_model 16 -depth 1 -heads 4 -lr 1e-3|E2T6-SAN-abs-d16-L1
+SAN -pos_encode -d_model 16 -depth 2 -heads 4 -lr 1e-3|E2T6-SAN-abs-d16-L2
+SAN -pos_encode -d_model 32 -depth 1 -heads 4 -lr 1e-3|E2T6-SAN-abs-d32-L1
+SAN -pos_encode -d_model 32 -depth 2 -heads 4 -lr 1e-3|E2T6-SAN-abs-d32-L2
+RNN -cell_type LSTM -hidden_size 16 -depth 1 -lr 1e-2|E2T6-LSTM-h16-lr1e-2
+RNN -cell_type LSTM -hidden_size 16 -depth 1 -lr 1e-3|E2T6-LSTM-h16-lr1e-3
+RNN -cell_type LSTM -hidden_size 32 -depth 1 -lr 1e-2|E2T6-LSTM-h32-lr1e-2
+RNN -cell_type LSTM -hidden_size 32 -depth 1 -lr 1e-3|E2T6-LSTM-h32-lr1e-3
