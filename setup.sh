@@ -7,7 +7,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 TASKS=("$@")
-[ ${#TASKS[@]} -eq 0 ] && TASKS=(zinc g2p regbench parity tomita5 tomita6 fflm)
+[ ${#TASKS[@]} -eq 0 ] && TASKS=(zinc g2p regbench parity tomita5 tomita6 fflm mqar mad_tsc ett scifar sc_raw)
 want() { printf '%s\n' "${TASKS[@]}" | grep -qx "$1"; }
 
 PY=${PYTHON:-python3}
@@ -52,6 +52,29 @@ if want parity || want tomita5 || want tomita6; then
   else
     echo "[setup]   패치 이미 적용됨 (또는 third_party/tfl.patch 확인 필요)"
   fi
+fi
+
+VENDOR_DIR="${PROXY_VENDOR_ROOT:-$PWD/third_party}"
+if want mqar; then
+  echo "[setup] mqar — zoology 고정 커밋 클론 (데이터는 실행 시 생성)"
+  ZOOLOGY_COMMIT=$(awk '{print $3}' third_party/zoology.commit)
+  [ -d "$VENDOR_DIR/zoology" ] || git clone https://github.com/HazyResearch/zoology.git "$VENDOR_DIR/zoology"
+  git -C "$VENDOR_DIR/zoology" checkout -q "$ZOOLOGY_COMMIT"
+  echo "[setup]   mqar 는 pydantic·wandb·einops 가 있는 torch 2.2.2 환경이 필요하다 (protocol runtime)"
+fi
+
+if want mad_tsc; then
+  echo "[setup] mad_tsc — mad-lab 고정 커밋 클론 + Turing SDPA 패치"
+  MAD_COMMIT=$(awk '{print $3}' third_party/mad.commit)
+  MAD_PATCH="$PWD/third_party/mad-turing-sdpa.patch"
+  [ -d "$VENDOR_DIR/mad-lab" ] || git clone https://github.com/athms/mad-lab.git "$VENDOR_DIR/mad-lab"
+  git -C "$VENDOR_DIR/mad-lab" checkout -q "$MAD_COMMIT"
+  if git -C "$VENDOR_DIR/mad-lab" apply --check "$MAD_PATCH" 2>/dev/null; then
+    git -C "$VENDOR_DIR/mad-lab" apply "$MAD_PATCH" && echo "[setup]   패치 적용"
+  else
+    echo "[setup]   패치 이미 적용됨 (또는 third_party/mad-turing-sdpa.patch 확인 필요)"
+  fi
+  echo "[setup]   mad_tsc 는 pytorch-lightning 2.2.1 이 있는 torch 2.2.2 환경이 필요하다 (protocol runtime)"
 fi
 
 want fflm && echo "[setup] fflm — data/vendor는 Git에 포함되지 않습니다. scripts/restore_fflm_assets.py 가 \$PROXY_DATA_ROOT/fflm 과 \$PROXY_VENDOR_ROOT/fflm_vendor 로 복원합니다 (docs/EVOSCIENTIST.md)."
