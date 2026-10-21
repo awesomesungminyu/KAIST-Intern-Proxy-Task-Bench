@@ -228,6 +228,17 @@ class ArtifactTests(unittest.TestCase):
             self.assertNotEqual(original, runner.evaluation_identity(self.args))
 
 
+class DefaultPathTests(unittest.TestCase):
+    def test_default_asset_paths_follow_common_paths(self):
+        data, vendor = runner.proxy_paths.DATA_ROOT, runner.proxy_paths.THIRD_PARTY
+        for task, model in [("g2p", "transformer"), ("zinc", "gine"), ("fflm", "lstm")]:
+            args = runner.parser().parse_args(["check", "--task", task, "--model", model])
+            spec = runner.load_protocol(task)[1]
+            for label, p in runner.asset_paths(args, spec).items():
+                root = vendor if label == "fflm_vendor" else data
+                self.assertEqual(Path(p).parts[:len(root.parts)], root.parts, (task, label))
+
+
 class RestoreTests(unittest.TestCase):
     def test_checks_entire_source_before_copying_and_refuses_overwrite(self):
         from scripts.restore_fflm_assets import restore

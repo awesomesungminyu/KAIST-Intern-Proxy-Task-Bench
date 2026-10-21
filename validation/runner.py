@@ -32,7 +32,7 @@ def _load_paths():
     return module
 
 
-paths = _load_paths()
+proxy_paths = _load_paths()
 
 
 def digest(path):
@@ -131,10 +131,10 @@ def evaluation_identity(args):
 
 def asset_paths(args, spec):
     if args.task == "g2p":
-        base = args.data_root or paths.DATA_ROOT / "g2p"
+        base = args.data_root or proxy_paths.DATA_ROOT / "g2p"
         return {name: base / name for name in ["vocab.json", "train.tsv", "val.tsv", "test.tsv"]}
     if args.task == "zinc":
-        base = args.data_root or paths.DATA_ROOT / "zinc"
+        base = args.data_root or proxy_paths.DATA_ROOT / "zinc"
         paths = {"metadata": base / "metadata.json"}
         for split in ["train", "val", "test"]:
             paths[split] = base / "subset/processed" / (split + ".pt")
@@ -152,7 +152,7 @@ def fflm_roots(args):
     """--fflm-assets 는 data/ 와 vendor/ 를 함께 담은 기존 패키지 폴더. 생략하면 공통 경로 규칙을 쓴다."""
     if args.fflm_assets:
         return {"data": args.fflm_assets / "data", "vendor": args.fflm_assets / "vendor"}
-    return dict(paths.FFLM_ASSETS)
+    return dict(proxy_paths.FFLM_ASSETS)
 
 
 def check_fflm(roots):
@@ -173,7 +173,7 @@ def preflight(args, spec):
     assets = asset_paths(args, spec)
     data = fingerprint(assets)
     if args.task == "g2p":
-        base = args.data_root or paths.DATA_ROOT / "g2p"
+        base = args.data_root or proxy_paths.DATA_ROOT / "g2p"
         words = [{line.split("\t", 1)[0] for line in (base / (split + ".tsv")).read_text().splitlines() if line.strip()}
                  for split in ["train", "val", "test"]]
         if any(not group for group in words) or any(words[i] & words[j] for i in range(3) for j in range(i)):
@@ -228,7 +228,7 @@ def build_command(args, spec, seed, destination):
         command = [args.python, "-m", args.task + ".train", "--model", args.model,
                    "--seed", str(seed), "--out_dir", str(native), *options]
         if args.task in {"g2p", "zinc"}:
-            data = args.data_root or paths.DATA_ROOT / args.task
+            data = args.data_root or proxy_paths.DATA_ROOT / args.task
             command += ["--data_dir" if args.task == "g2p" else "--root", str(data)]
         return command, ROOT / "proxy_tasks", env
     if spec["adapter"] == "fflm":
@@ -461,7 +461,7 @@ def parser():
         c.add_argument("--model", required=True)
         c.add_argument("--python", default=sys.executable, help="ML interpreter, separate from EvoScientist's venv")
         c.add_argument("--data-root", type=lambda p: Path(p).expanduser().resolve())
-        c.add_argument("--tfl-root", type=lambda p: Path(p).expanduser().resolve(), default=paths.THIRD_PARTY / "tfl")
+        c.add_argument("--tfl-root", type=lambda p: Path(p).expanduser().resolve(), default=proxy_paths.THIRD_PARTY / "tfl")
         c.add_argument("--fflm-assets", type=lambda p: Path(p).expanduser().resolve(), default=None)
         if name == "run":
             c.add_argument("--seeds", type=int, nargs="+", default=[0, 1, 2])
