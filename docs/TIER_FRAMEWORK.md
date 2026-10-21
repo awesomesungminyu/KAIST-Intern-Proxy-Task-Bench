@@ -126,9 +126,20 @@ Git 이력에는 두 버전이 있다.
 
 **v1 결과는 GPU가 아니라 CPU에서 나왔다.** 실행 당시 서버의 CUDA 드라이버 초기화가
 실패했고, 스크립트가 기본 장치로 CPU를 골랐다(각 JSON의 `env.device`, 로그 첫 줄 경고).
-같은 v1 코드를 GPU에서 돌리면 값이 소수 셋째 자리부터 달라지고, LSTM은 cuDNN RNN이
-eval 모드 backward를 지원하지 않아 실패한다. 따라서 v1과 v2 수치의 차이에는 코드
-변경과 장치 차이가 섞여 있다.
+같은 v1 코드를 GPU에서 돌리면 값이 소수 셋째 자리부터 달라진다.
+
+**v1과 v2의 수치를 직접 비교하지 않는다.** v1은 CPU, v2는 GPU에서 실행되어 코드 변경과
+장치 변경이 교란되어 있다. v1 수치의 역할은 SynFlow·NASWOT이 사용 불가라는 구조적
+근거를 뒷받침하는 것뿐이며, 그 근거는 장치와 무관하다.
+
+### GPU에서만 드러난 LSTM cuDNN 실패
+
+v1을 GPU에서 돌리면 `lstm`의 snip 이후 지표가 모두 실패한다
+(`RuntimeError: cudnn RNN backward can only be called in training mode`).
+하니스는 init 상태를 보려고 `model.eval()`로 두는데, cuDNN의 RNN 커널은 eval 모드
+backward를 지원하지 않는다. CPU에서는 cuDNN을 쓰지 않으므로 v1 CPU 실행에서는 보이지
+않았다. v2가 LSTM mixer forward 안에서만 cuDNN을 끄는(`torch.backends.cudnn.flags(enabled=False)`)
+실질적 근거가 이것이다. v2 GPU 결과의 `lstm` 행은 cuDNN 없이 계산된 값이다.
 
 ### 지표 판단 (현재)
 

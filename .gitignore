@@ -19,6 +19,7 @@ proxy_tasks/logs/
 # 비밀정보
 .env
 .env.*
+!.env.example
 
 # 파이썬
 __pycache__/

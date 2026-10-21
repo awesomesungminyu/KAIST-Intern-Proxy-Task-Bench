@@ -25,6 +25,36 @@ python -m validation run --task regbench --model transformer \
     ./setup.sh zinc              # 태스크 하나만 준비 (인자 없으면 전체)
     ./run.sh zinc gine 0         # <task> <model> <seed>
 
+## 첫 실행
+
+clone 직후에는 `<repo>/data`가 비어 있다. **`PROXY_DATA_ROOT`를 설정하고 그 아래에
+데이터를 두지 않으면 g2p·zinc·fflm은 데이터를 찾지 못하고 경로와 함께 실패한다.**
+regbench는 데이터를 실행 시 생성하므로 준비가 필요 없다.
+
+1. 경로 설정 파일을 만든다. 값은 환경마다 바꿔야 한다.
+
+       cp .env.example .env              # 값 수정
+       set -a; source .env; set +a       # 자동으로 읽지 않으므로 셸에 export
+
+2. `$PROXY_DATA_ROOT/<task>/`에 데이터를 둔다. 새로 받으려면 `./setup.sh g2p zinc`를 쓴다.
+   이 서버에는 이미 받아 둔 데이터가 `<archive>/proxy_tasks/<task>/data/` 구조로 있으므로
+   태스크별로 링크한다. 아카이브 경로를 `PROXY_DATA_ROOT`에 직접 넣으면 구조가 달라 찾지 못한다.
+
+       A=/workspace/AI4Science_2026summer_archive/smyu/proxy_tasks
+       mkdir -p "$PROXY_DATA_ROOT"
+       ln -s "$A/g2p/data"  "$PROXY_DATA_ROOT/g2p"
+       ln -s "$A/zinc/data" "$PROXY_DATA_ROOT/zinc"
+
+3. FFLM은 `setup.sh`로 준비되지 않는다. 검증된 패키지에서 따로 복원한다
+   (데이터는 `$PROXY_DATA_ROOT/fflm`, vendor는 `$PROXY_VENDOR_ROOT/fflm_vendor`로 간다).
+
+       python scripts/restore_fflm_assets.py \
+         --source /workspace/exp/2026-10-12/E3-FFLM/20261012T062553Z_26331
+
+4. 확인한다.
+
+       python -m validation check --task g2p --model transformer
+
 ## 데이터·산출물 경로
 
 모든 경로는 `proxy_tasks/common/paths.py` 한 곳에서 정한다. 데이터가 수백 MB라
@@ -41,6 +71,9 @@ python -m validation run --task regbench --model transformer \
 FFLM은 데이터를 `$PROXY_DATA_ROOT/fflm`에, vendor 패키지를 `$PROXY_VENDOR_ROOT/fflm_vendor`에
 둔다(`scripts/restore_fflm_assets.py`가 이 위치로 복원한다). 기존 패키지 폴더를
 `--fflm-assets`로 직접 지정해도 된다.
+
+알려진 미해결: `proxy_tasks/run_zinc_gps.sh`는 아직 `--out_dir runs/...`를 하드코딩해서
+`proxy_tasks/runs/`에 쓴다. 경로 통합 작업이 zinc 관련 변경을 금지했기 때문에 고치지 않았다.
 
 ## 태스크
 
