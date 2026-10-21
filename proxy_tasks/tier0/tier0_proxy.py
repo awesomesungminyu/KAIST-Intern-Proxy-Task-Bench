@@ -2,46 +2,47 @@
 """
 Tier 0 Zero-Cost Proxy harness  (Beyond-Transformer / KCVL)
 
-학습 0회. init 상태의 모델을 6개 지표로 스코어링하고,
+학습 0회. init 상태의 모델을 5개 지표로 스코어링하고,
 지표 간 Spearman 순위상관을 출력한다.
 
 사용 (proxy_tasks/ 에서):
     python -m tier0.tier0_proxy --quick
-    python -m tier0.tier0_proxy --seeds 3 --seq-len 256 --probe-len 24
+    python -m tier0.tier0_proxy --seeds 3 --seq-len 256 --probe-len 128
 결과는 --out 을 주지 않으면 $PROXY_OUTPUT_ROOT/tier0/<models>-s1234/tier0_results.json.
 
 지표:
-  synflow         SynFlow            (data-free, |theta| 치환 후 ones 입력)
   snip            SNIP               (|theta * dL/dtheta| 합)
-  dss_pp          DSS++ (generalized) token-mixing 행렬 nuclear norm + MLP saliency
-  naswot          NASWOT             (활성 패턴 Hamming 커널 logdet)
-  ntk_cond        NTK condition num  (-log10(cond) 로 부호 정렬)
-  state_cap       State capacity     (추론 시 상태 바이트, 해석적)
+  mix_nuc         token-mixing 야코비안 nuclear norm (DSS++ 의 mixer 항을 일반화)
+  mlp_sal         MLP saliency       (DSS++ 의 MLP 항, log |theta| 합)
+  naswot          NASWOT             (MLP·mixer 활성 패턴 Hamming 커널 logdet)
+  ntk_cond        NTK condition num  (출력 좌표 다중화, -log10(cond) 로 부호 정렬)
 대조군:
-  params, flops
+  params, flops, state_cap (추론 시 상태 바이트, 해석적)
+
+SynFlow 는 폐기: ones 입력에선 모든 토큰이 같아 token mixing 이 안 보이고,
+정규화를 끄면 mamba/h3/hyena 에서 float64 로도 오버플로우한다.
 
 의존성: torch 만. 외부 패키지 없음 (Mamba/GLA 등은 순수 PyTorch 재구현).
 
-알려진 한계 (실행해 확인함. 이 수치를 그대로 인용하지 말 것):
-  아래 수치는 서버에서 CUDA 초기화가 실패한 상태로 CPU 에서 돈 결과다
-  (artifacts/tier0/main_b*.json, env.device == "cpu"). 같은 코드를 GPU 에서
-  돌리면 값이 소수 셋째 자리부터 달라지고, LSTM 은 cudnn RNN 이 eval 모드
-  backward 를 지원하지 않아 snip 이후 지표가 NaN 이 된다.
-  - SynFlow: 입력이 전 위치 동일한 ones 텐서라 token mixing 차이가 점수에
-    드러나지 않는다. gla 와 rwkv6 가 같은 값(207.58), transformer 와 swa 가
-    거의 같은 값이 나왔다. mamba/h3/hyena 는 float64 에서도 오버플로우로 NaN 이다.
-  - NASWOT: 훅이 MLP 의 SiLU 에만 걸려 mixer 를 거의 보지 못한다.
-    11종 중 7종이 seed 표준편차(약 0.01) 안에 몰렸다.
-  - dss_pp: 원 DSS++ 가 아니다. 원본은 attention 행렬이 필요해서 SSM 에 적용할
-    수 없어 token-mixing 야코비안 nuclear norm 으로 대체한 자체 변형이다.
-    논문에서 DSS++ 로 인용하면 안 된다.
-  - ntk_cond: out.mean() 을 미분해 샘플당 야코비안이 1행뿐이라 degenerate 하다.
-    표준 empirical NTK 가 아니다.
-  - probe_len 이 window(64) 보다 짧으면 swa 가 transformer 와 동일해진다.
-    probe_len 24 에서 둘 다 294.509 가 나왔다.
-  - RWKV-6 의 gate 가 nn.Linear(d, n_head) 라 GLA 와 같은 head 단위 감쇠다.
-    채널 단위가 아니다.
-  - Based 가 2차 Taylor feature map 이 아니라 elu+1 + GLA 감쇠다.
+v1 (main_b*.json, CPU 실행) 에서 확인한 한계와 v2 의 처리:
+  - SynFlow: 폐기.
+  - NASWOT 이 MLP 만 봄: mixer 출력 부호 패턴도 코드에 넣는다.
+  - dss_pp: mix_nuc / mlp_sal 로 분리. 여전히 원 DSS++ 가 아니다 (DSS++ 로 인용 금지).
+  - ntk_cond 가 샘플당 1행: 샘플 8개 x 무작위 출력 좌표 4개 = 32행. 무작위 사영이라
+    표준 empirical NTK 는 아니다.
+  - probe_len < window: 기본 128, probe_len <= window 면 경고.
+  - RWKV-6 head 단위 감쇠: key 채널 단위 입력 의존 감쇠. bonus 항 u 는 없다.
+  - Based elu+1 + 감쇠: 2차 Taylor 커널 1 + s + s^2/2 (d_feat 16), 감쇠 없음.
+  - (GPU 에서만 드러남) LSTM 이 cudnn eval backward 미지원으로 실패: LSTM forward 에서 cudnn 끔.
+
+v2 에 남은 한계 (TITAN RTX, artifacts/tier0/v2_b8.json · v2_b32.json):
+  - mlp_sal 은 11종 모두 34.05 로 상수다 (MLP 구조·초기화가 동일). 순위 지표로 쓰지 말 것.
+  - snip <-> mix_nuc rho = 0.82. 중복 의심.
+  - ntk_cond 순위가 v1 과 크게 다르다 (v1 1위 h3 -> v2 9위). 좌표 수·좌표 seed 에 대한
+    안정성은 확인하지 않았다.
+  - naswot 은 gla/rwkv6/h3/lstm 이 0.06 안에 몰린다.
+  - 입력이 균일 랜덤 토큰이고 target 이 입력과 같다 (데이터 설계 미결).
+  - n=11 에서 Spearman 유의 임계는 rho 약 0.60 (p<0.05).
 """
 
 import argparse, json, math, os, platform, sys, time
@@ -156,9 +157,9 @@ class LinearAttnDecay(nn.Module):
             self.g = nn.Linear(d, n_head, bias=True)
             nn.init.constant_(self.g.bias, 2.0)
         else:
-            # RWKV-6: token-shift 로 섞은 입력 + 채널 단위 감쇠
+            # RWKV-6: token-shift 로 섞은 입력 + 입력 의존 채널(key 차원) 단위 감쇠
             self.mu = nn.Parameter(torch.rand(d))
-            self.g = nn.Linear(d, n_head, bias=True)
+            self.g = nn.Linear(d, d, bias=True)
             nn.init.constant_(self.g.bias, 1.0)
 
     def forward(self, x):
@@ -169,13 +170,43 @@ class LinearAttnDecay(nn.Module):
         q, k, v = self.qkv(x).chunk(3, -1)
         q, k, v = (t.view(B, L, self.h, self.dh).transpose(1, 2) for t in (q, k, v))
         q, k = F.elu(q) + 1, F.elu(k) + 1
-        logg = -F.softplus(self.g(x)).transpose(1, 2)          # (B,h,L) <= 0
-        c = logg.cumsum(-1)
+        m = causal_mask(L, x.device)
         # j>i 에서 c_i-c_j > 0 이라 exp 가 inf 로 터지고,
         # masked_fill 의 0 기울기와 곱해져 backward 가 NaN 이 된다. max=0 클램프 필수.
-        dec = (c[..., :, None] - c[..., None, :]).clamp(min=-30, max=0).exp()
-        m = causal_mask(L, x.device)
-        a = (q @ k.transpose(-1, -2)) * dec.masked_fill(~m, 0.0)
+        if self.mode == "gla":
+            logg = -F.softplus(self.g(x)).transpose(1, 2)      # (B,h,L) <= 0
+            c = logg.cumsum(-1)
+            dec = (c[..., :, None] - c[..., None, :]).clamp(min=-30, max=0).exp()
+            a = (q @ k.transpose(-1, -2)) * dec.masked_fill(~m, 0.0)
+        else:
+            logg = -F.softplus(self.g(x)).view(B, L, self.h, self.dh).transpose(1, 2)  # (B,h,L,dh)
+            c = logg.cumsum(2)
+            dec = (c[:, :, :, None] - c[:, :, None, :]).clamp(min=-30, max=0).exp()   # (B,h,L,L,dh)
+            a = torch.einsum("bhic,bhjc,bhijc->bhij", q, k, dec).masked_fill(~m, 0.0)
+        a = a / (a.sum(-1, keepdim=True) + 1e-6)
+        return self.o((a @ v).transpose(1, 2).reshape(B, L, D))
+
+
+class TaylorLinearAttn(nn.Module):
+    """Based 의 선형 어텐션 부분. 감쇠 없음.
+    phi(x) = [1, x, x⊗x/sqrt(2)] 이면 phi(q)·phi(k) = 1 + s + s^2/2 (s = q·k) 라
+    O(L^2) 경로에선 feature 를 펼치지 않고 커널을 직접 계산한다."""
+    kind = "linear_attn"
+
+    def __init__(self, d, n_head=4, d_feat=16):
+        super().__init__()
+        self.h, self.dh, self.df = n_head, d // n_head, d_feat
+        self.qk = nn.Linear(d, 2 * n_head * d_feat, bias=False)
+        self.v = nn.Linear(d, d, bias=False)
+        self.o = nn.Linear(d, d, bias=False)
+
+    def forward(self, x):
+        B, L, D = x.shape
+        q, k = self.qk(x).chunk(2, -1)
+        q, k = (t.view(B, L, self.h, self.df).transpose(1, 2) for t in (q, k))
+        v = self.v(x).view(B, L, self.h, self.dh).transpose(1, 2)
+        s = (q @ k.transpose(-1, -2)) / math.sqrt(self.df)
+        a = (1 + s + 0.5 * s * s).masked_fill(~causal_mask(L, x.device), 0.0)
         a = a / (a.sum(-1, keepdim=True) + 1e-6)
         return self.o((a @ v).transpose(1, 2).reshape(B, L, D))
 
@@ -186,7 +217,7 @@ class Based(nn.Module):
 
     def __init__(self, d, n_head=4, window=64):
         super().__init__()
-        self.lin = LinearAttnDecay(d, n_head)
+        self.lin = TaylorLinearAttn(d, n_head)
         self.swa = Attention(d, n_head, window=window)
         self.mix = nn.Linear(2 * d, d, bias=False)
 
@@ -314,7 +345,9 @@ class LSTMMixer(nn.Module):
         self.out = nn.Linear(d, d, bias=False)
 
     def forward(self, x):
-        return self.out(self.rnn(x)[0])
+        # cudnn RNN 은 eval 모드 backward 를 지원하지 않는다.
+        with torch.backends.cudnn.flags(enabled=False):
+            return self.out(self.rnn(x)[0])
 
 
 class ConvMixer(nn.Module):
@@ -359,9 +392,8 @@ class LM(nn.Module):
         self.nf = RMSNorm(d)
         self.head = nn.Linear(d, vocab, bias=False)
 
-    def forward(self, idx=None, x=None):
-        """idx: 토큰 id. x: 임베딩 우회 입력 (SynFlow 용)."""
-        h = self.emb(idx) if x is None else x
+    def forward(self, idx):
+        h = self.emb(idx)
         for b in self.blocks:
             h = b(h)
         return self.head(self.nf(h))
@@ -437,71 +469,6 @@ def state_capacity_bytes(name, cfg, dtype_bytes=2):
     return s * n_l * dtype_bytes
 
 
-@torch.no_grad()
-def _linearize(model):
-    signs = {}
-    for n, p in model.state_dict().items():
-        signs[n] = torch.sign(p)
-        p.abs_()
-    return signs
-
-
-@torch.no_grad()
-def _restore(model, signs):
-    for n, p in model.state_dict().items():
-        p.mul_(signs[n])
-
-
-class _BypassNorm:
-    """SynFlow 선형화 구간에서 RMSNorm 을 항등으로 둔다.
-    정규화를 켠 채로 돌리면 신호 크기가 매 블록에서 재설정돼
-    점수가 아키텍처와 무관하게 거의 상수가 된다(관측됨)."""
-    def __enter__(self):
-        self.orig = RMSNorm.forward
-        RMSNorm.forward = lambda self_, x: x
-        return self
-
-    def __exit__(self, *a):
-        RMSNorm.forward = self.orig
-
-
-def synflow(model, cfg, device):
-    """data-free. |theta| 치환 후 ones 입력, sum(theta * grad).
-    정규화를 끄면 깊이에 따라 크기가 지수로 커져 float32 에서 inf 가 난다
-    (mamba/h3/hyena 에서 관측). 원 구현대로 float64 로 돌린다."""
-    model.double()
-    signs = _linearize(model)
-    model.zero_grad(set_to_none=True)
-    x = torch.ones(1, cfg.seq_len, cfg.d_model, device=device, dtype=torch.float64)
-    try:
-        with _BypassNorm():
-            out = model(x=x)
-        out.sum().backward()
-        score, n_ok, n_bad = 0.0, 0, 0
-        for p in model.parameters():
-            if p.grad is not None:
-                g = (p * p.grad).sum()
-                if torch.isfinite(g):
-                    score += g.item()
-                    n_ok += 1
-                else:
-                    n_bad += 1
-        # 기여분이 전부 비유한이면 점수 0 이 되는데, 이를 log 하면 바닥값(-27.6)이
-        # 되어 "매우 낮은 점수"처럼 보인다. 측정 실패이므로 NaN 으로 구분한다.
-        if n_ok == 0 or score == 0.0:
-            val = float("nan")
-        else:
-            val = math.log(abs(score))
-        if n_bad:
-            synflow.last_overflow = n_bad
-    except Exception:
-        val = float("nan")
-    model.zero_grad(set_to_none=True)
-    _restore(model, signs)
-    model.float()
-    return val
-
-
 def snip(model, batch, device):
     model.zero_grad(set_to_none=True)
     idx, tgt = batch
@@ -514,7 +481,9 @@ def snip(model, batch, device):
 
 
 def naswot(model, batch, device):
-    """활성 패턴의 Hamming 커널 logdet."""
+    """활성 패턴의 Hamming 커널 logdet.
+    SiLU 에만 훅을 걸면 사실상 모든 모델에 똑같이 들어 있는 MLP 만 보게 된다.
+    mixer 출력의 부호 패턴도 코드로 넣는다."""
     codes = []
     hooks = []
 
@@ -524,6 +493,8 @@ def naswot(model, batch, device):
     for m in model.modules():
         if isinstance(m, nn.SiLU):
             hooks.append(m.register_forward_hook(hook))
+    for blk in model.blocks:
+        hooks.append(blk.mixer.register_forward_hook(hook))
     with torch.no_grad():
         model(batch[0])
     for h in hooks:
@@ -538,17 +509,26 @@ def naswot(model, batch, device):
     return torch.linalg.slogdet(K)[1].item()
 
 
-def ntk_cond(model, batch, device, n_sample=8):
-    """K = J J^T 의 조건수. 작을수록 좋으므로 -log10 으로 부호 정렬."""
+def ntk_cond(model, batch, device, n_sample=8, n_coord=4):
+    """K = J J^T 의 조건수. 작을수록 좋으므로 -log10 으로 부호 정렬.
+    out.mean() 하나만 쓰면 J 가 샘플당 1행이고 logits 평균이라 정보가 거의 없다.
+    샘플마다 무작위 (위치, vocab 방향) 출력 좌표 n_coord 개를 뽑아 행을 늘린다.
+    좌표는 고정 generator 로 뽑아 모델 간 동일하다."""
     idx = batch[0][:n_sample]
     params = [p for p in model.parameters() if p.requires_grad]
+    gen = torch.Generator().manual_seed(0)
+    L = idx.size(1)
     rows = []
     for i in range(idx.size(0)):
         model.zero_grad(set_to_none=True)
-        out = model(idx[i : i + 1])
-        g = torch.autograd.grad(out.mean(), params, retain_graph=False, allow_unused=True)
-        rows.append(torch.cat([(gi if gi is not None else torch.zeros_like(p)).flatten()
-                               for gi, p in zip(g, params)]))
+        out = model(idx[i : i + 1])[0]                          # (L,V)
+        pos = torch.randint(0, L, (n_coord,), generator=gen)
+        dirs = torch.randn(n_coord, out.size(-1), generator=gen).to(out.device)
+        ys = (out[pos.to(out.device)] * dirs).sum(-1)           # (n_coord,)
+        for c in range(n_coord):
+            g = torch.autograd.grad(ys[c], params, retain_graph=c < n_coord - 1, allow_unused=True)
+            rows.append(torch.cat([(gi if gi is not None else torch.zeros_like(p)).flatten()
+                                   for gi, p in zip(g, params)]))
     J = torch.stack(rows).double()
     if not torch.isfinite(J).all():
         return float("nan")      # 모델 forward/backward 자체가 깨진 경우 — 조용히 숨기지 않는다
@@ -566,12 +546,12 @@ def ntk_cond(model, batch, device, n_sample=8):
     return -math.log10(cond + 1e-12)
 
 
-def dss_pp(model, cfg, device, probe_len=32):
-    """DSS++ 일반화판.
+def mix_nuc(model, cfg, device, probe_len=128):
+    """DSS++ 의 mixer 항 일반화판.
     원 논문은 MSA 의 attention 행렬 nuclear norm(synaptic diversity)을 쓰지만,
     SSM/conv 에는 attention 행렬이 없다. 대신 모든 mixer 에 대해
     '경험적 token-mixing 야코비안' T (Lp x Lp) 를 뽑아 nuclear norm 을 쓴다.
-    MLP 쪽은 원 논문대로 saliency.
+    probe_len 이 window 보다 짧으면 swa 가 transformer 와 같아진다.
     """
     total = 0.0
     for blk in model.blocks:
@@ -581,10 +561,14 @@ def dss_pp(model, cfg, device, probe_len=32):
         for i in range(probe_len):
             g = torch.autograd.grad(y[0, i].sum(), x, retain_graph=True)[0]
             T[i] = g[0].abs().sum(-1)
-        nuc = torch.linalg.matrix_norm(T, ord="nuc").item() / probe_len
-        sal = sum(p.abs().sum().item() for p in blk.mlp.parameters())
-        total += nuc * math.log(sal + 1e-12)
+        total += torch.linalg.matrix_norm(T, ord="nuc").item() / probe_len
     return total
+
+
+def mlp_sal(model):
+    """DSS++ 의 MLP 항. 블록별 log sum|theta| 합."""
+    return sum(math.log(sum(p.abs().sum().item() for p in blk.mlp.parameters()) + 1e-12)
+               for blk in model.blocks)
 
 
 # ----------------------------------------------------------------------------
@@ -632,8 +616,9 @@ class Cfg:
     batch: int = 8
 
 
-PROXIES = ["synflow", "snip", "dss_pp", "naswot", "ntk_cond", "state_cap"]
-BASELINES = ["params", "flops"]
+PROXIES = ["snip", "mix_nuc", "mlp_sal", "naswot", "ntk_cond"]
+BASELINES = ["params", "flops", "state_cap"]
+WINDOW = 64   # swa / based 의 sliding window
 
 
 def run_one(name, cfg, device, seed, probe_len):
@@ -644,11 +629,11 @@ def run_one(name, cfg, device, seed, probe_len):
     batch = (idx, idx)
     r = {"params": float(count_params(model)), "flops": float(flops_proxy(model, cfg))}
     r["state_cap"] = float(state_capacity_bytes(name, cfg))
-    r["synflow"] = synflow(model, cfg, device)
     r["snip"] = snip(model, batch, device)
     r["naswot"] = naswot(model, batch, device)
     r["ntk_cond"] = ntk_cond(model, batch, device)
-    r["dss_pp"] = dss_pp(model, cfg, device, probe_len=probe_len)
+    r["mix_nuc"] = mix_nuc(model, cfg, device, probe_len=probe_len)
+    r["mlp_sal"] = mlp_sal(model)
     del model
     if device == "cuda":
         torch.cuda.empty_cache()
@@ -663,7 +648,7 @@ def main():
     ap.add_argument("--n-layers", type=int, default=4)
     ap.add_argument("--seq-len", type=int, default=256)
     ap.add_argument("--batch", type=int, default=8)
-    ap.add_argument("--probe-len", type=int, default=32)
+    ap.add_argument("--probe-len", type=int, default=128)
     ap.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     ap.add_argument("--out", default=None,
                     help="기본: $PROXY_OUTPUT_ROOT/tier0/<models>-s1234/tier0_results.json (1234 = 첫 seed)")
@@ -681,9 +666,13 @@ def main():
     env = env_report(a.device)
     print(f"CONFIG  d_model={cfg.d_model} n_layers={cfg.n_layers} L={cfg.seq_len} "
           f"B={cfg.batch} seeds={a.seeds} probe_len={a.probe_len}")
-    if cfg.seq_len <= 64 and ("swa" in names or "based" in names):
-        print("  [주의] window=64 >= L 이라 swa 가 transformer 와 동일해진다. "
-              "L>=256 으로 돌릴 것.")
+    if "swa" in names or "based" in names:
+        if cfg.seq_len <= WINDOW:
+            print(f"  [주의] L={cfg.seq_len} <= window={WINDOW} 이라 swa 가 transformer 와 "
+                  "동일해진다. L>=256 으로 돌릴 것.")
+        if a.probe_len <= WINDOW:
+            print(f"  [주의] probe_len={a.probe_len} <= window={WINDOW} 이라 mix_nuc 에서 "
+                  f"swa 가 transformer 와 동일해진다. --probe-len>{WINDOW} 로 돌릴 것.")
     print(f"MODELS  {len(names)}종: {', '.join(names)}\n")
 
     results, t0 = {}, time.time()
