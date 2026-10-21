@@ -19,6 +19,7 @@ TOKENS = {'w': 0, 'r': 1, 'i': 2, '0': 3, '1': 4}
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 from common.paths import FFLM_ASSETS, OUTPUT_ROOT  # noqa: E402
+from fflm.models import MODELS, model_for  # noqa: E402
 
 DATA_DIR = Path(os.environ.get('FFLM_DATA_DIR', FFLM_ASSETS['data'])).resolve()
 
@@ -47,32 +48,6 @@ def check_oracle(seq):
         op, bit = seq[:, j], seq[:, j+1]
         state = np.where(op == 0, bit, state)
         assert np.all(bit[op == 1] == state[op == 1])
-
-
-class LSTM(nn.Module):
-    def __init__(self, hidden=128):
-        super().__init__()
-        self.embed = nn.Embedding(5, hidden)
-        self.rnn = nn.LSTM(hidden, hidden, num_layers=1, batch_first=True)
-        self.head = nn.Linear(hidden, 5)
-
-    def forward(self, x):
-        y, _ = self.rnn(self.embed(x))
-        return self.head(y)
-
-
-def model_for(arch, smoke=False, flash=True):
-    if arch == 'lstm':
-        return LSTM(32 if smoke else 128)
-    from x_transformers import TransformerWrapper, Decoder
-    dim, depth, heads = (32, 2, 4) if smoke else (512, 6, 8)
-    return TransformerWrapper(
-        num_tokens=5, max_seq_len=512, emb_dropout=0., use_abs_pos_emb=True,
-        tie_embedding=False,
-        attn_layers=Decoder(dim=dim, depth=depth, heads=heads,
-            attn_dim_head=dim//heads, ff_mult=4, ff_glu=False,
-            ff_dropout=0., attn_dropout=0., pre_norm=True,
-            rotary_pos_emb=False, attn_flash=flash))
 
 
 def sync(device):
@@ -241,7 +216,7 @@ def run(args, arch):
 
 def main():
     p=argparse.ArgumentParser()
-    p.add_argument('--arch',choices=['lstm','transformer','both'],default='both')
+    p.add_argument('--arch',choices=[*MODELS.names(),'both'],default='both')
     p.add_argument('--mode',choices=['benchmark','train'],default='train')
     p.add_argument('--device',default='cuda')
     p.add_argument('--seed',type=int,default=1729)

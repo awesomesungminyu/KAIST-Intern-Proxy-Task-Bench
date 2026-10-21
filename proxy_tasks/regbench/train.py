@@ -18,7 +18,7 @@ from torch.utils.data import DataLoader
 
 from common.seed import set_seed
 from .data import RegBenchDataConfig, RegBenchDataset, collate_fn
-from .models import build_model
+from .models import MODELS, build_model
 from .pfa import PFAConfig, vocab_size_with_specials
 from common.gpu_guard import require_cuda
 from common.paths import task_output
@@ -27,7 +27,7 @@ from common.paths import task_output
 def parse_args():
     p = argparse.ArgumentParser()
     p.add_argument("--seed", type=int, default=0)
-    p.add_argument("--model", choices=["transformer", "lstm"], default="transformer")
+    p.add_argument("--model", choices=MODELS.names(), default="transformer")
     p.add_argument("--preset", choices=["paper", "repo"], default="repo")
     p.add_argument("--examples_per_seq", type=int, default=20)
     p.add_argument("--max_total_len", type=int, default=256)

@@ -18,7 +18,7 @@ from torch.utils.data import DataLoader
 
 from common.seed import set_seed
 from .data import G2PDataset, collate_fn, load_split, load_vocab, BOS_ID, EOS_ID, PAD_ID
-from .models import build_model
+from .models import MODELS, build_model
 from common.gpu_guard import require_cuda
 from common.paths import task_data, task_output
 
@@ -26,7 +26,7 @@ from common.paths import task_data, task_output
 def parse_args():
     p = argparse.ArgumentParser()
     p.add_argument("--seed", type=int, default=0)
-    p.add_argument("--model", choices=["transformer", "lstm"], default="transformer")
+    p.add_argument("--model", choices=MODELS.names(), default="transformer")
     p.add_argument("--data_dir", type=str, default=None, help="기본: $PROXY_DATA_ROOT/g2p")
     p.add_argument("--epochs", type=int, default=10)
     p.add_argument("--batch_size", type=int, default=128)

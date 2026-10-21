@@ -24,15 +24,15 @@ ROOT = Path(__file__).resolve().parents[1]
 PROTOCOL = ROOT / "validation/protocols/v1.json"
 
 
-def _load_paths():
-    # proxy_tasks 를 sys.path 에 올리지 않고 경로 모듈만 읽는다 (torch 를 import 하지 않음).
-    spec = importlib.util.spec_from_file_location("proxy_paths", ROOT / "proxy_tasks/common/paths.py")
+def _load_file(name, path):
+    # proxy_tasks 를 sys.path 에 올리지 않고 torch 없는 모듈 하나만 읽는다.
+    spec = importlib.util.spec_from_file_location(name, path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
 
 
-proxy_paths = _load_paths()
+proxy_paths = _load_file("proxy_paths", ROOT / "proxy_tasks/common/paths.py")
 
 
 def digest(path):
@@ -245,10 +245,7 @@ def build_command(args, spec, seed, destination):
     (stage / "src").symlink_to(args.tfl_root / "src", target_is_directory=True)
     (stage / "data").symlink_to(args.tfl_root / "data", target_is_directory=True)
     env.update(EXP_DIR=str(native), EXP_ID="proxy-validation-v1", N_CONCURRENT="1")
-    model = ["-model_type", "RNN", "-cell_type", "LSTM", "-hidden_size", "32", "-depth", "1", "-lr", "0.001"]
-    if args.model != "lstm":
-        model = ["-model_type", "SAN", "-pos_encode" if args.model == "san_abs" else "-no-pos_encode",
-                 "-d_model", "32", "-depth", "2", "-heads", "4", "-lr", "0.001"]
+    model = _load_file("formal_models", ROOT / "proxy_tasks/formal_languages/models.py").TFL_MODELS[args.model]
     return [args.python, str(ROOT / "proxy_tasks/formal_languages/runner.py"), "-mode", "train",
             "-dataset", spec["dataset"], "-opt", "rmsprop", "-batch_size", "32", "-gpu", "0",
             "-seed", str(seed), "-run_name", destination.name, *model, *options], stage, env

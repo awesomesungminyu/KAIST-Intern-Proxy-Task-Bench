@@ -11,6 +11,11 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+from common.registry import ModelRegistry
+
+MODELS = ModelRegistry("regbench")
+register_model = MODELS.register
+
 
 class CausalSelfAttention(nn.Module):
     def __init__(self, d_model: int, n_heads: int, dropout: float = 0.0):
@@ -120,9 +125,15 @@ class TinyLSTM(nn.Module):
         return sum(p.numel() for p in self.parameters())
 
 
+@register_model("transformer")
+def _transformer(vocab_size: int, max_len: int) -> nn.Module:
+    return TinyGPT(vocab_size, max_len=max_len)
+
+
+@register_model("lstm")
+def _lstm(vocab_size: int, max_len: int) -> nn.Module:
+    return TinyLSTM(vocab_size)
+
+
 def build_model(name: str, vocab_size: int, max_len: int) -> nn.Module:
-    if name == "transformer":
-        return TinyGPT(vocab_size, max_len=max_len)
-    if name == "lstm":
-        return TinyLSTM(vocab_size)
-    raise ValueError(f"unknown model: {name}")
+    return MODELS.build(name, vocab_size=vocab_size, max_len=max_len)

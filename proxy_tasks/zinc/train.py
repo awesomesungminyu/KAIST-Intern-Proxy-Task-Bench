@@ -18,8 +18,7 @@ from torch_geometric.datasets import ZINC
 from torch_geometric.loader import DataLoader
 
 from common.seed import set_seed
-from .models import build_model
-from .models_gps import build_gps
+from .models import MODELS
 from common.gpu_guard import require_cuda
 from common.paths import task_data, task_output
 
@@ -27,7 +26,7 @@ from common.paths import task_data, task_output
 def parse_args():
     p = argparse.ArgumentParser()
     p.add_argument("--seed", type=int, default=0)
-    p.add_argument("--model", choices=["gcn", "gine", "gps"], default="gine")
+    p.add_argument("--model", choices=MODELS.names(), default="gine")
     p.add_argument("--hidden_dim", type=int, default=None)
     p.add_argument("--heads", type=int, default=8)          # gps 전용
     p.add_argument("--attn_dropout", type=float, default=0.0)  # gps 전용
@@ -90,12 +89,9 @@ def main():
     val_loader = DataLoader(val_ds, batch_size=args.batch_size, shuffle=False)
     test_loader = None if test_ds is None else DataLoader(test_ds, batch_size=args.batch_size, shuffle=False)
 
-    if args.model == "gps":
-        model = build_gps(num_atom_types, num_bond_types, args.hidden_dim,
-                          n_layers=4, heads=args.heads,
-                          attn_dropout=args.attn_dropout).to(device)
-    else:
-        model = build_model(args.model, num_atom_types, num_bond_types, args.hidden_dim).to(device)
+    model = MODELS.build(args.model, num_atom_types=num_atom_types, num_bond_types=num_bond_types,
+                         hidden_dim=args.hidden_dim, heads=args.heads,
+                         attn_dropout=args.attn_dropout).to(device)
     n_params = model.num_params()
     print(f"[zinc] model={args.model} params={n_params:,} device={device} "
           f"train={len(train_ds)} val={len(val_ds)} test={len(test_ds) if test_ds is not None else 'not_loaded'}")
