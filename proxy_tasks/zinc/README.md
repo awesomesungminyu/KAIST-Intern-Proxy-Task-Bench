@@ -18,6 +18,10 @@
 
 Test MAE (낮을수록 좋음)
 
+위는 기존 직접 실행기의 기본 동작이다. EvoScientist 구조 탐색에는 저장소
+루트의 `python -m validation`을 사용한다. 이 인터페이스는
+`--validation_only`로 test를 로드·평가하지 않고 최저 validation MAE를 보고한다.
+
 ## 결과
 
 ../results/zinc/ 에 history.json 으로 보관한다. 체크포인트는 커밋하지 않는다.

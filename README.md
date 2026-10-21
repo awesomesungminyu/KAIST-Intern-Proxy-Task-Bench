@@ -3,7 +3,24 @@
 Transformer 계열 구조 변경을 큰 모델로 검증하기 전에 빠르게 돌려볼 수 있는
 6개 proxy 태스크를 하나의 실행 인터페이스로 모았다.
 
-## 빠른 시작
+## EvoScientist 검증 인터페이스
+
+자동 검증에는 `python -m validation`을 사용한다. 7개 task ID에 대해
+평가 설정·입력 해시·소스 버전·실패 상태를 공통 JSON으로 기록한다.
+
+```bash
+python -m validation list
+python -m validation check --task regbench --model transformer
+python -m validation run --task regbench --model transformer \
+  --profile smoke --seeds 0 --out artifacts/regbench-smoke
+```
+
+전체 실험은 `--profile full`을 명시해야 시작한다. smoke는 성능 근거가 아니다.
+데이터·외부 코드 준비, 기준/후보 비교, EvoScientist 실행 지시와 평가 한계는
+[연동 가이드](docs/EVOSCIENTIST.md)를 따른다.
+기존 결과를 새 프로토콜의 실측 결과로 자동 가져오지 않는다.
+
+## 기존 태스크 실행기
 
     ./setup.sh zinc              # 태스크 하나만 준비 (인자 없으면 전체)
     ./run.sh zinc gine 0         # <task> <model> <seed>

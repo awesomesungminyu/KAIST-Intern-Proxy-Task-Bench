@@ -52,6 +52,6 @@ if want parity || want tomita5 || want tomita6; then
   fi
 fi
 
-want fflm && echo "[setup] fflm — 의존성은 vendor 되어 있고 데이터(약 51MB)는 실행 시 생성된다"
+want fflm && echo "[setup] fflm — data/vendor는 Git에 포함되지 않습니다. docs/EVOSCIENTIST.md의 검증된 패키지 복원 절차를 따르세요."
 
 echo "[setup] 완료 — 예: ./run.sh zinc gine 0"

@@ -22,3 +22,10 @@ proxy_tasks/logs/
 __pycache__/
 *.py[cod]
 .venv/
+
+# Validation artifacts and restored FFLM dependencies stay outside source control.
+artifacts/
+proxy_tasks/fflm/vendor/
+proxy_tasks/fflm/smoke_runs/
+proxy_tasks/fflm/benchmark_runs/
+proxy_tasks/fflm/runs/

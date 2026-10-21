@@ -1,0 +1,224 @@
+{
+  "version": "proxy-validation-v1",
+  "precision": "fp32",
+  "default_seeds": [
+    0,
+    1,
+    2
+  ],
+  "tasks": {
+    "regbench": {
+      "adapter": "native",
+      "models": [
+        "transformer",
+        "lstm"
+      ],
+      "metric": "next_token_acc",
+      "direction": "maximize",
+      "split": "reused_test_stream",
+      "selection": "final_step",
+      "limitations": [
+        "The existing test stream is evaluated repeatedly during training. Treat it as development data, not an untouched final test.",
+        "This is the repo PFA preset, not an exact RegBench paper reproduction."
+      ],
+      "common": [
+        "--preset",
+        "repo",
+        "--examples_per_seq",
+        "20",
+        "--max_total_len",
+        "256",
+        "--lr",
+        "0.0003",
+        "--num_workers",
+        "0"
+      ],
+      "full": [
+        "--steps",
+        "2000",
+        "--eval_every",
+        "500",
+        "--eval_steps",
+        "50",
+        "--batch_size",
+        "64"
+      ],
+      "smoke": [
+        "--smoke_test"
+      ]
+    },
+    "g2p": {
+      "adapter": "native",
+      "models": [
+        "transformer",
+        "lstm"
+      ],
+      "metric": "val_word_acc",
+      "direction": "maximize",
+      "split": "validation",
+      "selection": "final_epoch",
+      "limitations": [
+        "CMUDict word-grouped 90/5/5 reconstruction; not the published paper split.",
+        "Only validation accuracy is exposed by this trainer; no final test claim is supported."
+      ],
+      "common": [
+        "--max_len",
+        "40",
+        "--lr",
+        "0.001",
+        "--num_workers",
+        "0"
+      ],
+      "full": [
+        "--epochs",
+        "10",
+        "--batch_size",
+        "128"
+      ],
+      "smoke": [
+        "--smoke_test"
+      ]
+    },
+    "zinc": {
+      "adapter": "native",
+      "models": [
+        "gcn",
+        "gine",
+        "gps"
+      ],
+      "metric": "best_val",
+      "direction": "minimize",
+      "split": "validation",
+      "selection": "lowest_validation_mae_checkpoint",
+      "limitations": [
+        "Architecture search reports validation MAE only. The test split is not loaded/evaluated by the trainer in this interface; run final test only after freezing the candidate.",
+        "GCN ignores bond features; GraphGPS is a GNN/attention hybrid. Parameter budgets are not automatically matched."
+      ],
+      "common": [
+        "--lr",
+        "0.001",
+        "--ckpt_epoch",
+        "200",
+        "--num_workers",
+        "0",
+        "--validation_only"
+      ],
+      "full": [
+        "--epochs",
+        "200",
+        "--batch_size",
+        "128"
+      ],
+      "smoke": [
+        "--smoke_test"
+      ]
+    },
+    "parity": {
+      "adapter": "formal",
+      "dataset": "Parity",
+      "models": [
+        "san_abs",
+        "san_mask",
+        "lstm"
+      ],
+      "metric": "mean_best_val_accuracy",
+      "direction": "maximize",
+      "split": "diagnostic_validation_bins",
+      "selection": "independent_best_epoch_per_bin",
+      "limitations": [
+        "Each bin can select a different epoch. The average is a diagnostic, not the score of one selected checkpoint or a final test.",
+        "The pinned upstream can stop early at mean validation accuracy >= 0.999; epochs specify a maximum budget."
+      ],
+      "full": [
+        "-epochs",
+        "100"
+      ],
+      "smoke": [
+        "-epochs",
+        "2"
+      ]
+    },
+    "tomita5": {
+      "adapter": "formal",
+      "dataset": "Tomita-5",
+      "models": [
+        "san_abs",
+        "san_mask",
+        "lstm"
+      ],
+      "metric": "mean_best_val_accuracy",
+      "direction": "maximize",
+      "split": "diagnostic_validation_bins",
+      "selection": "independent_best_epoch_per_bin",
+      "limitations": [
+        "Each bin can select a different epoch. The average is a diagnostic, not the score of one selected checkpoint or a final test.",
+        "The pinned upstream can stop early at mean validation accuracy >= 0.999; epochs specify a maximum budget."
+      ],
+      "full": [
+        "-epochs",
+        "100"
+      ],
+      "smoke": [
+        "-epochs",
+        "2"
+      ]
+    },
+    "tomita6": {
+      "adapter": "formal",
+      "dataset": "Tomita-6",
+      "models": [
+        "san_abs",
+        "san_mask",
+        "lstm"
+      ],
+      "metric": "mean_best_val_accuracy",
+      "direction": "maximize",
+      "split": "diagnostic_validation_bins",
+      "selection": "independent_best_epoch_per_bin",
+      "limitations": [
+        "Each bin can select a different epoch. The average is a diagnostic, not the score of one selected checkpoint or a final test.",
+        "The pinned upstream can stop early at mean validation accuracy >= 0.999; epochs specify a maximum budget."
+      ],
+      "full": [
+        "-epochs",
+        "100"
+      ],
+      "smoke": [
+        "-epochs",
+        "2"
+      ]
+    },
+    "fflm": {
+      "adapter": "fflm",
+      "models": [
+        "transformer",
+        "lstm"
+      ],
+      "metric": "id_read_error_rate",
+      "direction": "minimize",
+      "split": "id_development_prefix",
+      "selection": "final_step_no_ood_selection",
+      "limitations": [
+        "A reconstruction, not the authors' original training implementation.",
+        "LSTM uses 500 steps and Transformer 10000; cross-architecture comparisons have unequal budgets and are rejected by compare.",
+        "Only the repeatedly monitored ID prefix is scored here. Sparse/dense OOD evaluation must be reserved for frozen candidates. Zero observed errors does not establish universal correctness."
+      ],
+      "data_seed": 1000,
+      "evaluation_splits": [
+        "id"
+      ],
+      "steps": {
+        "lstm": 500,
+        "transformer": 10000
+      },
+      "full": [],
+      "smoke": [
+        "--smoke",
+        "--batch",
+        "2",
+        "--eval-batch",
+        "2"
+      ]
+    }
+  }
+}

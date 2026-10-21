@@ -42,6 +42,7 @@ def parse_args():
 
 def greedy_decode(model, src, max_len, device, model_name):
     """Teacher-forcing 없이 한 글자씩 생성해서 단어 정확도(WER) 계산용."""
+    was_training = model.training
     model.eval()
     B = src.size(0)
     tgt = torch.full((B, 1), BOS_ID, dtype=torch.long, device=device)
@@ -55,7 +56,7 @@ def greedy_decode(model, src, max_len, device, model_name):
             finished = finished | (next_tok.squeeze(1) == EOS_ID)
             if finished.all():
                 break
-    model.train()
+    model.train(was_training)
     return tgt
 
 

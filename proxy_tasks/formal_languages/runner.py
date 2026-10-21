@@ -1,6 +1,10 @@
 import datetime, fcntl, json, os, sys, time
 sys.path.insert(0, os.getcwd())
 import torch
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from validation.torch_compat import install_cpu_sequence_lengths
+install_cpu_sequence_lengths()
 T_PROC_START = time.perf_counter()
 STARTED_AT = datetime.datetime.now().astimezone().isoformat(timespec="seconds")
 EXP_DIR = os.environ.get("EXP_DIR", "/workspace/exp/2026-10-12")

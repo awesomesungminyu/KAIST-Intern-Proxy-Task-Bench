@@ -1,5 +1,13 @@
 # E3 FFLM — one-seed pilot
 
+For EvoScientist architecture search, use `python -m validation` from the repository
+root; see `docs/EVOSCIENTIST.md`. That interface scores ID development data only.
+Direct execution below retains the original ID/sparse/dense final evaluation.
+`FFLM_DATA_DIR` can point to existing verified data. Data/vendor assets are not
+tracked by Git; `package_manifest.json` describes the original bundle, and the
+restore/check tools verify its data/vendor entries. Modified driver code is
+identified by Git and the validation source/evaluator hashes.
+
 This package reconstructs the deterministic (clean) task described in Liu et al. 2023, https://arxiv.org/html/2306.00946v2. It is not the authors' original training code or a 500-seed replication.
 
 Training: T=512, fresh FFL(0.8) samples, batch16; AdamW beta=(.9,.999), lr3e-4, wd0.1, 50-step warmup, linear decay with step10001=0. Only next-token targets following read instructions contribute to cross entropy. No early stopping or selection using OOD results.

@@ -16,6 +16,7 @@ from torch.nn import functional as F
 
 TOKENS = {'w': 0, 'r': 1, 'i': 2, '0': 3, '1': 4}
 HERE = Path(__file__).resolve().parent
+DATA_DIR = Path(os.environ.get('FFLM_DATA_DIR', HERE / 'data')).resolve()
 
 
 def fresh_batch(rng, batch=16, length=512, p_ignore=.8):
@@ -143,12 +144,13 @@ def run(args, arch):
            'model_seed': args.seed, 'data_seed': args.data_seed, 'batch': args.batch,
            'eval_batch': args.eval_batch, 'precision': 'fp32', 'p_ignore_train': .8,
            'length': 512, 'tokens': TOKENS, 'flash_sdpa': not args.no_flash,
+           'evaluation_splits': args.evaluation_splits,
            'model_parameters': sum(p.numel() for p in model.parameters() if p.requires_grad),
            'weight_decay_policy': 'all model parameters', 'lstm_schedule_endpoint': 10001,
            'model_reconstruction': 'x-transformers pinned explicit pre-norm GELU learned absolute PE; unpublished author details may differ',
            'training_samples': 'fresh procedural samples; same distribution, not published train prefix rows',
            'driver_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-           'eval_manifest': json.loads((HERE/'data/manifest.json').read_text())}
+           'eval_manifest': json.loads((DATA_DIR/'manifest.json').read_text())}
     stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S_%fZ')
     run_id = 'E3-' + arch + '-' + args.mode + '-s' + str(args.seed) + '-' + stamp
     dest = args.out / run_id
@@ -185,7 +187,7 @@ def run(args, arch):
                 append(dest/'history.jsonl', row)
                 print(run_id, row,flush=True)
             if args.mode == 'train' and not args.smoke and step % 1000 == 0:
-                data = np.load(HERE/'data/id.npy', mmap_mode='r')
+                data = np.load(DATA_DIR/'id.npy', mmap_mode='r')
                 val = evaluate(model, data, device, args.eval_batch, 1000)
                 online_eval_s += val['elapsed_s']
                 append(dest/'history.jsonl', {'step': step, 'id_monitor': val})
@@ -198,7 +200,7 @@ def run(args, arch):
         tests = {}
         limit = 8 if args.smoke else None
         if args.mode == 'benchmark':
-            data = np.load(HERE/'data/sparse.npy', mmap_mode='r')
+            data = np.load(DATA_DIR/'sparse.npy', mmap_mode='r')
             forward = evaluate(model, data, device, args.eval_batch, 160)
             mean = sum(timings)/len(timings) if timings else train_s/steps
             estimate = {'train_step_mean_s_after_warmup': mean,
@@ -210,8 +212,8 @@ def run(args, arch):
             print('BUDGET',arch,json.dumps(estimate),flush=True)
         else:
             torch.save({'model': model.state_dict(), 'config': cfg, 'step': steps}, dest/'final.pt')
-            for name in ['id','sparse','dense']:
-                data = np.load(HERE/'data'/ (name+'.npy'), mmap_mode='r')
+            for name in args.evaluation_splits:
+                data = np.load(DATA_DIR/ (name+'.npy'), mmap_mode='r')
                 tests[name] = evaluate(model, data, device, args.eval_batch, limit)
                 if limit is None:
                     assert tests[name]['reads'] == cfg['eval_manifest']['splits'][name]['reads']
@@ -223,7 +225,7 @@ def run(args, arch):
                   't_wall_s_after_setup':time.perf_counter()-setup_end,
                   'peak_gpu_mem_mb':torch.cuda.max_memory_allocated(device)/2**20 if device.type=='cuda' else None,
                   'result':tests,
-                  'joint_ood_zero':all(tests[n]['read_errors']==0 for n in ['sparse','dense']) if tests else None}
+                  'joint_ood_zero':all(tests[n]['read_errors']==0 for n in ['sparse','dense']) if all(n in tests for n in ['sparse','dense']) else None}
         (dest/'result.json').write_text(json.dumps(result,indent=2))
         append(args.out/'runs.jsonl', result)
     except BaseException as exc:
@@ -245,6 +247,7 @@ def main():
     p.add_argument('--steps',type=int)
     p.add_argument('--smoke',action='store_true')
     p.add_argument('--no-flash',action='store_true')
+    p.add_argument('--evaluation-splits', nargs='+', choices=['id','sparse','dense'], default=['id','sparse','dense'])
     p.add_argument('--out',type=Path,default=HERE/'runs')
     args=p.parse_args()
     args.out.mkdir(parents=True,exist_ok=True)

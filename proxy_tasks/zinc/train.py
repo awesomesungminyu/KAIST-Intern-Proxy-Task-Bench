@@ -41,6 +41,7 @@ def parse_args():
     p.add_argument("--out_dir", type=str, default="runs/zinc")
     p.add_argument("--smoke_test", action="store_true")
     p.add_argument("--amp", action="store_true")
+    p.add_argument("--validation_only", action="store_true", help="구조 탐색용: test를 로드하거나 평가하지 않음")
     return p.parse_args()
 
 
@@ -79,15 +80,16 @@ def main():
 
     train_ds = ZINC(root=str(root), subset=True, split="train")
     val_ds = ZINC(root=str(root), subset=True, split="val")
-    test_ds = ZINC(root=str(root), subset=True, split="test")
+    test_ds = None if args.validation_only else ZINC(root=str(root), subset=True, split="test")
     if args.smoke_test:
         train_ds = train_ds[:200]
         val_ds = val_ds[:50]
-        test_ds = test_ds[:50]
+        if test_ds is not None:
+            test_ds = test_ds[:50]
 
     train_loader = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True, num_workers=args.num_workers)
     val_loader = DataLoader(val_ds, batch_size=args.batch_size, shuffle=False)
-    test_loader = DataLoader(test_ds, batch_size=args.batch_size, shuffle=False)
+    test_loader = None if test_ds is None else DataLoader(test_ds, batch_size=args.batch_size, shuffle=False)
 
     if args.model == "gps":
         model = build_gps(num_atom_types, num_bond_types, args.hidden_dim,
@@ -97,7 +99,7 @@ def main():
         model = build_model(args.model, num_atom_types, num_bond_types, args.hidden_dim).to(device)
     n_params = model.num_params()
     print(f"[zinc] model={args.model} params={n_params:,} device={device} "
-          f"train={len(train_ds)} val={len(val_ds)} test={len(test_ds)}")
+          f"train={len(train_ds)} val={len(val_ds)} test={len(test_ds) if test_ds is not None else 'not_loaded'}")
 
     opt = torch.optim.AdamW(model.parameters(), lr=args.lr)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
@@ -152,16 +154,18 @@ def main():
                   f"val_mae={val_mae:.4f} lr={rec['lr']:.2e} elapsed={elapsed:.1f}s")
 
     # best checkpoint로 최종 test MAE 측정 (문헌 관례)
-    model.load_state_dict(torch.load(out_dir / "best_model.pt"))
-    test_mae = evaluate(model, test_loader, device)
+    test_mae = None
+    if test_loader is not None:
+        model.load_state_dict(torch.load(out_dir / "best_model.pt"))
+        test_mae = evaluate(model, test_loader, device)
     total_time = time.time() - t0
-    print(f"[zinc] final test_mae={test_mae:.4f} total_time={total_time:.1f}s")
+    print(f"[zinc] best_val_mae={best_val:.4f} test_mae={test_mae} total_time={total_time:.1f}s")
     print(f"[peak_vram] {torch.cuda.max_memory_allocated()/1024**3:.2f} GB", flush=True)
 
     # 중간 지점(ckpt_epoch) best-val 체크포인트의 test MAE도 측정
     early_ckpt = out_dir / f"best_model_e{args.ckpt_epoch}.pt"
     test_mae_early, time_at_early = None, None
-    if args.epochs > args.ckpt_epoch and early_ckpt.exists():
+    if test_loader is not None and args.epochs > args.ckpt_epoch and early_ckpt.exists():
         model.load_state_dict(torch.load(early_ckpt))
         test_mae_early = evaluate(model, test_loader, device)
         time_at_early = next((r["elapsed_sec"] for r in history
