@@ -25,6 +25,23 @@ python -m validation run --task regbench --model transformer \
     ./setup.sh zinc              # 태스크 하나만 준비 (인자 없으면 전체)
     ./run.sh zinc gine 0         # <task> <model> <seed>
 
+## 데이터·산출물 경로
+
+모든 경로는 `proxy_tasks/common/paths.py` 한 곳에서 정한다. 데이터가 수백 MB라
+다른 디스크에 둘 수 있고 서버와 맥에서 위치가 다르므로 환경변수로 옮길 수 있다.
+설정하지 않아도 기본값으로 동작한다.
+
+| 환경변수 | 기본값 | 내용 |
+|---|---|---|
+| `PROXY_DATA_ROOT` | `<repo>/data` | 태스크별 입력 데이터 (`<root>/<task>/`) |
+| `PROXY_OUTPUT_ROOT` | `<repo>/artifacts` | 체크포인트·history·로그 (`<root>/<task>/<model>-s<seed>/`) |
+| `PROXY_VENDOR_ROOT` | `<repo>/third_party` | 외부 저장소·패키지 (`tfl/`, `fflm_vendor/`) |
+
+`--root`, `--data_dir`, `--out_dir`처럼 명시적으로 넘긴 인자가 항상 우선한다.
+FFLM은 데이터를 `$PROXY_DATA_ROOT/fflm`에, vendor 패키지를 `$PROXY_VENDOR_ROOT/fflm_vendor`에
+둔다(`scripts/restore_fflm_assets.py`가 이 위치로 복원한다). 기존 패키지 폴더를
+`--fflm-assets`로 직접 지정해도 된다.
+
 ## 태스크
 
 | 태스크 | 내용 | 실행 |
@@ -35,12 +52,15 @@ python -m validation run --task regbench --model transformer \
 | `parity` | Parity 언어 인식 | `./run.sh parity full` |
 | `tomita5` `tomita6` | Tomita 문법 5 / 6 | `./run.sh tomita5 full` |
 | `fflm` | 형식언어 LM 재현 실험 | `./run.sh fflm` |
+| `tier0` | Zero-cost proxy: 시퀀스 믹서 11종을 학습 없이 init 상태로 스코어링 | `cd proxy_tasks && python -m tier0.tier0_proxy` |
 
-모델 선택지와 상세는 각 디렉터리의 README.md 참조.
+모델 선택지와 상세는 각 디렉터리의 README.md 참조. 태스크들을 Tier 0–3으로
+묶는 구조와 아직 Tier 간 비교를 할 수 없는 이유는
+[Tier 프레임워크](docs/TIER_FRAMEWORK.md)를 볼 것.
 
 ## 설계 원칙
 
-- **태스크는 독립적이다.** 서로 import 하지 않고 `common/`(seed 고정, GPU 가드)만
+- **태스크는 독립적이다.** 서로 import 하지 않고 `common/`(seed 고정, GPU 가드, 경로)만
   공유한다. 한 태스크만 떼어내 쓸 수 있다.
 - **설치도 태스크 단위다.** `./setup.sh zinc` 는 ZINC 에 필요한 것만 준비한다.
 - **데이터·체크포인트는 커밋하지 않는다.** `setup.sh` 와 각 태스크의
@@ -52,12 +72,16 @@ python -m validation run --task regbench --model transformer \
     |- run.sh                    통합 실행 진입점
     |- setup.sh                  태스크별 환경·데이터 준비
     |- environment.md            검증된 환경, 학습 시간 해석 시 주의
-    |- third_party/              외부 저장소 고정 커밋 + 패치
+    |- third_party/              외부 저장소 고정 커밋 + 패치 (클론본은 커밋하지 않음)
+    |- data/                     입력 데이터 기본 위치 (커밋하지 않음)
+    |- artifacts/                산출물 기본 위치 (커밋하지 않음)
+    |- docs/                     연동 가이드, Tier 프레임워크
     `- proxy_tasks/
-       |- common/                seed 고정, GPU 가드 (공용)
+       |- common/                seed 고정, GPU 가드, 경로 (공용)
        |- zinc/ g2p/ regbench/   자체 구현
        |- formal_languages/      parity / tomita 하네스
        |- fflm/                  형식언어 LM 재현 패키지
+       |- tier0/                 zero-cost proxy 하니스
        |- results/<task>/        history.json
        `- analysis/              표·그래프 생성
 
