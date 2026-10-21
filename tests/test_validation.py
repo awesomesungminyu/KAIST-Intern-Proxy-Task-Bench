@@ -249,6 +249,22 @@ class RestoreTests(unittest.TestCase):
             with self.assertRaises(FileExistsError):
                 restore(source, target, manifest)
 
+    def test_restores_each_prefix_into_its_own_root(self):
+        from scripts.restore_fflm_assets import restore
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            source = base / "source"
+            for rel in ["data/one", "vendor/pkg/two"]:
+                (source / rel).parent.mkdir(parents=True, exist_ok=True)
+                (source / rel).write_text(rel)
+            manifest = base / "manifest.json"
+            manifest.write_text(json.dumps([{"path": rel, "sha256": runner.digest(source / rel)}
+                                            for rel in ["data/one", "vendor/pkg/two"]]))
+            roots = {"data": base / "data_root/fflm", "vendor": base / "vendor_root/fflm_vendor"}
+            self.assertEqual(restore(source, roots, manifest), 2)
+            self.assertEqual((roots["data"] / "one").read_text(), "data/one")
+            self.assertEqual((roots["vendor"] / "pkg/two").read_text(), "vendor/pkg/two")
+
 
 if __name__ == "__main__":
     unittest.main()

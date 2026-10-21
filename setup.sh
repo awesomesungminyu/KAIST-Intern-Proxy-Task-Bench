@@ -43,15 +43,17 @@ want regbench && echo "[setup] regbench — 데이터는 실행 시 생성된다
 if want parity || want tomita5 || want tomita6; then
   echo "[setup] parity/tomita — 외부 저장소 클론 + 패치"
   TFL_COMMIT=$(awk '{print $3}' third_party/tfl.commit)
-  [ -d third_party/tfl ] || git clone https://github.com/satwik77/Transformer-Formal-Languages.git third_party/tfl
-  git -C third_party/tfl checkout -q "$TFL_COMMIT"
-  if git -C third_party/tfl apply --check ../tfl.patch 2>/dev/null; then
-    git -C third_party/tfl apply ../tfl.patch && echo "[setup]   패치 적용"
+  TFL_DIR="${PROXY_VENDOR_ROOT:-$PWD/third_party}/tfl"   # proxy_tasks/common/paths.py 와 같은 규칙
+  TFL_PATCH="$PWD/third_party/tfl.patch"
+  [ -d "$TFL_DIR" ] || git clone https://github.com/satwik77/Transformer-Formal-Languages.git "$TFL_DIR"
+  git -C "$TFL_DIR" checkout -q "$TFL_COMMIT"
+  if git -C "$TFL_DIR" apply --check "$TFL_PATCH" 2>/dev/null; then
+    git -C "$TFL_DIR" apply "$TFL_PATCH" && echo "[setup]   패치 적용"
   else
     echo "[setup]   패치 이미 적용됨 (또는 third_party/tfl.patch 확인 필요)"
   fi
 fi
 
-want fflm && echo "[setup] fflm — data/vendor는 Git에 포함되지 않습니다. docs/EVOSCIENTIST.md의 검증된 패키지 복원 절차를 따르세요."
+want fflm && echo "[setup] fflm — data/vendor는 Git에 포함되지 않습니다. scripts/restore_fflm_assets.py 가 \$PROXY_DATA_ROOT/fflm 과 \$PROXY_VENDOR_ROOT/fflm_vendor 로 복원합니다 (docs/EVOSCIENTIST.md)."
 
 echo "[setup] 완료 — 예: ./run.sh zinc gine 0"

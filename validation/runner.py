@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import ast
+import importlib.util
 from contextlib import contextmanager
 from datetime import datetime, timezone
 import hashlib
@@ -21,6 +22,17 @@ import uuid
 
 ROOT = Path(__file__).resolve().parents[1]
 PROTOCOL = ROOT / "validation/protocols/v1.json"
+
+
+def _load_paths():
+    # proxy_tasks 를 sys.path 에 올리지 않고 경로 모듈만 읽는다 (torch 를 import 하지 않음).
+    spec = importlib.util.spec_from_file_location("proxy_paths", ROOT / "proxy_tasks/common/paths.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+paths = _load_paths()
 
 
 def digest(path):
@@ -119,10 +131,10 @@ def evaluation_identity(args):
 
 def asset_paths(args, spec):
     if args.task == "g2p":
-        base = args.data_root or ROOT / "proxy_tasks/g2p/data"
+        base = args.data_root or paths.DATA_ROOT / "g2p"
         return {name: base / name for name in ["vocab.json", "train.tsv", "val.tsv", "test.tsv"]}
     if args.task == "zinc":
-        base = args.data_root or ROOT / "proxy_tasks/zinc/data"
+        base = args.data_root or paths.DATA_ROOT / "zinc"
         paths = {"metadata": base / "metadata.json"}
         for split in ["train", "val", "test"]:
             paths[split] = base / "subset/processed" / (split + ".pt")
@@ -131,17 +143,26 @@ def asset_paths(args, spec):
         base = args.tfl_root / "data" / spec["dataset"]
         return {"train": base / "train_corpus.pk", "validation_bins": base / "val_corpus_bins.pk"}
     if spec["adapter"] == "fflm":
-        return {"fflm_data": args.fflm_assets / "data", "fflm_vendor": args.fflm_assets / "vendor"}
+        roots = fflm_roots(args)
+        return {"fflm_data": roots["data"], "fflm_vendor": roots["vendor"]}
     return {}
 
 
-def check_fflm(assets):
+def fflm_roots(args):
+    """--fflm-assets 는 data/ 와 vendor/ 를 함께 담은 기존 패키지 폴더. 생략하면 공통 경로 규칙을 쓴다."""
+    if args.fflm_assets:
+        return {"data": args.fflm_assets / "data", "vendor": args.fflm_assets / "vendor"}
+    return dict(paths.FFLM_ASSETS)
+
+
+def check_fflm(roots):
     # Check assets against the committed package manifest, never an untrusted replacement.
     manifest = json.loads((ROOT / "proxy_tasks/fflm/package_manifest.json").read_text())
     for item in manifest:
         if item["path"].split("/")[0] not in {"data", "vendor"}:
             continue
-        p = assets / item["path"]
+        prefix, _, rest = item["path"].partition("/")
+        p = roots[prefix] / rest
         if not p.is_file() or digest(p) != item["sha256"]:
             raise ValueError(f"Missing or changed FFLM asset: {p}")
 
@@ -152,13 +173,13 @@ def preflight(args, spec):
     assets = asset_paths(args, spec)
     data = fingerprint(assets)
     if args.task == "g2p":
-        base = args.data_root or ROOT / "proxy_tasks/g2p/data"
+        base = args.data_root or paths.DATA_ROOT / "g2p"
         words = [{line.split("\t", 1)[0] for line in (base / (split + ".tsv")).read_text().splitlines() if line.strip()}
                  for split in ["train", "val", "test"]]
         if any(not group for group in words) or any(words[i] & words[j] for i in range(3) for j in range(i)):
             raise ValueError("Empty or overlapping CMUDict word splits")
     if spec["adapter"] == "fflm":
-        check_fflm(args.fflm_assets)
+        check_fflm(fflm_roots(args))
     if spec["adapter"] == "formal":
         if not (args.tfl_root / "src/main.py").is_file():
             raise FileNotFoundError("TFL source missing; set --tfl-root to a prepared, patched checkout")
@@ -207,13 +228,14 @@ def build_command(args, spec, seed, destination):
         command = [args.python, "-m", args.task + ".train", "--model", args.model,
                    "--seed", str(seed), "--out_dir", str(native), *options]
         if args.task in {"g2p", "zinc"}:
-            data = args.data_root or ROOT / "proxy_tasks" / args.task / "data"
+            data = args.data_root or paths.DATA_ROOT / args.task
             command += ["--data_dir" if args.task == "g2p" else "--root", str(data)]
         return command, ROOT / "proxy_tasks", env
     if spec["adapter"] == "fflm":
-        env["FFLM_DATA_DIR"] = str(args.fflm_assets / "data")
+        roots = fflm_roots(args)
+        env["FFLM_DATA_DIR"] = str(roots["data"])
         # Pin only the FFLM subprocess dependencies, not EvoScientist's Python environment.
-        env["PYTHONPATH"] = str(args.fflm_assets / "vendor")
+        env["PYTHONPATH"] = str(roots["vendor"])
         return [args.python, str(ROOT / "proxy_tasks/fflm/run_fflm.py"), "--arch", args.model,
                 "--seed", str(seed), "--data-seed", str(spec["data_seed"]), "--device", "cuda",
                 "--out", str(native), *options, "--evaluation-splits", *spec["evaluation_splits"]], ROOT, env
@@ -439,8 +461,8 @@ def parser():
         c.add_argument("--model", required=True)
         c.add_argument("--python", default=sys.executable, help="ML interpreter, separate from EvoScientist's venv")
         c.add_argument("--data-root", type=lambda p: Path(p).expanduser().resolve())
-        c.add_argument("--tfl-root", type=lambda p: Path(p).expanduser().resolve(), default=ROOT / "third_party/tfl")
-        c.add_argument("--fflm-assets", type=lambda p: Path(p).expanduser().resolve(), default=ROOT / "proxy_tasks/fflm")
+        c.add_argument("--tfl-root", type=lambda p: Path(p).expanduser().resolve(), default=paths.THIRD_PARTY / "tfl")
+        c.add_argument("--fflm-assets", type=lambda p: Path(p).expanduser().resolve(), default=None)
         if name == "run":
             c.add_argument("--seeds", type=int, nargs="+", default=[0, 1, 2])
             c.add_argument("--profile", choices=["smoke", "full"], default="smoke")

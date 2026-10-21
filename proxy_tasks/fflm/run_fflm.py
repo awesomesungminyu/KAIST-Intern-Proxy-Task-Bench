@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import random
+import sys
 import time
 
 import numpy as np
@@ -16,7 +17,10 @@ from torch.nn import functional as F
 
 TOKENS = {'w': 0, 'r': 1, 'i': 2, '0': 3, '1': 4}
 HERE = Path(__file__).resolve().parent
-DATA_DIR = Path(os.environ.get('FFLM_DATA_DIR', HERE / 'data')).resolve()
+sys.path.insert(0, str(HERE.parent))
+from common.paths import FFLM_ASSETS, OUTPUT_ROOT  # noqa: E402
+
+DATA_DIR = Path(os.environ.get('FFLM_DATA_DIR', FFLM_ASSETS['data'])).resolve()
 
 
 def fresh_batch(rng, batch=16, length=512, p_ignore=.8):
@@ -248,7 +252,7 @@ def main():
     p.add_argument('--smoke',action='store_true')
     p.add_argument('--no-flash',action='store_true')
     p.add_argument('--evaluation-splits', nargs='+', choices=['id','sparse','dense'], default=['id','sparse','dense'])
-    p.add_argument('--out',type=Path,default=HERE/'runs')
+    p.add_argument('--out',type=Path,default=OUTPUT_ROOT/'fflm'/'runs')
     args=p.parse_args()
     args.out.mkdir(parents=True,exist_ok=True)
     for arch in (['lstm','transformer'] if args.arch=='both' else [args.arch]):

@@ -21,6 +21,7 @@ from .data import RegBenchDataConfig, RegBenchDataset, collate_fn
 from .models import build_model
 from .pfa import PFAConfig, vocab_size_with_specials
 from common.gpu_guard import require_cuda
+from common.paths import task_output
 
 
 def parse_args():
@@ -37,7 +38,7 @@ def parse_args():
     p.add_argument("--batch_size", type=int, default=64)
     p.add_argument("--lr", type=float, default=3e-4)
     p.add_argument("--num_workers", type=int, default=2)
-    p.add_argument("--out_dir", type=str, default="runs/regbench")
+    p.add_argument("--out_dir", type=str, default=None, help="기본: $PROXY_OUTPUT_ROOT/regbench/<model>-s<seed>")
     p.add_argument("--smoke_test", action="store_true", help="수십 스텝만 돌려 동작 확인")
     p.add_argument("--amp", action="store_true", help="fp16 AMP 사용 (sm_75는 bf16 미지원)")
     return p.parse_args()
@@ -109,8 +110,11 @@ def main():
     opt = torch.optim.AdamW(model.parameters(), lr=args.lr)
     scaler = torch.cuda.amp.GradScaler(enabled=use_amp)
 
-    out_dir = Path(args.out_dir) / f"{args.model}_seed{args.seed}"
-    out_dir.mkdir(parents=True, exist_ok=True)
+    if args.out_dir:
+        out_dir = Path(args.out_dir) / f"{args.model}_seed{args.seed}"
+        out_dir.mkdir(parents=True, exist_ok=True)
+    else:
+        out_dir = task_output("regbench", args.model, args.seed)
     history = []
 
     model.train()

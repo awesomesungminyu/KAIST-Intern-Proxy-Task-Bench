@@ -20,21 +20,20 @@ from common.seed import set_seed
 from .data import G2PDataset, collate_fn, load_split, load_vocab, BOS_ID, EOS_ID, PAD_ID
 from .models import build_model
 from common.gpu_guard import require_cuda
-
-DATA_DIR = Path(__file__).parent / "data"
+from common.paths import task_data, task_output
 
 
 def parse_args():
     p = argparse.ArgumentParser()
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--model", choices=["transformer", "lstm"], default="transformer")
-    p.add_argument("--data_dir", type=str, default=str(DATA_DIR))
+    p.add_argument("--data_dir", type=str, default=None, help="기본: $PROXY_DATA_ROOT/g2p")
     p.add_argument("--epochs", type=int, default=10)
     p.add_argument("--batch_size", type=int, default=128)
     p.add_argument("--lr", type=float, default=1e-3)
     p.add_argument("--max_len", type=int, default=40)
     p.add_argument("--num_workers", type=int, default=2)
-    p.add_argument("--out_dir", type=str, default="runs/g2p")
+    p.add_argument("--out_dir", type=str, default=None, help="기본: $PROXY_OUTPUT_ROOT/g2p/<model>-s<seed>")
     p.add_argument("--smoke_test", action="store_true")
     p.add_argument("--amp", action="store_true")
     return p.parse_args()
@@ -93,7 +92,7 @@ def main():
     device = require_cuda()
     use_amp = args.amp and device == "cuda"
 
-    data_dir = Path(args.data_dir)
+    data_dir = Path(args.data_dir) if args.data_dir else task_data("g2p")
     char_vocab, phone_vocab = load_vocab(data_dir / "vocab.json")
     train_entries = load_split(data_dir / "train.tsv")
     val_entries = load_split(data_dir / "val.tsv")
@@ -118,8 +117,11 @@ def main():
     opt = torch.optim.AdamW(model.parameters(), lr=args.lr)
     scaler = torch.cuda.amp.GradScaler(enabled=use_amp)
 
-    out_dir = Path(args.out_dir) / f"{args.model}_seed{args.seed}"
-    out_dir.mkdir(parents=True, exist_ok=True)
+    if args.out_dir:
+        out_dir = Path(args.out_dir) / f"{args.model}_seed{args.seed}"
+        out_dir.mkdir(parents=True, exist_ok=True)
+    else:
+        out_dir = task_output("g2p", args.model, args.seed)
     history = []
     t0 = time.time()
 

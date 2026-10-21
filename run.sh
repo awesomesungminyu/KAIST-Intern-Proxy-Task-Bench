@@ -12,18 +12,19 @@ case "$TASK" in
   zinc|g2p|regbench)
     MODEL=${1:?"사용법: ./run.sh $TASK <model> <seed> [...]"}
     SEED=${2:?"사용법: ./run.sh $TASK <model> <seed> [...]"}; shift 2
-    OUT="runs/${TASK}_${MODEL}_s${SEED}"
-    echo "[run] $TASK model=$MODEL seed=$SEED -> proxy_tasks/$OUT"
+    # 산출물 위치는 train.py 기본값(common/paths.py: $PROXY_OUTPUT_ROOT/<task>/<model>-s<seed>)을 따른다.
+    echo "[run] $TASK model=$MODEL seed=$SEED"
     cd proxy_tasks
-    exec python -m "${TASK}.train" --model "$MODEL" --seed "$SEED" --out_dir "$OUT" "$@"
+    exec python -m "${TASK}.train" --model "$MODEL" --seed "$SEED" "$@"
     ;;
   parity|tomita5|tomita6)
-    [ -d third_party/tfl ] || { echo "third_party/tfl 없음 — 먼저 ./setup.sh $TASK"; exit 1; }
+    TFL_DIR="${PROXY_VENDOR_ROOT:-$PWD/third_party}/tfl"
+    [ -d "$TFL_DIR" ] || { echo "$TFL_DIR 없음 — 먼저 ./setup.sh $TASK"; exit 1; }
     case "$TASK" in
       parity) SCRIPT=proxy_tasks/formal_languages/run_parity_mini.sh ;;
       *)      SCRIPT=proxy_tasks/formal_languages/run_${TASK}.sh ;;
     esac
-    exec env REPO="$PWD/third_party/tfl" bash "$SCRIPT" "${1:-full}"
+    exec env REPO="$TFL_DIR" bash "$SCRIPT" "${1:-full}"
     ;;
   fflm) exec bash proxy_tasks/fflm/start_server.sh ;;
   *)

@@ -16,15 +16,15 @@ from pathlib import Path
 
 from torch_geometric.datasets import ZINC
 
-DEFAULT_ROOT = Path(__file__).parent / "data"
+from common.paths import task_data
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--root", type=str, default=str(DEFAULT_ROOT))
+    ap.add_argument("--root", type=str, default=None, help="기본: $PROXY_DATA_ROOT/zinc")
     args = ap.parse_args()
 
-    root = Path(args.root)
+    root = Path(args.root) if args.root else task_data("zinc")
     root.mkdir(parents=True, exist_ok=True)
 
     max_atom_type, max_bond_type = -1, -1
