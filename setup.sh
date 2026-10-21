@@ -20,9 +20,9 @@ pip install --upgrade pip -q
 # 플랫폼별 torch: 실험 서버는 CUDA 12.4, macOS 는 CPU/MPS 빌드(편집·분석용).
 if [ "$(uname -s)" = "Darwin" ]; then
   echo "[setup] macOS 감지 — CPU/MPS 빌드 설치 (학습은 CUDA 서버에서)"
-  pip install torch==2.5.1
+  pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1
 else
-  pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu124
+  pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu124
 fi
 pip install -r requirements.txt
 python -c "import torch; print('[setup] torch', torch.__version__, '| cuda', torch.cuda.is_available())"
@@ -79,4 +79,4 @@ fi
 
 want fflm && echo "[setup] fflm — data/vendor는 Git에 포함되지 않습니다. scripts/restore_fflm_assets.py 가 \$PROXY_DATA_ROOT/fflm 과 \$PROXY_VENDOR_ROOT/fflm_vendor 로 복원합니다 (docs/EVOSCIENTIST.md)."
 
-echo "[setup] 완료 — 예: ./run.sh zinc gine 0"
+echo "[setup] 완료 — 예: python -m validation check --task zinc --model gine"

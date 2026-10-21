@@ -30,14 +30,19 @@ Tier 0 안에서 지표끼리 비교한 값뿐이고, Tier 간 예측력과는 �
 |---|---|---|
 | Tier 0 | `tier0` (`proxy_tasks/tier0/tier0_proxy.py`) | 구현됨, 한계 있음 (아래) |
 | Tier 1 lose | `parity`, `tomita5`, `tomita6`, `fflm` | 구현됨 |
-| Tier 1 win | `mqar`, `copy`, `iclreg` | **미구현** |
+| Tier 1 win | `mqar`, `mad_tsc` (MAD selective copying) | 구현됨, 런타임·파일럿 한계 있음 |
+| Tier 1 win | `iclreg`, Jelassi et al. 2024 `copy` | **미구현** |
 | Tier 2 win | `regbench`, `g2p`, `zinc` | 구현됨 |
-| Tier 2 lose | `sc_raw`, `scifar`, `ett` | **미구현** |
+| Tier 2 lose | `sc_raw`, `scifar`, `ett` | 구현됨, budget_limited/미수렴 이력은 프로토콜에 명시 |
 | Tier 3 | 대규모 AR LM | 이 리포 범위 밖 (ETRI) |
 
 ## 미해결 문제
 
-### (1) 공통 아키텍처 집합이 없다 — 최우선 과제
+### (1) 공통 아키텍처 집합이 없다 — ρ 측정 시점까지 보류
+
+현재 편입 목표는 EvoScientist가 제안한 모델을 태스크별로 등록·실행할 수 있게 하는 것이다.
+공통 아키텍처 집합 구성과 Tier 간 Spearman은 **ρ 측정 시점까지 보류**한다.
+아래 문제를 해결했다는 뜻은 아니며, 다음 비교 단계에서 다시 다뤄야 한다.
 
 `validation/protocols/v1.json` 기준 태스크별 모델은 다음과 같다.
 
@@ -46,9 +51,13 @@ Tier 0 안에서 지표끼리 비교한 값뿐이고, Tier 간 예측력과는 �
 | regbench, g2p, fflm | transformer, lstm |
 | parity, tomita5, tomita6 | san_abs, san_mask, lstm |
 | zinc | gcn, gine, gps |
+| ett | linear, transformer, naive |
+| scifar, sc_raw | transformer, lstm |
+| mqar | transformer, linear_attention, gated_linear_attention, gqa2 |
+| mad_tsc | MAD 레시피 16종 (models.py); 과거 official benchmark는 2종 중 1종 FAILED |
 | tier0 | 시퀀스 믹서 11종 (transformer, swa, gla, rwkv6, based, s4d, mamba, h3, hyena, lstm, cnn) |
 
-네 그룹 모두에 들어 있는 아키텍처가 없다. 이름이 같은 `transformer`도 구현이 다르다.
+모든 태스크에 공통으로 들어 있는 아키텍처가 없다. 이름이 같은 `transformer`도 구현이 다르다.
 
 | | regbench `TinyGPT` | tier0 `transformer` |
 |---|---|---|
@@ -90,10 +99,14 @@ ett)은 Tier 1↔Tier 2 변별력 검증에만 쓰고, Tier 3 예측 주장의 �
 
 ## Tier 0 하니스
 
-`proxy_tasks/tier0/tier0_proxy.py`는 torch만으로 11종 믹서를 init 상태에서
+`proxy_tasks/tier0/models.py`의 레지스트리와 `tier0_proxy.py`는 torch만으로 11종 믹서를 init 상태에서
 스코어링한다. 학습은 하지 않는다.
 
 ```bash
+# 공통 provenance가 필요한 실행 (학습/점수화 승인이 있는 세션)
+python -m validation run --task tier0 --model transformer --profile full \
+  --seeds 0 1 2 --out artifacts/tier0-transformer
+# 직접 하니스 (기본 seed 1234부터)
 cd proxy_tasks
 python -m tier0.tier0_proxy --quick                                  # 스모크
 python -m tier0.tier0_proxy --seeds 3 --seq-len 256 --probe-len 128  # 본 실행
@@ -153,3 +166,12 @@ backward를 지원하지 않는다. CPU에서는 cuDNN을 쓰지 않으므로 v1
 | params, flops, state_cap | 대조군 | |
 
 입력이 균일 랜덤 토큰이고 target이 입력과 같다는 데이터 설계 문제는 아직 정하지 않았다.
+
+## 신규 편입의 해석 범위
+
+신규 태스크 코드가 있다는 것과 수렴·정량 재현을 검증했다는 것은 다르다.
+sc_raw는 2048 update/epoch 0회 무작위 수준, scifar는 10 epoch 미수렴이었다.
+MQAR는 4모델 × 3 seed 완료 이력이 있으나 linear/gated는 0.99 미달, GQA-2 분산이 컸다.
+MAD official은 seed 12345 하나, attention 완료 / striped Hyena MoE 실패였으며 SDPA로 kernel_exact=false다.
+ETT linear/transformer는 3 seed, naive는 1 seed 이력이다. 이 파일럿을 새 acceptance로 반입하지 않는다.
+모델 추가 계약은 [ADDING_A_MODEL](ADDING_A_MODEL.md), 데이터 준비는 [인벤토리](DATA_INVENTORY.md)를 따른다.

@@ -4,6 +4,7 @@
 #   ./run.sh parity|tomita5|tomita6 [pilot|full|summary]
 #   ./run.sh fflm
 set -euo pipefail
+echo "[legacy] run.sh does not record validation provenance. Prefer python -m validation (README.md)." >&2
 cd "$(dirname "$0")"
 export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0}"   # gpu_guard 가 빈 값을 거부한다
 

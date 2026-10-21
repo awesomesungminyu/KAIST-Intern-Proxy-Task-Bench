@@ -1,4 +1,9 @@
-"""G2P seq2seq 베이스라인: Transformer encoder-decoder / LSTM+attention encoder-decoder."""
+"""G2P encoder-decoder registry.
+
+Builder(src_vocab, tgt_vocab, max_len) returns nn.Module:
+forward(src[B,S], tgt_in[B,T]) -> logits[B,T,tgt_vocab]; num_params() -> int.
+PAD/BOS/EOS = 0/1/2. The trainer owns greedy decoding and mode restoration.
+"""
 from __future__ import annotations
 
 import math

@@ -5,7 +5,9 @@ EvoScientist 내부 API나 에이전트 구조에 의존하지 않는다. 기준
 각각 소스 버전이 고정된 별도 체크아웃에서 실행하고, 결과 JSON을 비교한다.
 
 EvoScientist venv와 GPU 학습용 Python은 분리한다. 서버에서 이미 검증한 ML
-환경을 `--python /절대경로/python`으로 지정한다. EvoScientist venv에 torch를
+환경은 태스크별 protocol `runtime`이 선택한다. mqar/mad_tsc는 기존 torch 2.2.2
+인터프리터를 쓰고 나머지는 현재 Python (torch 2.5.1)을 쓴다.
+`--python /절대경로/python`으로 덮어쓸 수 있다. EvoScientist venv에 torch를
 설치하거나 기존 서버 환경을 업그레이드할 필요가 없다.
 
 ## 공통 명령
@@ -53,12 +55,19 @@ seed당 1800초이며, 긴 실험에서는 예산에 맞게 `--timeout`을 지�
 | tomita5 | san_abs, san_mask, lstm | 위와 같음 | 위와 같음 |
 | tomita6 | san_abs, san_mask, lstm | 위와 같음 | 위와 같음 |
 | fflm | transformer, lstm | ID read error rate | 개발용 ID만 평가하며 sparse/dense OOD는 남겨 둠 |
+| ett | linear, transformer, naive | best val_mse (min) | ETTh1, 최대20 epoch/조기 종료, naive epoch0 |
+| scifar | transformer, lstm | best val_accuracy (max) | 10 epoch, budget_limited |
+| sc_raw | transformer, lstm | final val_accuracy (max) | 2048 updates, epoch0, budget_limited |
+| mqar | transformer, linear_attention, gated_linear_attention, gqa2 | best_valid_accuracy (max) | 최대30 epoch, >=0.99 조기 종료, 별도 test 없음 |
+| mad_tsc | MAD recipe 16종 | final val_accuracy (max) | 단일 baseline, upstream test는 개발 데이터 |
+| tier0 | mixer 11종 | 5 proxies + 3 controls | 학습 없음, 지표별 기술통계만 |
 
 숫자의 증감만 보고 자동으로 가설을 채택하지 않는다. `compare`는 기술통계만
 출력한다. 3개 미만 seed는 pilot으로 표시하고, 단일 seed·smoke·시간 제한 종료를
 반복 검증 완료로 취급하지 않는다. 서로 다른 태스크를 하나의 평균 점수로 합치지 않는다.
 현재 인터페이스는 기존 baseline을 실행하거나 등록된 모델 구현을 교체하는 방식이다.
-새 모델 이름을 추가하려면 해당 factory·CLI·프로토콜에 명시적으로 등록한다.
+새 이름은 models.py 레지스트리와 프로토콜 models에 등록한다. CLI는 자동 갱신된다.
+[태스크별 모델 계약과 예제](ADDING_A_MODEL.md)를 따른다.
 
 ## 자산 준비 및 서버에서 재사용
 
@@ -79,7 +88,10 @@ python -m validation check --task zinc --model gine \
 형식언어 태스크는 `third_party/tfl.commit`의 커밋과 패치, 준비된 pickle 데이터가
 필요하다. 기존 `bash setup.sh parity tomita5 tomita6`는 소스만 준비하므로 데이터
 유무를 별도로 확인한다. 데이터 생성법은 해당 upstream 문서를 따른다. 이 서버의
-기존 준비본은 `/workspace/tfl`이며 실제 데이터명은 `Tomita-5`, `Tomita-6`다.
+원본 준비본은 `/workspace/tfl`이며 실제 데이터명은 `Tomita-5`, `Tomita-6`다.
+현재는 고정·패치된 소스를 third_party/tfl에 준비했고 데이터는
+`$PROXY_DATA_ROOT/{parity,tomita5,tomita6}`에 복사했다. --tfl-root는 소스만,
+--data-root는 해당 태스크의 복사 데이터 폴더를 선택한다.
 검증 실행은 별도 staging 폴더에 소스·데이터를 연결하므로 기존 체크포인트를 덮어쓰지 않는다.
 고정 upstream의 LSTM은 GPU 길이 텐서를 `pack_padded_sequence`에 넘기는 문제가
 있다. 검증 runner는 해당 프로세스 안에서 길이 텐서만 CPU로 옮기는 호환 처리를
@@ -144,7 +156,7 @@ artifacts/<experiment>/
 
 비교는 같은 태스크·프로토콜 해시·평가 코드·데이터·환경·예산·seed 집합일 때만
 허용한다. 모델 소스의 차이는 허용하지만 평가/데이터/옵티마이저 변경은 거부한다.
-FFLM에서는 `LSTM`/`model_for`, 자체 태스크에서는 `models*.py`, 형식언어에서는
+FFLM과 자체 태스크/Tier 0에서는 `models*.py`, 형식언어에서는
 `src/components/`가 후보 구조 변경 지점이다. 나머지를 수정하는 연구는 새 프로토콜이 필요하다.
 실행 중 소스나 입력이 바뀌면 결과를 실패로 처리한다.
 
@@ -178,3 +190,27 @@ python -m unittest discover -s tests -v
 따라서 예전 G2P 결과는 v1 기준 결과로 자동 재사용하지 않는다.
 ZINC에는 검증 전용 옵션을 추가했고, FFLM에는 평가 split 선택 옵션을 추가했다.
 기존 직접 실행기의 기본 전체 평가 동작은 유지한다.
+
+## 신규 태스크 실행 계약
+
+[데이터 인벤토리](DATA_INVENTORY.md)의 복사본을 .env로 지정한다. 새 패키지 설치는
+필요하지 않다. MQAR/MAD의 --zoology-root / --mad-root는 고정 checkout을 덮어쓴다.
+
+각 budget_rule은 counter key, full/smoke 예산, 조기 종료 허용/검증 조건, 지표 위치를
+명시한다. 새 native trainer는 history.json 최상위 지표를 기록한다. validation은
+ETT/MQAR의 정당한 조기 종료와 ETT naive(epoch0)를 허용하고 불완전 예산을 거부한다.
+ETT/scifar/sc_raw의 --final_test는 검색 중 전달하지 않으며 test 평가 결과를 거부한다.
+
+MAD는 upstream train.train을 그대로 호출하며 단일 selective-copying baseline만
+실행한다 (공식 sweep 전체가 아님). 모든 모델 seed가 data seed12345 캐시를 쓰도록
+run 내부에 symlink를 만든다. upstream test는 반복 모니터링하므로 개발 지표다.
+MAD 레시피 추가는 상류 layer registry/config 및 패치가 필요하다. 등록된 16종 전체의
+Turing 실행을 보증하지 않는다. SDPA로 kernel_exact=false다.
+
+Tier 0는 outer runner가 seeds 0/1/2를 반복하고 child는 각각 한 번 실행한다.
+full은 d128/4layers/L256/probe128/batch8, smoke는 --quick이다. compare는
+지표 정의(name/direction/role)를 확인하고 지표별 평균/표준편차만 낸다.
+mlp_sal 상수 등 v2의 한계를 프로토콜 limitations에 보존했다.
+
+모델/경로·레지스트리 편입으로 evaluation_sha256이 바뀌었다. 기존 acceptance
+(smoke)와 새 결과를 비교하거나, 보존한 파일럿을 acceptance로 반입하지 않는다.

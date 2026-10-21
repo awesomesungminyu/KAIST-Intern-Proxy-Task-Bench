@@ -1,5 +1,8 @@
 """ZINC-12K 그래프 회귀 베이스라인: GCN(edge feature 무시) / GINE(edge feature 사용).
 
+Builder(num_atom_types, num_bond_types, hidden_dim=None, **model_options) returns
+a PyG Data batch -> prediction[B] regressor with num_params() -> int.
+
 파라미터 예산은 문헌 관례(Dwivedi et al. 2020, ~500K)를 기준으로 hidden_dim을
 잡았다. 실제 파라미터 수는 build_model()이 반환하는 model.num_params()로 확인.
 """

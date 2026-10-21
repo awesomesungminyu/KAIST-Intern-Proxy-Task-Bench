@@ -1,5 +1,7 @@
 """RegBench 베이스라인: 작은 causal Transformer / LSTM.
 
+Builder(vocab_size, max_len): tokens[B,T] -> logits[B,T,V], causal; num_params() -> int.
+
 sm_75(Turing)에서는 FlashAttention-2가 없으므로 PyTorch 기본
 scaled_dot_product_attention(SDPA, math/efficient 커널 자동 선택)만 사용.
 """

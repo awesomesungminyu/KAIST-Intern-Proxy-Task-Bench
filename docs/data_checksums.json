@@ -1,0 +1,2592 @@
+{
+  "root_at_copy": "/data/proxy-task-bench/data",
+  "verification": "All source/destination SHA256 values matched on 2026-10-21; local snapshots, not publisher authentication.",
+  "files": [
+    {
+      "path": "g2p/cmudict.dict",
+      "bytes": 3618488,
+      "sha256": "81917843c7f44ce2b094ac63873c2c7a4cf802040792c455ba3ca406891c3d22",
+      "source": "/workspace/AI4Science_2026summer_archive/smyu/proxy_tasks/g2p/data/cmudict.dict"
+    },
+    {
+      "path": "g2p/test.tsv",
+      "bytes": 177233,
+      "sha256": "21d9d42f141848b8b7643844bc9d1992e22f5959f3e557be0171b2818f680433",
+      "source": "/workspace/AI4Science_2026summer_archive/smyu/proxy_tasks/g2p/data/test.tsv"
+    },
+    {
+      "path": "g2p/train.tsv",
+      "bytes": 3194568,
+      "sha256": "ff68871f1a9ddec87fef0b3827b94f524713f20d618045c5affa055413c59f25",
+      "source": "/workspace/AI4Science_2026summer_archive/smyu/proxy_tasks/g2p/data/train.tsv"
+    },
+    {
+      "path": "g2p/val.tsv",
+      "bytes": 179608,
+      "sha256": "57ea9a9d555f1cde2586456e0c94993c54722bbb1b2f3201a6195e72c56b9feb",
+      "source": "/workspace/AI4Science_2026summer_archive/smyu/proxy_tasks/g2p/data/val.tsv"
+    },
+    {
+      "path": "g2p/vocab.json",
+      "bytes": 1463,
+      "sha256": "470def066d90461f7b0e4efacab856971eeb814b5d9986592ae0cdcb500ec95f",
+      "source": "/workspace/AI4Science_2026summer_archive/smyu/proxy_tasks/g2p/data/vocab.json"
+    },
+    {
+      "path": "zinc/metadata.json",
+      "bytes": 368,
+      "sha256": "5195b7f65146d46ce08717c6e041b1b1c2d9b194d9afde1d8025ca44b33c6c87",
+      "source": "/workspace/AI4Science_2026summer_archive/smyu/proxy_tasks/zinc/data/metadata.json"
+    },
+    {
+      "path": "zinc/raw/atom_dict.pickle",
+      "bytes": 765,
+      "sha256": "c4c8e8625c9773bb725ec2771552eccb2b6cf6550c8fef0f6139627aa8fe51c6",
+      "source": "/workspace/AI4Science_2026summer_archive/smyu/proxy_tasks/zinc/data/raw/atom_dict.pickle"
+    },
+    {
+      "path": "zinc/raw/bond_dict.pickle",
+      "bytes": 239,
+      "sha256": "623359be444efd15db6eec412ea9ba9a12bf1afec57305f9f5abd4b4a52c541a",
+      "source": "/workspace/AI4Science_2026summer_archive/smyu/proxy_tasks/zinc/data/raw/bond_dict.pickle"
+    },
+    {
+      "path": "zinc/raw/test.index",
+      "bytes": 4782,
+      "sha256": "6aa50d98976044fb36089afef5b4c991b429ca1c8e009d33a0319e42a2d9b525",
+      "source": "/workspace/AI4Science_2026summer_archive/smyu/proxy_tasks/zinc/data/raw/test.index"
+    },
+    {
+      "path": "zinc/raw/test.pickle",
+      "bytes": 7690132,
+      "sha256": "33c7d2bcf6332be422aaea4baaf056e36f2c80eb6f7d0f5d68a8264d1b94e65b",
+      "source": "/workspace/AI4Science_2026summer_archive/smyu/proxy_tasks/zinc/data/raw/test.pickle"
+    },
+    {
+      "path": "zinc/raw/train.index",
+      "bytes": 65110,
+      "sha256": "575d6acd72ac207a95947e2bdd16411ef6fc3faa88c2f55a2c496ea43022a6d8",
+      "source": "/workspace/AI4Science_2026summer_archive/smyu/proxy_tasks/zinc/data/raw/train.index"
+    },
+    {
+      "path": "zinc/raw/train.pickle",
+      "bytes": 338943042,
+      "sha256": "9c76df5a1ab90aac200df22902893827168aeced3df87aab4b6bee100235d7f2",
+      "source": "/workspace/AI4Science_2026summer_archive/smyu/proxy_tasks/zinc/data/raw/train.pickle"
+    },
+    {
+      "path": "zinc/raw/val.index",
+      "bytes": 5541,
+      "sha256": "fe48c38157f0d38e7fc441903a143392eda080511a79e8fb8f60f5c1b0a9c164",
+      "source": "/workspace/AI4Science_2026summer_archive/smyu/proxy_tasks/zinc/data/raw/val.index"
+    },
+    {
+      "path": "zinc/raw/val.pickle",
+      "bytes": 37634758,
+      "sha256": "4c6015ec483224c55593c862b0334ae4b64e14679eab041c0655c6a7b603e47a",
+      "source": "/workspace/AI4Science_2026summer_archive/smyu/proxy_tasks/zinc/data/raw/val.pickle"
+    },
+    {
+      "path": "zinc/subset/processed/pre_filter.pt",
+      "bytes": 864,
+      "sha256": "bed90159f346b7ee0fa80e1d287e0ebe46264111c1e928ef341d926aae6a075c",
+      "source": "/workspace/AI4Science_2026summer_archive/smyu/proxy_tasks/zinc/data/subset/processed/pre_filter.pt"
+    },
+    {
+      "path": "zinc/subset/processed/pre_transform.pt",
+      "bytes": 864,
+      "sha256": "bed90159f346b7ee0fa80e1d287e0ebe46264111c1e928ef341d926aae6a075c",
+      "source": "/workspace/AI4Science_2026summer_archive/smyu/proxy_tasks/zinc/data/subset/processed/pre_transform.pt"
+    },
+    {
+      "path": "zinc/subset/processed/test.pt",
+      "bytes": 1417024,
+      "sha256": "bd7a1ceb5b4ec126160bc095fb2bf28c0019a736c5575afa3ed11fb844a3aced",
+      "source": "/workspace/AI4Science_2026summer_archive/smyu/proxy_tasks/zinc/data/subset/processed/test.pt"
+    },
+    {
+      "path": "zinc/subset/processed/train.pt",
+      "bytes": 14181504,
+      "sha256": "e0f1837b4a19714fcf3a5c6727a30c23f57c3398c8987cab2983214a0e76955b",
+      "source": "/workspace/AI4Science_2026summer_archive/smyu/proxy_tasks/zinc/data/subset/processed/train.pt"
+    },
+    {
+      "path": "zinc/subset/processed/val.pt",
+      "bytes": 1416128,
+      "sha256": "3f343e47281b85a52bae4b996beb8a230c3d9146d39a45f443bdc36e7e7ab809",
+      "source": "/workspace/AI4Science_2026summer_archive/smyu/proxy_tasks/zinc/data/subset/processed/val.pt"
+    },
+    {
+      "path": "ett/ETTh1.csv",
+      "bytes": 2589657,
+      "sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+      "source": "/workspace/exp/2026-10-16-quick-suite/data/ETTh1.csv"
+    },
+    {
+      "path": "ett/ETTm1.csv",
+      "bytes": 10360719,
+      "sha256": "6ce1759b1a18e3328421d5d75fadcb316c449fcd7cec32820c8dafda71986c9e",
+      "source": "/workspace/exp/2026-10-16-quick-suite/data/ETTm1.csv"
+    },
+    {
+      "path": "scifar/cifar/cifar-10-batches-py/batches.meta",
+      "bytes": 158,
+      "sha256": "f962466ef690d46b226450fb9aadc74ba4bc64a76aa526b5827fe4bc5c7125cb",
+      "source": "/workspace/exp/2026-10-16-quick-suite/data/cifar/cifar-10-batches-py/batches.meta"
+    },
+    {
+      "path": "scifar/cifar/cifar-10-batches-py/data_batch_1",
+      "bytes": 31035704,
+      "sha256": "54636561a3ce25bd3e19253c6b0d8538147b0ae398331ac4a2d86c6d987368cd",
+      "source": "/workspace/exp/2026-10-16-quick-suite/data/cifar/cifar-10-batches-py/data_batch_1"
+    },
+    {
+      "path": "scifar/cifar/cifar-10-batches-py/data_batch_2",
+      "bytes": 31035320,
+      "sha256": "766b2cef9fbc745cf056b3152224f7cf77163b330ea9a15f9392beb8b89bc5a8",
+      "source": "/workspace/exp/2026-10-16-quick-suite/data/cifar/cifar-10-batches-py/data_batch_2"
+    },
+    {
+      "path": "scifar/cifar/cifar-10-batches-py/data_batch_3",
+      "bytes": 31035999,
+      "sha256": "0f00d98ebfb30b3ec0ad19f9756dc2630b89003e10525f5e148445e82aa6a1f9",
+      "source": "/workspace/exp/2026-10-16-quick-suite/data/cifar/cifar-10-batches-py/data_batch_3"
+    },
+    {
+      "path": "scifar/cifar/cifar-10-batches-py/data_batch_4",
+      "bytes": 31035696,
+      "sha256": "3f7bb240661948b8f4d53e36ec720d8306f5668bd0071dcb4e6c947f78e9682b",
+      "source": "/workspace/exp/2026-10-16-quick-suite/data/cifar/cifar-10-batches-py/data_batch_4"
+    },
+    {
+      "path": "scifar/cifar/cifar-10-batches-py/data_batch_5",
+      "bytes": 31035623,
+      "sha256": "d91802434d8376bbaeeadf58a737e3a1b12ac839077e931237e0dcd43adcb154",
+      "source": "/workspace/exp/2026-10-16-quick-suite/data/cifar/cifar-10-batches-py/data_batch_5"
+    },
+    {
+      "path": "scifar/cifar/cifar-10-batches-py/readme.html",
+      "bytes": 88,
+      "sha256": "4d1c3fb199d6a183ae03f5162b469d7bc04edf2fad9547bd5f224271d52f98e5",
+      "source": "/workspace/exp/2026-10-16-quick-suite/data/cifar/cifar-10-batches-py/readme.html"
+    },
+    {
+      "path": "scifar/cifar/cifar-10-batches-py/test_batch",
+      "bytes": 31035526,
+      "sha256": "f53d8d457504f7cff4ea9e021afcf0e0ad8e24a91f3fc42091b8adef61157831",
+      "source": "/workspace/exp/2026-10-16-quick-suite/data/cifar/cifar-10-batches-py/test_batch"
+    },
+    {
+      "path": "scifar/cifar/cifar-10-python.tar.gz",
+      "bytes": 170498071,
+      "sha256": "6d958be074577803d12ecdefd02955f39262c83c16fe9348329d7fe0b5c001ce",
+      "source": "/workspace/exp/2026-10-16-quick-suite/data/cifar/cifar-10-python.tar.gz"
+    },
+    {
+      "path": "sc_raw/testing.json",
+      "bytes": 291,
+      "sha256": "5103c0190f31ba3e9b58f61c2068bd054bfd04658e0b11cd2a912f4535bdcd36",
+      "source": "/workspace/exp/2026-10-16-scraw/raw_cache_v1/testing.json"
+    },
+    {
+      "path": "sc_raw/testing_x.npy",
+      "bytes": 312832128,
+      "sha256": "75948fec068c8c3709252e59c2c01efd057050d12b7d1436ab5875f3cb3fdf7a",
+      "source": "/workspace/exp/2026-10-16-scraw/raw_cache_v1/testing_x.npy"
+    },
+    {
+      "path": "sc_raw/testing_y.npy",
+      "bytes": 39232,
+      "sha256": "6e3a2aad3717c6245840d2091612250655ec1d97e2dc7d97556b3b775a532141",
+      "source": "/workspace/exp/2026-10-16-scraw/raw_cache_v1/testing_y.npy"
+    },
+    {
+      "path": "sc_raw/training.json",
+      "bytes": 292,
+      "sha256": "9c1a185537f787a117a7414840d6a60d5906b8c7d6f4a73c0b89c313337b15eb",
+      "source": "/workspace/exp/2026-10-16-scraw/raw_cache_v1/training.json"
+    },
+    {
+      "path": "sc_raw/training_x.npy",
+      "bytes": 2363072128,
+      "sha256": "2c5ff6f0a9e0ac883de101b0a2272a8636f90001452aa99adeed6ad1eb846c5d",
+      "source": "/workspace/exp/2026-10-16-scraw/raw_cache_v1/training_x.npy"
+    },
+    {
+      "path": "sc_raw/training_y.npy",
+      "bytes": 295512,
+      "sha256": "61a1aeafe92dc21395eee4cf0c32c69d737002373dfa10646f10728fb7d04dcd",
+      "source": "/workspace/exp/2026-10-16-scraw/raw_cache_v1/training_y.npy"
+    },
+    {
+      "path": "sc_raw/validation.json",
+      "bytes": 291,
+      "sha256": "b078a0da3e6b787c525e672b408f561f9cc08b114486b9621131f10d64b32b73",
+      "source": "/workspace/exp/2026-10-16-scraw/raw_cache_v1/validation.json"
+    },
+    {
+      "path": "sc_raw/validation_x.npy",
+      "bytes": 284352128,
+      "sha256": "ec10d3aaead02600bf2f3f2695a75ec29ac9d915ad1d1e075844b76833e20077",
+      "source": "/workspace/exp/2026-10-16-scraw/raw_cache_v1/validation_x.npy"
+    },
+    {
+      "path": "sc_raw/validation_y.npy",
+      "bytes": 35672,
+      "sha256": "a05438e1cc7daedddf843443be55539c6946798e4029160c96617687f9c1d9ea",
+      "source": "/workspace/exp/2026-10-16-scraw/raw_cache_v1/validation_y.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-128_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1300608,
+      "sha256": "fd3a307ea2ed74f1fe82ddb0505e0b796e0f6e0daa310210643f6af84ea2aca2",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-128_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-128_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1300608,
+      "sha256": "055f9b3628b2128fd4399ba8fb4b4c9f34fe0b43ef363afe74322d2cef2c3198",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-128_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-128_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13004928,
+      "sha256": "240be3676ac1009e95872aa851254429149539d21040a932a8eeec4b362f75c0",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-128_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-128_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13004928,
+      "sha256": "9febd1dabc819a6293896a16a0142dedf79e86a2b60541285483d1e51268e3b1",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-128_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 10475648,
+      "sha256": "15c4ca753603d1c4c56b615762a811f5cfdc5f404967e014b9311164bfb01742",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 10475648,
+      "sha256": "1aad1cde64467ccb35c63ecbdf0695e18eb23d9abd8eba85dc1362b735a872dc",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 104755328,
+      "sha256": "fc56e13c35dfdf487f6ab38443a263b2c071b0899b41960c9fc2e95b9e45f0e6",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 104755328,
+      "sha256": "74489cdb8357db1c259098bb2afaa19a818582c23f777fc7f923d7907bfa5008",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1300608,
+      "sha256": "a6109e8167c6bce7783ee7c664943802ce65ccc3f77512c53046fba58f0642fc",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1300608,
+      "sha256": "0ce1eba568e4816368d745a510d82889c96b944093276486bbd4e2bd83563b69",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13004928,
+      "sha256": "151d18f53dee671459149b5d5e98f0f76eba9902dd71a84b4f89b540b6d4b8ff",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13004928,
+      "sha256": "bd5696798a8abf86c3e337b58f4695197018e5900d6d56e49f4c424d3be31092",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1300608,
+      "sha256": "736974c5751631ba8dd208c41485361c07ea8e3a20e213df35dea73aa3efc110",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1300608,
+      "sha256": "c3e67d58c7b2acf09a2a6a38c5b67e0dfdc991ba314878ad3b0f76ccc4e61a5e",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 1625728,
+      "sha256": "06a84fda4b8aac7757f36894fbb208114dc6deecc586b03cc553466dcc323c94",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 1625728,
+      "sha256": "0c9bbce5aac116ee887186ea21ee03945ecc121c23b1877a2a5246bd4cf6686f",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1300608,
+      "sha256": "8281652070dc4887138f140baa3e45344d8c0c9a332d21ebd70bbb5c28048339",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1300608,
+      "sha256": "699762576baa353aba8929cf60899c7faa67a45950a86d92f4b83a0bcba9eaed",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 3251328,
+      "sha256": "a63ff39c08e325cd7c78ad177a4a8e0698f29bbf2d8b4a5907b7f26a5fc5ae9c",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 3251328,
+      "sha256": "b250bec01215de2bdc13bf30939daa464ebf4a937cc5f80715687ea60127cc9d",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1300608,
+      "sha256": "904498f15ca659cbf7b70ffdff68418370afd70cb103f0827455682fe34bc426",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1300608,
+      "sha256": "5ac04e7f24bece9746c1f064985db1a0b1a3eba8b89f6e5e8b31a7c10213caf8",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 6502528,
+      "sha256": "c3aae13845edb9ae45adeef1eaa554f67ebb66e63d6e9e1d05a55360c4c89cd2",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 6502528,
+      "sha256": "e8b24436a866156a17de9f86c4a4c9b9dacc1812905a5b026d3218aaab5adeb8",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1300608,
+      "sha256": "d03398c2139c060cafb6117dcad74c9250f47a296aa72ff4f3d2b212c1cfe335",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1300608,
+      "sha256": "04eb29c08ffa8b6abf391ca32be0ee029d88d2194cf6168a95ee355839574af9",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 812928,
+      "sha256": "5ae4207d2765051814bd217fc535e0fbbcdc874aa61d412671f8eca95859f184",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 812928,
+      "sha256": "b42ec1bfe2ce227dd57ba9724a350e78648b8a0ad98fc01b7e872e0b7cea11d1",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 20961408,
+      "sha256": "284a00cb815afb49ec5411f3c36277ebb9041fc2dec8426b1f8f7354bd279417",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 20961408,
+      "sha256": "ff5c4327c66e2ab0482113eb1f306146d257f1046170f80cef850cfc4c7c8f0e",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 209612928,
+      "sha256": "1eec9f0d210b1bbd63eeceb49081a43962e3c05d3c69480cc9961abe248e0ade",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 209612928,
+      "sha256": "c6c6ab6ea24895c7b3ecb6166a4be10446842c5ebd647f2a492583bfcc5757fd",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 2611328,
+      "sha256": "e65998869369cc22d443d7e4b638d55992a3c4ed64bd25dd0ebe85d4c8b93e04",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 2611328,
+      "sha256": "41c22a7d34945f386d04f1a79508f9fb321d53f3dbf6fe7d1117a65b093043fe",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 26112128,
+      "sha256": "863b3bc85480f1044d6f04de6f754c6a6df153eddfa920b0b88539435515eb7d",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 26112128,
+      "sha256": "2b189d788c8ac2e59e6b2a6fed781171c5721a16f5f0b6430f2fbccddf6c96e7",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 5232768,
+      "sha256": "dcfbbd93a1ee05d3a53273d7171e97e79e477f95c3a2bc1aa6d6cc589a99a729",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 5232768,
+      "sha256": "e76ec1fb105a1099b01de2ba1d8f37411a277b07df35e6587f26fa2f592e16e5",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 52326528,
+      "sha256": "f776f6f01d3298136c7cadf3025f255b351d6f845c660fd8121e941385e7bdcf",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-16_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 52326528,
+      "sha256": "80efbcb75e3f0bada8e7da1018334447853fba34042bc579ad37ea069e382ca6",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-16_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-256_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1300608,
+      "sha256": "10b1b630e9e5878e8675ae94e4dccd772ed85335e19ddfbd4da4689338407e65",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-256_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-256_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1300608,
+      "sha256": "f26fc5ac9a24dc852627e8f80a40f6f52cc25890e7cd239f4942506b3acc28c5",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-256_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-256_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13004928,
+      "sha256": "99841dbbf0e7b64b6e4f9abf76f81c31cc00da5b52904c9866e9b89763107e86",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-256_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-256_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13004928,
+      "sha256": "d119d5867fa35942681150ca9bd5f19fe30474cd49e028d0876d03f79a90c69f",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-256_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1300608,
+      "sha256": "7ef2f0ff94520c51c27456c5d11fe5df13de80619ca81e0d4bd9ca8df95b556a",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1300608,
+      "sha256": "86bbbc48052d12aae9403a1e7db0c7aa95306ce509ecc02e4958ac71f4520e4d",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13004928,
+      "sha256": "a4a13e002896be9ece5b3b953657840b226b2318b4ebb650829a22c47ef30154",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13004928,
+      "sha256": "9bde0bb769c59d84ff18c416543c8f0a9a7d88d7e640db41d2fed17a8acbab23",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-64_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1300608,
+      "sha256": "8e44693d0ceaca249d263a9c79791a4929468a9595aac8ae1ecb857d7045de43",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-64_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-64_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1300608,
+      "sha256": "979a64e61b59e70047d468e1b4b02a14d34c5217b2ba5cd2e1f4bb6cf4e15752",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-64_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-64_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13004928,
+      "sha256": "01239355fa98494672004af4b9ffdbd7900a4a477c9b44e8d7f1a53e6ccbb9a6",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-64_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-CR_vs-64_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13004928,
+      "sha256": "84c26ee786d984df9396fe5931a29a1f3c3cc41196645a0833b8ba68b574908b",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-CR_vs-64_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-128_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 327808,
+      "sha256": "010f66b512f4c51fa444070f8d92c8bd0dccd6bf8c7070dedba8a947a197791c",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-128_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-128_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 327808,
+      "sha256": "010f66b512f4c51fa444070f8d92c8bd0dccd6bf8c7070dedba8a947a197791c",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-128_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-128_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 3276928,
+      "sha256": "05f914bb4af601a15d606fef0f12c6c33d85a489984ff3144c42eabef1174446",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-128_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-128_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 3276928,
+      "sha256": "05f914bb4af601a15d606fef0f12c6c33d85a489984ff3144c42eabef1174446",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-128_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "7b8b1445fff73768af2cbd5aa3354f067a1c55b2343cc90cd36c7ab3d1608169",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "7b8b1445fff73768af2cbd5aa3354f067a1c55b2343cc90cd36c7ab3d1608169",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13107328,
+      "sha256": "8f50022dd4445b6e1555672022e17391edf1cb78b6e87c97197692c5eb2a2b56",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13107328,
+      "sha256": "8f50022dd4445b6e1555672022e17391edf1cb78b6e87c97197692c5eb2a2b56",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 2621568,
+      "sha256": "0ee54607686b901d79824a7dabe0beba2be9570ac7d55d4dfd31beeeea3e07f2",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 2621568,
+      "sha256": "0ee54607686b901d79824a7dabe0beba2be9570ac7d55d4dfd31beeeea3e07f2",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 26214528,
+      "sha256": "62a92256c6c5caa6014b1281f530c2da4977f62ac74f1135dd7a83a47e41573a",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 26214528,
+      "sha256": "62a92256c6c5caa6014b1281f530c2da4977f62ac74f1135dd7a83a47e41573a",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 327808,
+      "sha256": "ea52d5acd0c68ec67f46f633270e761d90b9312d6420ec85be598097c07cf249",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 327808,
+      "sha256": "ea52d5acd0c68ec67f46f633270e761d90b9312d6420ec85be598097c07cf249",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 3276928,
+      "sha256": "7cfe4eb81fe3c39499cd02a78791a374036c8ca517dd28d26ee6f9bada5dda37",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 3276928,
+      "sha256": "7cfe4eb81fe3c39499cd02a78791a374036c8ca517dd28d26ee6f9bada5dda37",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-32_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 327808,
+      "sha256": "2721b69ba98f6fcc42a4c373968379998537ebbb851399f0a9d0f46a15e9607e",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-32_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-32_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 327808,
+      "sha256": "2721b69ba98f6fcc42a4c373968379998537ebbb851399f0a9d0f46a15e9607e",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-32_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-32_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 409728,
+      "sha256": "434f0ff49055acacf0d45d3d00c5d1e9d715f73d9492abc0e9749819e9173b3b",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-32_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-32_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 409728,
+      "sha256": "434f0ff49055acacf0d45d3d00c5d1e9d715f73d9492abc0e9749819e9173b3b",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-32_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-32_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 327808,
+      "sha256": "fe409798e3b1eed5523732bdd09b6d3e9968725f17da9d5573a43a3b7cc9d34a",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-32_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-32_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 327808,
+      "sha256": "fe409798e3b1eed5523732bdd09b6d3e9968725f17da9d5573a43a3b7cc9d34a",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-32_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-32_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 819328,
+      "sha256": "80719a07bbcc36d4ca5a64edc1b3d678389dd590257a4dc6e93055aab764ad51",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-32_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-32_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 819328,
+      "sha256": "80719a07bbcc36d4ca5a64edc1b3d678389dd590257a4dc6e93055aab764ad51",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-32_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-32_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 327808,
+      "sha256": "fc66c02f20faf3ef8a47dd70c9862deccec5e2fb19f0b3045e80abd5e4ea6875",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-32_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-32_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 327808,
+      "sha256": "fc66c02f20faf3ef8a47dd70c9862deccec5e2fb19f0b3045e80abd5e4ea6875",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-32_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-32_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 1638528,
+      "sha256": "9852025af0ce04f0824b63d3a702a832ba89b735d15cf59622172ca13f25809d",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-32_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-32_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 1638528,
+      "sha256": "9852025af0ce04f0824b63d3a702a832ba89b735d15cf59622172ca13f25809d",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-32_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-32_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 327808,
+      "sha256": "b46aa3318df909417f4c65b5312c6dc1eb974fe41eae583df9d5ce246ef51269",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-32_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-32_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 327808,
+      "sha256": "b46aa3318df909417f4c65b5312c6dc1eb974fe41eae583df9d5ce246ef51269",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-32_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-32_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 204928,
+      "sha256": "512526f3c2a7723209705716ab91510314d791ec8c944e0e8c7b25607edf2517",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-32_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-32_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 204928,
+      "sha256": "512526f3c2a7723209705716ab91510314d791ec8c944e0e8c7b25607edf2517",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-32_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-64_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 655488,
+      "sha256": "9dd5c530ba80b7a183841871fcf0c6e939e3f1331e43bdc6741fd9251c0a013a",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-64_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-64_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 655488,
+      "sha256": "9dd5c530ba80b7a183841871fcf0c6e939e3f1331e43bdc6741fd9251c0a013a",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-64_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-64_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 6553728,
+      "sha256": "34bbdf69c1e4551a4cb6f00cd9a856b62455b76aaf4208bc8ac0c97c03f92f72",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-64_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-16_sl-64_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 6553728,
+      "sha256": "34bbdf69c1e4551a4cb6f00cd9a856b62455b76aaf4208bc8ac0c97c03f92f72",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-16_sl-64_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-32_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 327808,
+      "sha256": "38fbb611e39d70d63b5378209f3fa48d64f3c4ae5e7541c8f3d400515cb69181",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-32_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-32_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 327808,
+      "sha256": "38fbb611e39d70d63b5378209f3fa48d64f3c4ae5e7541c8f3d400515cb69181",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-32_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-32_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 3276928,
+      "sha256": "eec2caeb4c85a087475bcfa0e1854462f0f291f7a744b9eb1f0e3de765c14f9a",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-32_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-32_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 3276928,
+      "sha256": "eec2caeb4c85a087475bcfa0e1854462f0f291f7a744b9eb1f0e3de765c14f9a",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-32_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-64_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 327808,
+      "sha256": "32be9a71d36b215c9d1310d3e330c32f226c546ff22a1f3da5c5d57c86d83740",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-64_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-64_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 327808,
+      "sha256": "32be9a71d36b215c9d1310d3e330c32f226c546ff22a1f3da5c5d57c86d83740",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-64_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-64_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 3276928,
+      "sha256": "fa7abdddea2e1d4bff9c8c5098097b5b38c0b7c5bfd2d1ebfdc2ff4e6392abc9",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-64_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-C_vs-64_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 3276928,
+      "sha256": "fa7abdddea2e1d4bff9c8c5098097b5b38c0b7c5bfd2d1ebfdc2ff4e6392abc9",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-C_vs-64_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-128_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "5534b87e47b5cd790b39e743200dd74e9c3404f0a813db815b3fb5b1f3559573",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-128_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-128_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "cdfb32c5ed901a0582cbdd2be1a36f1abf0f69acab346bb7a71564fc643a2496",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-128_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-128_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13107328,
+      "sha256": "ca65ac4784949ea7c8a3a9b24702004d00a2d04cde27b88719fb8aa64e260a5f",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-128_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-128_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13107328,
+      "sha256": "014734cc20b6e111137492a35ef83a948f9699d5607a02e79faf7b52ee6ed3b3",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-128_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-1024_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 10485888,
+      "sha256": "5890efc4880b9f515fbb75d960c33b6730d1e7eb0e875ff1ad35bada1801ccfe",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-1024_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-1024_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 10485888,
+      "sha256": "ae304bf26e4a36ca6a129d6e7b7c0044829374d1f2b98a810cef98eb8bc2bc8e",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-1024_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-1024_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 104857728,
+      "sha256": "1998edb9785a5db6e1646c04a2af4a552741e18b212e5e2c772044471910ea4c",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-1024_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-1024_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 104857728,
+      "sha256": "07f7d13b8a9dd9ed307e744e5bd9f990210b74cccd6bb8f62388203bcb0114bc",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-1024_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "1c9d1761e05ff6bfab3ac08f2dc87c759f52e5c156adaa07c08280dd36fd2a00",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "3800bc8d8c32052eb368fc6689f981f36938cc6753e6330f3bdd3a82528cb1eb",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13107328,
+      "sha256": "46a0406bc19da2a4e80137bd5be8a6edf253d9a7e0e0d75e080d4e798b6a9b4d",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13107328,
+      "sha256": "f64a40ca772f25d0e5d4544d6c93c4d764bfc7812ce0e7fd5056bc56e2dbed17",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-128_ntr-1600_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "c4cf25d6cb13acb84279263f571a6de9d297f2a23ea890786cbdc15bd497b1ce",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-128_ntr-1600_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-128_ntr-1600_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "b35809df5565d7aef74d278f26e16af1798153bd1b0fec14103d8260e13dc4c2",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-128_ntr-1600_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-128_ntr-1600_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 1638528,
+      "sha256": "cfd52324d6d78bf55f479df474b3c26988e98b492c9062e41af9f93c13b01797",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-128_ntr-1600_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-128_ntr-1600_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 1638528,
+      "sha256": "cc7745cf2e86a635f5917a9559f77efc6a0118dedf01070022ad64e398578148",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-128_ntr-1600_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-128_ntr-3200_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "46f2e33dcc3752b19e06853cb53a587907b4133f10d3f8f7c68e2c1b5088b075",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-128_ntr-3200_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-128_ntr-3200_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "5d0d1f315c3942b371f6c54308afaee4e4c3eab0557cfe0211aae353cb5682b7",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-128_ntr-3200_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-128_ntr-3200_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 3276928,
+      "sha256": "90aeff09946ce7f5d843953de982f448c1cf3e23059b5797f5a6cba28d5bd49d",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-128_ntr-3200_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-128_ntr-3200_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 3276928,
+      "sha256": "5c8ded348ae293bf4add9a9fada5e4450e75d1a5decdc853a47194e1a4b00f24",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-128_ntr-3200_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-128_ntr-6400_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "f8483c55037c3b6b4e73e6f036e182e1f172866bd43c271940dfe386ac17337c",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-128_ntr-6400_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-128_ntr-6400_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "df4cd6d5b50bbc50b087c3077d3beb86d04f6dc9fdbb38f1cfc847a56d03200f",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-128_ntr-6400_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-128_ntr-6400_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 6553728,
+      "sha256": "d1401bc4b1492d776380866d9ebf62aa198e45398a567f5205a7ec5c519ee006",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-128_ntr-6400_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-128_ntr-6400_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 6553728,
+      "sha256": "bceead8d493f7fbabf3cf0e956f38d2baa1ac55aeae3432e4f18cb0c4d4acc5e",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-128_ntr-6400_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-128_ntr-800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "635e764e85d97e633db335cd3afd3f0fb5372cd3668f76cbb8d0c4168e296a4c",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-128_ntr-800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-128_ntr-800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "45dc618c1a7afecfd718b6128b0576dd4dacea11acf863984f50dc9cf3d6d599",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-128_ntr-800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-128_ntr-800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 819328,
+      "sha256": "d070f7922f55401b1e3800520f97e24a0d1615bae2e0568c39f7f9dea3d18401",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-128_ntr-800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-128_ntr-800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 819328,
+      "sha256": "8190e9595fadd83afbfb880f4ae3627d4cb2e49f984e45ac9af8ca1ae2b4b497",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-128_ntr-800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-256_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 2621568,
+      "sha256": "98ddcf500e538cf3fbc39a2d0cbe1725ee24838ba63f1ec03ae9c259ff3cfb2a",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-256_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-256_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 2621568,
+      "sha256": "8123ed8c6e720c27545d372e605f0d4566f107d1442515b640983e8d1232ada6",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-256_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-256_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 26214528,
+      "sha256": "461c9e3ac639fd4616066a25344d76b04f544146bded2a3948ba838747f4c9ff",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-256_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-256_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 26214528,
+      "sha256": "755a4f40e9843e9cc95b79903aa44aed9851783239432c6b144fd828ee746fd5",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-256_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-512_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 5243008,
+      "sha256": "97090792fcd517fa96137cabe10827a5d71b1d48ad1bcc8608ef3397dae8cffd",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-512_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-512_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 5243008,
+      "sha256": "68df34e4819a86308c5878410b63ba826c1b799f7f5f0f31d661b52aa753e4bf",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-512_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-512_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 52428928,
+      "sha256": "610194527660aeab21d1f1caf2245afb715b03e7b86517ff678962a5339776c4",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-512_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-16_sl-512_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 52428928,
+      "sha256": "fcb77155c3b4df643c9708b684bda02dadc28c412842667beee860f734517d73",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-16_sl-512_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-32_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "3930498ec4880f294d8136369aab0bd9d32e7b8dafec97b6e66d468ba76e02b6",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-32_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-32_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "0a9ba4fcb3a65aed0feb17963bd245b47e7ce4dc6e3930624620b52e6363463b",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-32_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-32_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13107328,
+      "sha256": "0ec36119455707a31038b53058a12d90202418c754be44cd323b34f1e726f6ec",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-32_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-32_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13107328,
+      "sha256": "0c7607a3d0202e2afb6c4f44977ce4138041086c901181027855b1215d41591d",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-32_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-64_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "89d86e33d2e41fe2a973d3b9f3989fdaaedd7935a275d097990be13898cb302b",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-64_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-64_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "e2da0da6cf1061210db68dfa072dc3dc7016b76d5db7a0fdafa5cc451681cb95",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-64_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-64_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13107328,
+      "sha256": "d011a4747747d08463f8bed959947ab0b76be901ac23c8c6e2b9a07c23c206af",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-64_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-FR_vs-64_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13107328,
+      "sha256": "cd7211b23220a6e4b66e3f8fb5d95982550a5c7b8e7ed16dcdc6b3b7186f6f6a",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-FR_vs-64_sl-128_ntr-12800_nte-1280_km-3_vm-3_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-1024_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 327808,
+      "sha256": "b95858f1b3dffcc594bdb1eb96b8b17145e19aca4b33294e4e264d387537accc",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-1024_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-1024_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 327808,
+      "sha256": "272fabc2d96859b2d3c480eae438a4b74cdba241fb847ddbdf5bdd5c32788762",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-1024_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-1024_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 65664,
+      "sha256": "a313166391f1d71d118db4668eb52c10aeb5ee122bd09349e4b5eac2e93a3fdb",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-1024_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-1024_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 65664,
+      "sha256": "9cf12908c675c92215c3312f81cd764029e5fa24e149e3f91907bd7e79169b86",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-1024_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-2048_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 327808,
+      "sha256": "f6b6de8fceb93f70f5639d0fe665428833733a96c5caad60df75b9d2f4f5fc8a",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-2048_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-2048_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 327808,
+      "sha256": "2b9ae0aa1b745e8359ffaafea6da4cd19a90faf3a68f492f5e7020464099dd28",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-2048_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-2048_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 65664,
+      "sha256": "cfdd67942d27915ac55bd0eab41429f1c367d5947706d82d65c692a2c2d7566a",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-2048_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-2048_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 65664,
+      "sha256": "7e6e06d849b76d7c494ea5035e3d577d21e92a4a82959f430e039bb03e422787",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-2048_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-256_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 327808,
+      "sha256": "0b2c3c834f82399dcc53597f476cdcc3d4b9d4f6ed8934c528a0332197fda4a1",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-256_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-256_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 327808,
+      "sha256": "120bdfe9f8d0872f6b99f7a2f5deba25f6cfb728c541b7c3d8236bd38bcb6754",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-256_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-256_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 65664,
+      "sha256": "ebc532973990f5f916b9187e6d3e750ec0e52b9370484bde609ccfdee2130a18",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-256_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-256_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 65664,
+      "sha256": "c775ef2a2efda9d21de2916107bcfb6ace5ef4593aba79753a3ca875435458c4",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-256_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-4096_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 327808,
+      "sha256": "85560c2d4531c2ba3e1272c1a6a68e13904bb17a89abba4a85c2280944d19557",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-4096_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-4096_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 327808,
+      "sha256": "d412924bd4717673b55db15d7ee71094eab670139a39e9afa7b2c8cb6ff873bd",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-4096_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-4096_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 65664,
+      "sha256": "f8d31fc00778e52f1fa99eef74ee5f86f3910af5cd8c9316de7dd9dc45417865",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-4096_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-4096_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 65664,
+      "sha256": "1558d33b3d3af95fe525486779e66909fac61a3e71c1e8d481144c99ca56035d",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-4096_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-512_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 327808,
+      "sha256": "ac5a12afd33519d9dd2310402685e3906dfccc3fc66a7e2551e73792cc908aed",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-512_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-512_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 327808,
+      "sha256": "670b34caf2e1b5a8ca7f5ff969b644372ce6bb444e3422a9e3b76cb732bdb375",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-512_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-512_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 65664,
+      "sha256": "cd330300cbd9eaf8a3949c0552d05d66b69eaad63ea63023561e5e80e819e448",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-512_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-512_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 65664,
+      "sha256": "4508c0f52cc39d719c795f7bb108ca5e68320d65afabaf06a2617bb41bb980b8",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-512_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-8192_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 327808,
+      "sha256": "4b3efbb85b203db1e8ac275265fe033b7651d480d43ae5417778ee0f6e2a8a30",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-8192_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-8192_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy",
+      "bytes": 327808,
+      "sha256": "f8091933918a53f7171f7a66262fb1d8386ad57e0360b9804b92bcd0920670bc",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-8192_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-8192_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 65664,
+      "sha256": "787e0ec9910a098f0ca3acb8b46791ca753247634d2f74ffb7f1dc1c625f6293",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-8192_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-M_vs-8192_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy",
+      "bytes": 65664,
+      "sha256": "9410328e7e0f71589ee401daedffba2706831a2662037dd84282903cd853540d",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-M_vs-8192_sl-32_ntr-256_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-144_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1300608,
+      "sha256": "ce804f2916f3d18af3ab5f74f34db18b74ac292f82af853c030be0af0f556743",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-144_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-144_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1300608,
+      "sha256": "f425316f3e1b8a2c3509448896720e8a9594024ef760fe37dcd1cd2d3357e9e3",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-144_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-144_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13004928,
+      "sha256": "76e9a61d6ea8b043e55a8a16fc84e90744c82d32ee5a82f4e8cc30cfd56aef42",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-144_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-144_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13004928,
+      "sha256": "5c50c5e5d15f5acc4f7da4ef2b15d736accd7b452a1aba3bc60777b4207a2f30",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-144_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-272_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1300608,
+      "sha256": "d11ceeb097a5536133ece0598b8f77289efb8d863e14556e283f85f9474429fc",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-272_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-272_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1300608,
+      "sha256": "ff4132953f542e5a2bce704128f908116416de37b8f2ab2e3c1b8f03ff72933e",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-272_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-272_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13004928,
+      "sha256": "41494163ea6305f88fe5109f695166858d10d3d11bf54d870d5a43d78a7c1205",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-272_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-272_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13004928,
+      "sha256": "7f5b495e6bafb6b073f8a05fbd430784dbac2f4958a4d2d1827c453b09cc5a8c",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-272_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 10475648,
+      "sha256": "b19d1eed99db37a50991ceeb1d44e906f5753444a3f4526f95834188771f7cbd",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 10475648,
+      "sha256": "9245721b79f417bc1f9bea6b755949ef5c987dd6ba9e0ee7df5f2fd8076efbd3",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 104755328,
+      "sha256": "7fb78f404a4925eefe3f8d72540bb378cdfae34480675ab956e4b88d04b02fc4",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 104755328,
+      "sha256": "7d6ff0c67595e6f62fc7e31c226ba32851f77e002c02b82c22c918ed4b335c32",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1300608,
+      "sha256": "ac8445fdebfe4c2162f311d92703a553f329a2ac8acd184d2255c304708b943b",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1300608,
+      "sha256": "c44e3e66baf5cb61248636fb2e3b0544c24cd6dde8556c398dafb37db2a21af7",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13004928,
+      "sha256": "0fb3c1faf5f9a24bb915d0db452c1edfe60485fb640c7cddf43d7aaae0066928",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13004928,
+      "sha256": "b06a11d91fab97da20542c50b7723905487e2873c826a4b38ee2b7211000adec",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#4_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1300608,
+      "sha256": "dc476bd52020633098a74a9a18d6afce994d6a179f5bf8bfd131832a568fb72f",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#4_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#4_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1300608,
+      "sha256": "7796df08b3007a5803ea0e0b7a983878abf054eb0990cab145cb12bafdb30e9d",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#4_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#4_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13004928,
+      "sha256": "5a48f3082d4778aaf3ccbe429614281ba1aead9f6c440a70181c9c8e244c2cb3",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#4_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#4_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13004928,
+      "sha256": "a1faf48227f287433c5f25660ee4a8714230328fd9d6166efc991f5456a85578",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#4_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#6_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1300608,
+      "sha256": "88be26f34ccd390836e3949e7a3cf40f3e5fd9b4c12ad9058199d5bb16c8dede",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#6_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#6_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1300608,
+      "sha256": "35aa80bd85b23a0572ce8e0184602b2420f3d2639641f46ac1173f424826bcac",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#6_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#6_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13004928,
+      "sha256": "5fe1c07e4b02fcaf49365ccc82d098a26d05bd3ac107f39ccfad202e033374ea",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#6_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#6_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13004928,
+      "sha256": "5104bb46bf55fa2c5fdaf6e023bf3eaf6c2d597bc2b397fb29fd53dbec4a3bad",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#6_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#8_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1300608,
+      "sha256": "872cec7668b049ace3a40d0cc329018a913cc13a495431f727f540198a13191e",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#8_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#8_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1300608,
+      "sha256": "47f39c42b7c9087fe224c549d9811b4c47b42e76443c12061892cf1f3e92f800",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#8_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#8_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13004928,
+      "sha256": "177821c29b086b24d5199cebf74a44ad5cbc81d1fe3aafeb287ed59e5d4b9c7d",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#8_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#8_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13004928,
+      "sha256": "f660a8789a382f1077d328340526afdf94c7c5deb15d68c5bc50d7f4c4f0cbea",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#8_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1300608,
+      "sha256": "87c11cc50742f7b612e28c4321394f4326ee5e8baf748360970b72da2c248801",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1300608,
+      "sha256": "eff9e07e335549c4cad87bafa040b819cc7dd9c4a35979d6e98923bd67a08306",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 1625728,
+      "sha256": "7450b09183a28e9f96347a2a16f41938d203f3fe4a1c0a5ef7a5ead4d6be0e36",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 1625728,
+      "sha256": "88ee8affafffbdc0299f224c9f0e5d6f222b8bacad16cebc577eafa5e5e78410",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1300608,
+      "sha256": "4a5f99475797e95a2c63c7c42f2ad3a8a59dc219ca9627a3875c3576a8a136da",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1300608,
+      "sha256": "d2bc33d35bd4c2d499a6af78ef38d8607435c035046363953dde026950b71c5c",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 3251328,
+      "sha256": "450d2d425cf20c2a199f8a15d62dd0fb1193cf791f740554f43effafbceec3ef",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 3251328,
+      "sha256": "0ab0b234e3958be04a87202f8905b6a384526f7e1548d56bef60f28486e57080",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1300608,
+      "sha256": "9507b274fb258a87a7e2f14ee02c7c4e6defc070529bf86ef8a7b7260e3168c6",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1300608,
+      "sha256": "be8219bf7ad81121ebc11c9005a5bed1b36298d2914d57d6751f03ba57317420",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 6502528,
+      "sha256": "ae4d894a8d61339febed136c4f7b04e67c9d4751c0ca26c03fdfdbd76e5d24fa",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 6502528,
+      "sha256": "112d5a3b3bcdc8f6d02f5b984704d9f99cd3ad4eabef4752ddd8e637363f19d1",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1300608,
+      "sha256": "cff3926aa948dace92d4bb02e7e6de0207ca23999e8cf8562fcbf32d12765b57",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1300608,
+      "sha256": "8c4705b2c1b71d6b4efec0478bbcccef6869288b019cc1b08408eb0601c25cfe",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 812928,
+      "sha256": "d092bb374e0b09136a57af474ff3f50fc056300e90fbccd012b77e0a94df757b",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 812928,
+      "sha256": "a53826b8f874241b84f8a6d1d9bcddb04349bf282c898d47d69af4055dbcfc47",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 20961408,
+      "sha256": "4c87be7113e25d58d59c105432f69fecd95b756c906355c5b8777c76aa51c3e4",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 20961408,
+      "sha256": "8577c0c353d536d8f9d74ca0d6700bbd45021bc0961446ffd74fa9765b178abe",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 209612928,
+      "sha256": "b4ecf3137d0817e9393d1e278cb79ca75ea47d5c8096da8390bdfdd0ace80d33",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 209612928,
+      "sha256": "bc2e422fd524becc57aae21956cb1595c696788deea5a7a44acc8806275d7258",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 2611328,
+      "sha256": "e3fe00fb81d0e84bff7edd6e0a301efe8b3829025735afe7016591e57c8d7268",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 2611328,
+      "sha256": "8dab24480d0ab38876b39e1e86cf83aad07286bb5554ff566cd49c6a46cf2993",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 26112128,
+      "sha256": "591c3a84a9ffa74b052746f79150abe53cd98575979cb095dfb0824f7b590938",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 26112128,
+      "sha256": "9532cf8fee16f74e4a2f59e1ffd08fe06108cfeb32aabb6d59e871b8b4668b87",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 5232768,
+      "sha256": "8a04b71345c9821fe6a9ddf82640f0c42564f3db98fba7d0de9c285b42653aab",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 5232768,
+      "sha256": "38d6f4904e878d4da8bb6b14ab01157ec89194108e98091dd3254900a2a7a50a",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 52326528,
+      "sha256": "de4dcc11cbb8a840d6eec9b1dba994f696f43e4e45a60c6256fe22abec87f6ea",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-32_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 52326528,
+      "sha256": "76c8cd7c1fd92b4e4446fa0856a3359489a6efb669666e7f2f4c39318529c886",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-32_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-48_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1300608,
+      "sha256": "a343a9f1c8ba1d1993fa55919583091df2b3652698b4bf9941e17cccf7eec9e4",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-48_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-48_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1300608,
+      "sha256": "bb95b1bcfdc7ce138e2e9ff6895199707046debfbc215efd4a9b8d1029950d29",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-48_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-48_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13004928,
+      "sha256": "3dadae731543bb948350476588191f8f117f6e7aa189a245c33ed1a72e19be09",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-48_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-48_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13004928,
+      "sha256": "fa73269c989cbac0207714addd6e70b8b6501844ac6f577151b8f55031f5acf4",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-48_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-80_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1300608,
+      "sha256": "93a239cd18b76319e0e6477267a4e9ae595b91420e276423c5864140aa9fda75",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-80_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-80_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1300608,
+      "sha256": "f2b1ae3db45e3920069724e678bb6b061400a905a6de2a5b37031feef637485a",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-80_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-80_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13004928,
+      "sha256": "3ab9a63fb5a05b122b255391fc2c17a0f71a19c7378393887f12cbfcd12f85fb",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-80_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-NR_vs-80_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13004928,
+      "sha256": "029f18ded4020e2a87280c970c20d115aff6104e5796cd146594892df729fd71",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-NR_vs-80_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-144_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "5e20862c38d95812ada60603ec4e76e4ac2a06d85c11745d24d7735f22c1ad02",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-144_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-144_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "6942f6e44de429682ff588949ae474e141d3ac08bb2c66a71892af33a2936704",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-144_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-144_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13107328,
+      "sha256": "f5b83efbdb86d31ff48aa50bd928bf6103d090015236c50d2117a0b7f5e080cd",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-144_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-144_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13107328,
+      "sha256": "6588be5c86ed1ee347765b7ddbbba775505459ea2b364fabdb9a3cb75bac5b90",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-144_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-272_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "dc42e7d5e3c2eba66b4af9cc0f5aebe2bcc69758b5903fae94daffa8cb0bcd53",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-272_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-272_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "37e7684099330c27387ad2a557cf975ad31cb7828c6279b28559b1aee6fbb27b",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-272_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-272_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13107328,
+      "sha256": "effb709980755d67b9c76ae6840d5a3008cf3adf3782bf233f524dc613713851",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-272_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-272_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13107328,
+      "sha256": "9f502c8a808d2a78b7f92d9a97ae6e9808091c1eb962a7e50cec4b8badd7f13b",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-272_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 10485888,
+      "sha256": "fb43e41a45c16fc20fd3766f5c0cc0605eeb82cd296d4183427955e343644128",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 10485888,
+      "sha256": "647cad708a8fc2787db0f33ba4cc22bd1ca21ba83e3b8b3ed853a816f2b9bb1f",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 104857728,
+      "sha256": "30ff9bc58fd94bb58879430da380428cd8bb76250db03eddf65b26baba2bf61e",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 104857728,
+      "sha256": "32802c6137681c286195beec3bebcdd4138ba22b7907709de044af6967822633",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "0e1a2d65b8d26c02c7b0fdcf0759c7ec1f875ec4b48e70f439697eeaf2e555d8",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "0270c5d113fe79be2d015f4c4034296acf6dad41f9458aeb8a8ea9dedb467794",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13107328,
+      "sha256": "e73df8d87f699fe3aa6674e198116d1a9594e5a4d238337b8551571644f9dde2",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13107328,
+      "sha256": "c2616ff3935548b8f08b8074d2f096355747fa0ec5d27ce104f147701cf8bcb0",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "8bcc6d2d052a6f0728338dc8bdb9453daa239212136124770e77b28519ecd1cf",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "c1a53b1eae5cace1a4daa18bb3c736f6aee9b1b790fef7f7011690639045f11c",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13107328,
+      "sha256": "509632a5bd871b439dc304c8f70a7d49e050f4c22d45764c0fec5fcddb664409",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13107328,
+      "sha256": "2d39931b32674dffec9bbc9bb6f3f9b611fcb8cd4636a05eb8c2cd0534ac783e",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#2_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#4_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "742d806348ddc19f4288687f130efda74329b320cd3877ab7b5c41a9104d6fa9",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#4_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#4_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "aa20983ba5df6853a6f7c5e0c6fd1128256e8e415c0c37df8640358892e408ec",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#4_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#4_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13107328,
+      "sha256": "b804590ae022e1d099341e56f9ef129c56e5c610a5f8f243ffa732bb31cc4096",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#4_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#4_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13107328,
+      "sha256": "8cb6610ca992e24f408f7bc6ab573e4b36cce6e492e4e7de65efddd045ac4f31",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#4_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#6_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "68a7f01339b7ad780965a4770d93c52f469a3626c6972e6770c089bd2e3bbc64",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#6_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#6_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "42caebe48c0768a5056d8ea0e15dca3f9ecfbc28a11fe567318f05ad176af166",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#6_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#6_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13107328,
+      "sha256": "b16a8ed7562bbefe16742474a3c4216bc08f743b345232db5a967bcd6a794eae",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#6_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#6_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13107328,
+      "sha256": "aa7a0169d76d1a0e182957db0eee59cb5ae06e323541d4ec266b9dc28bfb0d5a",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#6_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#8_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "5d0a91bfee98bf633e673a2cbae442091ff06fd3e2a5065a227b95aa06fb0d4e",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#8_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#8_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "2290f9cbe181d806c6c6f9389885343a6ae3dd95101df5d09f5512e15731ed2f",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#8_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#8_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13107328,
+      "sha256": "32e88ca756145e2ec6e48d3914bd8d3d87e0f9f99b6bbed85eaa4e045cb899c9",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#8_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#8_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13107328,
+      "sha256": "673767d03b7a3c6dbbf1a4d9e0715ab2c3eff5a5589a7920b8d606a2b9f454c7",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#8_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "655247049a4381f0d3ae9eb8c00f113eff7cf47335adb1b63dec9a78da54fafd",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "72b87d380bb7e1d481ad6861e9092330bcb7db3ba635a66e56de5acf67baa3b0",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 1638528,
+      "sha256": "0e8a80d4f2c010e056be63181cc12cb86caa49de02060ec60f521a35e64170f1",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 1638528,
+      "sha256": "a965b195681519cf21f8c7d0d44ead9371ff5aa9db0a5757b4441eb8a3fa352f",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "1b7f31786ed1adf2ecd0b3cf4e396bb97c1d84550967ac068b4369a2a1dca291",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "21e6bb9f555dea6cb559f205291084a92a39a7151655c6bcdca2e03e04212222",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 3276928,
+      "sha256": "734f5c5521cb7d61235d3ee41f03402f5e7a964a02e2ace7fb8335a67b39b338",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 3276928,
+      "sha256": "b9436bf4c6b17ed090a66837e41759c41ba2ac8c1920bba01f90f78f825fddb4",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "2fe76197aaa03688dc7109eb76a3b598db073dd4342f549c342b63b0fb60ae24",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "354f36024e60d9ffc5e1f0e3d4ed8529f150d8139be1f78f07797b5fcedec9b1",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 6553728,
+      "sha256": "2558d08cce9064d776291a907cc57e69d72c7365530fd2979f287aecbb107853",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 6553728,
+      "sha256": "f0f4e1a1cdf34b891b3475ff0124363721894a24a9833493b63f06433884eed2",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "ff8aedd755c445ad9f64639535790c62d3148e1247dccb921713cfaaa584ba26",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "754fe292e1abd3417eefe0fedd2e4f8fd781877c8e69b3418d36044c09b40a0a",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 819328,
+      "sha256": "3c1bfab6fa97b22329b4af901b3f944e34e6d4f34e24e439fa18953bd464b86b",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 819328,
+      "sha256": "163dac45d075d30542d428d98c2f9f63eab5f8f231591742fe09c80d3d235a1f",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-128_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 20971648,
+      "sha256": "961c0623b5baa809fbe79016ba297021398834b678c76391d8d0598d68b4e75c",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 20971648,
+      "sha256": "ab04cddf0efddbb6f875f781c08fd364229c90c8dc86b890b2451eb45090e666",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 209715328,
+      "sha256": "0508f6a14b195396a9c15bab1b6074027375517baa23fa7f59ab9ee586d6b6c4",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 209715328,
+      "sha256": "4deeb09ab8711de0495bb22019a4cdfd9f80c422e09c9939d517e82d2eca0deb",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 2621568,
+      "sha256": "da5d1d40a706cae66ba415f10b51b922740909ea4c229db06cd03b320150eee3",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 2621568,
+      "sha256": "d5d5d417e4f9ef2f5c7382ef64739b045b4789fa2774f5564d4bc1e7f650e9f2",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 26214528,
+      "sha256": "9ff48c7f9b05a90ad4570752731db5596034cb0b93626eff0611a3ee43b7cd4d",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 26214528,
+      "sha256": "116076ed914fd22fee80ffdf2c4b1d12db37d9f3c540d06e5daf5229a83fcc85",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 5243008,
+      "sha256": "75bf83117899ec7197df0c0b65193af8731493e4977f6233946697cf7bfa67d9",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 5243008,
+      "sha256": "204468c8edba8cfa4950c319f6306387f3e1f1c753d02e1d82dc05b4d56b30e9",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 52428928,
+      "sha256": "1135f4453e0824744a5c2e54a3c895f811551dcefd0d265475bf00fc5fc4ecc5",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-32_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 52428928,
+      "sha256": "8b28cbd753ae19a8a4f76a3b20e053deda8c0c732b5e04fa50e0c71fab43166f",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-32_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-48_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "81bd0e524611369728f238a33e8d95f4607875d0132cfb6d49502f8e40764ada",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-48_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-48_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "c5cf82bf08d4da54f15c9c1136d99919309d481a9eaa67286bdce3ba2dd2707e",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-48_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-48_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13107328,
+      "sha256": "97e93df659c20558cf0c0f645a314582151276257f6145a990da45d7a926ea1e",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-48_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-48_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13107328,
+      "sha256": "c979c32345ba6f91903ab9ff84c5df8b368adad0fd2b795726604c0e355ad68e",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-48_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-80_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy",
+      "bytes": 1310848,
+      "sha256": "51b7c915fee0784c943698a17af8cdcd51186d8a5328afc6b3bc58dfc0875dc0",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-80_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-80_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy",
+      "bytes": 1310848,
+      "sha256": "afcfc648d9ccf79b3d7c1afff08a9a648276f4bead7c6f9a0abbfaefa769a288",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-80_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-80_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy",
+      "bytes": 13107328,
+      "sha256": "e49946fca09be115e8d13847d4ae0a899f8ee5d697b6dd527a1be31122bd3956",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-80_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-R_vs-80_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy",
+      "bytes": 13107328,
+      "sha256": "0207c6660d668906ab993fe32cdb0085c1c4a6c994916a9887f65296473d0fb0",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-R_vs-80_sl-128_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-16_ntc-0_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-128_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy",
+      "bytes": 2621568,
+      "sha256": "e8f9d88c4c3fcb3505df138b88cf2abf9e688f8b41f6ad5d7a6bec7537a7dc8b",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-128_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-128_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy",
+      "bytes": 2621568,
+      "sha256": "32bb73b99b5255c558c8ce59270adb1b42a6453a0a946a364857f24cbf307be4",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-128_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-128_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy",
+      "bytes": 26214528,
+      "sha256": "96891d8ec2c11cde4e9abd1fa2bfdf82603057d2a85b56a2fd28d9cbdaff2119",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-128_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-128_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy",
+      "bytes": 26214528,
+      "sha256": "b6364f7dbf88c30024105e0534d47b64edcf3b2b25492c9a660bee939c0c35ff",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-128_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy",
+      "bytes": 10485888,
+      "sha256": "c2185df4b83b384093010c4c7e83382991761c21fc9dbdc3ffd5c1b068f9894f",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy",
+      "bytes": 10485888,
+      "sha256": "f6c6c4af38a9fcd5f9090e5422ecdadd44afc355049f0a8e9b67846dd9cbee4b",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy",
+      "bytes": 104857728,
+      "sha256": "9338bbf8a5daeac353dd612f166c05b9a782f0ffecc1eaf1270e136fed22f9eb",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy",
+      "bytes": 104857728,
+      "sha256": "ae2147cc8435401ce59df99957675c7f49f52fb69e3c0851dfbfc92cc625d8e5",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-1024_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy",
+      "bytes": 20971648,
+      "sha256": "e77754170feabaa60b877915bda6ae8fac2ac77b8dd291ea513dc75dbf36b3f2",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy",
+      "bytes": 20971648,
+      "sha256": "1237e45f2ac2f0384605e657f68046e11242d1375ed76e9777c1d49ea01924b7",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy",
+      "bytes": 209715328,
+      "sha256": "21a06f6b51258f1c511ad02aefe2aa703d4c3de48a5d9ad9625bf26847deb2ad",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy",
+      "bytes": 209715328,
+      "sha256": "8c37bd9b547005b73e70d58b60041b5d7d4a8040b6a6f831784b6b70ce079fdc",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-2048_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy",
+      "bytes": 2621568,
+      "sha256": "0928f06728c60ac1e8e0250018579a3092432852f5008942f1fa73b218b7ecc3",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy",
+      "bytes": 2621568,
+      "sha256": "26ceeff39b3288cbc21a65cf0c1e589bdac8a690443b05af457210d718ad653b",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy",
+      "bytes": 26214528,
+      "sha256": "8789e7a60947944ae99e0c07d623efe1123483118299eaa35cb52602e99da46b",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy",
+      "bytes": 26214528,
+      "sha256": "7601cb8199095877fa5c73d86fa18e1123548755b875a16bafaed7d3329b03ea",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-32_s-12345/test/inputs.npy",
+      "bytes": 2621568,
+      "sha256": "dea1e95aa23dfdf9286b1c7d3869b5658feba90532a0c38202c301b595af6c30",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-32_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-32_s-12345/test/targets.npy",
+      "bytes": 2621568,
+      "sha256": "26ceeff39b3288cbc21a65cf0c1e589bdac8a690443b05af457210d718ad653b",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-32_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-32_s-12345/train/inputs.npy",
+      "bytes": 26214528,
+      "sha256": "0bdcc48447bed7aa5dea8100a2392b233e2910d9df9cbf10e977645ccd1d8d1d",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-32_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-32_s-12345/train/targets.npy",
+      "bytes": 26214528,
+      "sha256": "7601cb8199095877fa5c73d86fa18e1123548755b875a16bafaed7d3329b03ea",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-32_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-64_s-12345/test/inputs.npy",
+      "bytes": 2621568,
+      "sha256": "7b82795018cac82af706e82927b0d9ce0fe9a96dcb09ac9dcd054c60a51533a6",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-64_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-64_s-12345/test/targets.npy",
+      "bytes": 2621568,
+      "sha256": "26ceeff39b3288cbc21a65cf0c1e589bdac8a690443b05af457210d718ad653b",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-64_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-64_s-12345/train/inputs.npy",
+      "bytes": 26214528,
+      "sha256": "1ec3285110aed38a7a911d41739953a21077be6f766d7a7e87db7d7bf60c7e38",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-64_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-64_s-12345/train/targets.npy",
+      "bytes": 26214528,
+      "sha256": "7601cb8199095877fa5c73d86fa18e1123548755b875a16bafaed7d3329b03ea",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-64_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-96_s-12345/test/inputs.npy",
+      "bytes": 2621568,
+      "sha256": "54ab3814f119ab7880d1d6a5465693df34d987f3f4ac14500ab1f6bf4ba174a4",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-96_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-96_s-12345/test/targets.npy",
+      "bytes": 2621568,
+      "sha256": "26ceeff39b3288cbc21a65cf0c1e589bdac8a690443b05af457210d718ad653b",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-96_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-96_s-12345/train/inputs.npy",
+      "bytes": 26214528,
+      "sha256": "cb272e70377810430d8301d9df2aaa8ce4453da2fb1e922f503215750f60ea88",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-96_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-96_s-12345/train/targets.npy",
+      "bytes": 26214528,
+      "sha256": "7601cb8199095877fa5c73d86fa18e1123548755b875a16bafaed7d3329b03ea",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-96_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy",
+      "bytes": 2621568,
+      "sha256": "e137f6bcc1e5bd6c94b2b0ac25d9efcd863c700b126d7e5076ec56f667acc8a8",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy",
+      "bytes": 2621568,
+      "sha256": "9ec4e70e512c2551421016bcd24491c230f94783eed2c39a72ac3900b430bade",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy",
+      "bytes": 3276928,
+      "sha256": "445c9efaffbaeded332e31e1fb05e27157e040fae82c96c20abb4dbe29374673",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy",
+      "bytes": 3276928,
+      "sha256": "ecc40e6bfdb64124f7bf26d701419a79ffd794516aca8d759655f1611d09e29b",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-1600_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy",
+      "bytes": 2621568,
+      "sha256": "59f26b17a4d8dbd6163dfe3380a7d3468b2c36d4dfe72a7a9102612b5750b0cc",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy",
+      "bytes": 2621568,
+      "sha256": "fd94ae2b3dde6b8640d2bab6f069952876d220d96dfb05bdc980bb2a8d44b981",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy",
+      "bytes": 6553728,
+      "sha256": "904a430fe13c615028ed85ce501f3b883580fd9bd86259e80ece04f68bf89c92",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy",
+      "bytes": 6553728,
+      "sha256": "9b77ec7ec92357117262762adcdbc02bb13320a8d510bfc5ebb6636fb689caa0",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-3200_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy",
+      "bytes": 2621568,
+      "sha256": "678e21cbe73f37d236b5153735a196605b2891fca7353be14921b92dbc78cb03",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy",
+      "bytes": 2621568,
+      "sha256": "86bdf4567a24e940c49b450d4b3fccec8263e182faccd9439f4ce41f1fca867c",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy",
+      "bytes": 13107328,
+      "sha256": "f37db6bdbb58d86fd986f6a18f605eae8afdd73e448eb7a8b22d924c37e9e069",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy",
+      "bytes": 13107328,
+      "sha256": "68049751de7c68298cf656ebc0b6c33f07038805a5a97a2be3fcb13fe5b69611",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-6400_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy",
+      "bytes": 2621568,
+      "sha256": "9d8e8b9b78fa121661d64d01ba2b583d781001f273ed184b0037b697568351c1",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy",
+      "bytes": 2621568,
+      "sha256": "441cd74cbefd7b6769f9b51bc39b4c8fabf6802ba4fa112f5d7d7ab188c9160b",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy",
+      "bytes": 1638528,
+      "sha256": "359613948f436a9c89c087b720b52b2c94d9172e61146dab782206e265f8438f",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-256_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy",
+      "bytes": 1638528,
+      "sha256": "4fd78a09df2eb12d81f56da1506efa7e9bb9018a32a6868e96f1616a16833c66",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-256_ntr-800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy",
+      "bytes": 5243008,
+      "sha256": "56412fba8bee620ff033c2a0606676385d70769cad934805340f3cba30d61aad",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy",
+      "bytes": 5243008,
+      "sha256": "64fbd4b0f9ef79e311041b463422a61c8a08ee2fac7ba2a4e57c6214d68eb1c9",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy",
+      "bytes": 52428928,
+      "sha256": "e07484af5a404a0c8274d66e40ad9413b3eaceb23b58ff8bdde21af995c41adf",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-16_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy",
+      "bytes": 52428928,
+      "sha256": "b5584fcdc17571af977f5efc7d4a4c4027e22d84ce9047b6fff4b3752f34fab8",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-16_sl-512_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-256_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy",
+      "bytes": 2621568,
+      "sha256": "0d2b164eade4ccfe88c40fccde36ee47e286355ee731515391d12310b145feb5",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-256_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-256_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy",
+      "bytes": 2621568,
+      "sha256": "b92271be478768c86a907c83d2f707b53c19c0f3d776d1856de0f10f624e6428",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-256_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-256_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy",
+      "bytes": 26214528,
+      "sha256": "ca314c316229e380cb0353ead9ea4f81b7d1538f8b40bfbc70136b9727dbebdf",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-256_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-256_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy",
+      "bytes": 26214528,
+      "sha256": "f2a44c43314742210fc9d9fb1e9c78bd8a2d10eece06786c587461018e985dea",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-256_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy",
+      "bytes": 2621568,
+      "sha256": "40447cf514a2c9790436b9de135e6c4a53973fb934bc06bd643bf3a1bc923eff",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy",
+      "bytes": 2621568,
+      "sha256": "f15e266775628f788183f96fcdeb889e02606b5f4c3d9d0fc5db260717401685",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy",
+      "bytes": 26214528,
+      "sha256": "ea45beb7c07e8924b575a112e6033a8f19a64b1a0e651078c03777eab00861bd",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy",
+      "bytes": 26214528,
+      "sha256": "1c75c108c5440633d05c3f813918a7ff89d92f607bf36f3b32cf5b17a63acd34",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-32_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-64_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy",
+      "bytes": 2621568,
+      "sha256": "ae510ac5cca93139685603d3bba299c5e8d9e196993065e5a2b7902fa6101a16",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-64_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-64_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy",
+      "bytes": 2621568,
+      "sha256": "6fc1d94998e1b336525ad0785191895b8b5300b7948811defa4ec7b764d22615",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-64_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/test/targets.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-64_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy",
+      "bytes": 26214528,
+      "sha256": "653348133479ba485f1711d41b0da550f60940c4e9d3d92886bdf8c6531506f5",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-64_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/inputs.npy"
+    },
+    {
+      "path": "mad_tsc/t-SC_vs-64_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy",
+      "bytes": 26214528,
+      "sha256": "c7312f4e8305f0b8cc54a1fdad2278d9feea0b163ba81f741663985857886afe",
+      "source": "/data/mad-official-repro/repo/benchmark/data/t-SC_vs-64_sl-256_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-16_s-12345/train/targets.npy"
+    },
+    {
+      "path": "mad_tsc/data.zip",
+      "bytes": 335467803,
+      "sha256": "2bce0f6f7fc844b6be9c350838f12b75b46ffb769f36857f33c6d5fd517c5830",
+      "source": "/data/mad-official-repro/data.zip"
+    },
+    {
+      "path": "parity/data_info.json",
+      "bytes": 261,
+      "sha256": "5d3b7f7806c722927bac7d6c5eec1dc0ce14714abb5794f337da30e87e985946",
+      "source": "/workspace/tfl/data/Parity/data_info.json"
+    },
+    {
+      "path": "parity/train_corpus.pk",
+      "bytes": 684987,
+      "sha256": "43af35efab8509ec04548cf9eb54c12235dfa40a9cbaf8d6d09ef62938f021c4",
+      "source": "/workspace/tfl/data/Parity/train_corpus.pk"
+    },
+    {
+      "path": "parity/train_src.txt",
+      "bytes": 252691,
+      "sha256": "51bbae696254318b68ef7b0d2e115d5d95108fab8514a6fd525da46844e42641",
+      "source": "/workspace/tfl/data/Parity/train_src.txt"
+    },
+    {
+      "path": "parity/train_tgt.txt",
+      "bytes": 252691,
+      "sha256": "760f3607db6faf02f3db149c7381bfcd3c0a321144ac7744bf13333c66ff7a3d",
+      "source": "/workspace/tfl/data/Parity/train_tgt.txt"
+    },
+    {
+      "path": "parity/val_corpus_bins.pk",
+      "bytes": 502831,
+      "sha256": "e2d4f9958653d74d08ff52c8d9d7591573cc6ebfe70ebf01c53b30f8204c2bc8",
+      "source": "/workspace/tfl/data/Parity/val_corpus_bins.pk"
+    },
+    {
+      "path": "parity/val_src_bin0.txt",
+      "bytes": 49784,
+      "sha256": "530a4a43ffa126533c29defb1a0cb1bd6f859604bc47006bf7b53fb1a120ab9f",
+      "source": "/workspace/tfl/data/Parity/val_src_bin0.txt"
+    },
+    {
+      "path": "parity/val_src_bin1.txt",
+      "bytes": 165767,
+      "sha256": "796e17b94b6aaee7a686b246f0e602b60a3f3de39a8e55e0bfbf8fb7ede3cf8e",
+      "source": "/workspace/tfl/data/Parity/val_src_bin1.txt"
+    },
+    {
+      "path": "parity/val_tgt_bin0.txt",
+      "bytes": 49784,
+      "sha256": "ad1ba6113cba6d6a4e28e88062621d2757dd932d95a8128f5128b9e56861f6d5",
+      "source": "/workspace/tfl/data/Parity/val_tgt_bin0.txt"
+    },
+    {
+      "path": "parity/val_tgt_bin1.txt",
+      "bytes": 165767,
+      "sha256": "27c3dffb56cc13fd6d8374850520cb2306ab63247314598cb341983e4342f596",
+      "source": "/workspace/tfl/data/Parity/val_tgt_bin1.txt"
+    },
+    {
+      "path": "tomita5/data_info.json",
+      "bytes": 257,
+      "sha256": "748d683341c5485bb6dbbe4ea229881ddc13a0209fc5d24a3a27f4eb82588194",
+      "source": "/workspace/tfl/data/Tomita-5/data_info.json"
+    },
+    {
+      "path": "tomita5/train_corpus.pk",
+      "bytes": 870567,
+      "sha256": "40d1f325ce323171c5fb8f154abde276a1c23a5b47ebce4304cb5ed7ac5415ae",
+      "source": "/workspace/tfl/data/Tomita-5/train_corpus.pk"
+    },
+    {
+      "path": "tomita5/train_src.txt",
+      "bytes": 345487,
+      "sha256": "ea150b9dc72a6b8500d93a9e943047685c1088190ea5aec6366490d81ff21d60",
+      "source": "/workspace/tfl/data/Tomita-5/train_src.txt"
+    },
+    {
+      "path": "tomita5/train_tgt.txt",
+      "bytes": 345487,
+      "sha256": "6e5c83c98fba7bbb7d72f723729923258d8b7328b1369ea7202af471c6f92f8a",
+      "source": "/workspace/tfl/data/Tomita-5/train_tgt.txt"
+    },
+    {
+      "path": "tomita5/val_corpus_bins.pk",
+      "bytes": 577782,
+      "sha256": "3943f8e5ba0d419e1afc32080768c9abdc9608613b24b3b9e0809b00214d4c52",
+      "source": "/workspace/tfl/data/Tomita-5/val_corpus_bins.pk"
+    },
+    {
+      "path": "tomita5/val_src_bin0.txt",
+      "bytes": 68573,
+      "sha256": "341f5cd501f7427c4214cb0e0e5cf8e4c98a4b037ea2096e3caf3930f842a452",
+      "source": "/workspace/tfl/data/Tomita-5/val_src_bin0.txt"
+    },
+    {
+      "path": "tomita5/val_src_bin1.txt",
+      "bytes": 184475,
+      "sha256": "cca46ab14cd74c06059fc7755fe5a54b9c4b619f9649f9084ad4cae482670bb6",
+      "source": "/workspace/tfl/data/Tomita-5/val_src_bin1.txt"
+    },
+    {
+      "path": "tomita5/val_src_bin2.txt",
+      "bytes": 705511,
+      "sha256": "31fce8e9925e2d2336304cbf70fb63267e76cad4180671f8153c0007aad111cb",
+      "source": "/workspace/tfl/data/Tomita-5/val_src_bin2.txt"
+    },
+    {
+      "path": "tomita5/val_src_bin3.txt",
+      "bytes": 806105,
+      "sha256": "f91f8ba9d3caa156e7332a5f7b5fba776c35e4e750cf3d11892e1907dd533f47",
+      "source": "/workspace/tfl/data/Tomita-5/val_src_bin3.txt"
+    },
+    {
+      "path": "tomita5/val_tgt_bin0.txt",
+      "bytes": 68573,
+      "sha256": "2c7e1765b8380e004b2c6ab6215971477763b76848b0f663e769f41c9af95754",
+      "source": "/workspace/tfl/data/Tomita-5/val_tgt_bin0.txt"
+    },
+    {
+      "path": "tomita5/val_tgt_bin1.txt",
+      "bytes": 184475,
+      "sha256": "5729ed5a83f6cfb9f466bd6b871f68ccb756bd9ea5d6b7d6f9682f12d9985781",
+      "source": "/workspace/tfl/data/Tomita-5/val_tgt_bin1.txt"
+    },
+    {
+      "path": "tomita5/val_tgt_bin2.txt",
+      "bytes": 705511,
+      "sha256": "99b12f8b7ecfe3100f4565c8968d069a31bc3b3b8213e3f4026fb7fdc9440d0b",
+      "source": "/workspace/tfl/data/Tomita-5/val_tgt_bin2.txt"
+    },
+    {
+      "path": "tomita5/val_tgt_bin3.txt",
+      "bytes": 806105,
+      "sha256": "21a3a359cffbce927d2101140f3b86b0551ec7147bbc883396a2fadea8cbf532",
+      "source": "/workspace/tfl/data/Tomita-5/val_tgt_bin3.txt"
+    },
+    {
+      "path": "tomita6/data_info.json",
+      "bytes": 258,
+      "sha256": "f5f812a17fa62a5e7175e64a7de6ce1926b39315244526d8a9369197de6ebbe6",
+      "source": "/workspace/tfl/data/Tomita-6/data_info.json"
+    },
+    {
+      "path": "tomita6/train_corpus.pk",
+      "bytes": 800417,
+      "sha256": "1d3f71f7c5f8b3f0e8117ad2fa68f3faed33eb51c6227449b2d14c356734947a",
+      "source": "/workspace/tfl/data/Tomita-6/train_corpus.pk"
+    },
+    {
+      "path": "tomita6/train_src.txt",
+      "bytes": 310412,
+      "sha256": "77e914091591174a3aa81d2c0871d706510dbb72a7e6b16d7587158d5b5ca093",
+      "source": "/workspace/tfl/data/Tomita-6/train_src.txt"
+    },
+    {
+      "path": "tomita6/train_tgt.txt",
+      "bytes": 310412,
+      "sha256": "85f636a9b698c0e31d22d84ac9428b3237a14d667a4c55fd96ba38438ff05a8f",
+      "source": "/workspace/tfl/data/Tomita-6/train_tgt.txt"
+    },
+    {
+      "path": "tomita6/val_corpus_bins.pk",
+      "bytes": 547950,
+      "sha256": "b028ef5e8ff1d69605c8faf7d97f5950e1b60df3a2320272cc874aea4b2f9845",
+      "source": "/workspace/tfl/data/Tomita-6/val_corpus_bins.pk"
+    },
+    {
+      "path": "tomita6/val_src_bin0.txt",
+      "bytes": 61507,
+      "sha256": "03582d634eec94422192c3eb57e6fc1b1e8fd4c59b31aa0d4079892519e0e225",
+      "source": "/workspace/tfl/data/Tomita-6/val_src_bin0.txt"
+    },
+    {
+      "path": "tomita6/val_src_bin1.txt",
+      "bytes": 176625,
+      "sha256": "7a7c6fe1f793fa871d1d079cce29d74f101c5ec4ae8ee32a9d7b2a9a1c7f0dd4",
+      "source": "/workspace/tfl/data/Tomita-6/val_src_bin1.txt"
+    },
+    {
+      "path": "tomita6/val_src_bin2.txt",
+      "bytes": 701922,
+      "sha256": "a7dba0d7df0da52034755476cac29cb405eb089dc1e9b19b9839d3652409e755",
+      "source": "/workspace/tfl/data/Tomita-6/val_src_bin2.txt"
+    },
+    {
+      "path": "tomita6/val_src_bin3.txt",
+      "bytes": 803197,
+      "sha256": "fef6fcdc50d7f55f951203f9f93f4c83274cd67a87b53a0e3446f12165b6175c",
+      "source": "/workspace/tfl/data/Tomita-6/val_src_bin3.txt"
+    },
+    {
+      "path": "tomita6/val_tgt_bin0.txt",
+      "bytes": 61507,
+      "sha256": "fe86a4326b55ad9ff980551d5537f8ce2933c0e4080796815b1016ac886ba0a4",
+      "source": "/workspace/tfl/data/Tomita-6/val_tgt_bin0.txt"
+    },
+    {
+      "path": "tomita6/val_tgt_bin1.txt",
+      "bytes": 176625,
+      "sha256": "c3cdfcd2cc7437f2e40ab50d8fc992e52c6cd85c9ab54242c30fb2021f1cba7d",
+      "source": "/workspace/tfl/data/Tomita-6/val_tgt_bin1.txt"
+    },
+    {
+      "path": "tomita6/val_tgt_bin2.txt",
+      "bytes": 701922,
+      "sha256": "1aeb7cf10236da3e5b244b4f3431a08254205ee940beb60e81f89e4fc8e9409d",
+      "source": "/workspace/tfl/data/Tomita-6/val_tgt_bin2.txt"
+    },
+    {
+      "path": "tomita6/val_tgt_bin3.txt",
+      "bytes": 803197,
+      "sha256": "841dd206ebbaaae53f6772418ae17d91e4956684d004fda5d500ee505fb67e28",
+      "source": "/workspace/tfl/data/Tomita-6/val_tgt_bin3.txt"
+    }
+  ]
+}
