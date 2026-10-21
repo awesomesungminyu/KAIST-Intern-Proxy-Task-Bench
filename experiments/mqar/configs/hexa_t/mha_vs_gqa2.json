@@ -1,0 +1,24 @@
+{
+  "name": "HEXA-T MHA vs GQA-2",
+  "control": {
+    "architecture": "Standard Transformer",
+    "query_heads": 4,
+    "kv_heads": 4
+  },
+  "candidate": {
+    "architecture": "GQA-2 Transformer",
+    "query_heads": 4,
+    "kv_heads": 2
+  },
+  "comparison_policy": {
+    "primary": "matched width and training budget",
+    "report_separately": [
+      "task metric",
+      "parameter count",
+      "runtime",
+      "throughput",
+      "peak VRAM"
+    ],
+    "single_composite_score": false
+  }
+}

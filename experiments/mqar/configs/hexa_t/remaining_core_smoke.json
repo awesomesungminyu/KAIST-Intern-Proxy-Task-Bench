@@ -1,0 +1,65 @@
+{
+  "framework": "HEXA-T",
+  "experiment": "remaining-core-smoke",
+  "architecture": "Standard Transformer",
+  "seed": 456,
+  "gpu": "0",
+  "jobs": [
+    {
+      "id": "H2",
+      "name": "Streaming Parity smoke",
+      "entrypoint": "train_streaming_parity_transformer.py",
+      "environment": {
+        "HEXA_T_MAX_EPOCHS": "1",
+        "HEXA_T_TRAIN_EXAMPLES": "512",
+        "HEXA_T_VALID_EXAMPLES": "256",
+        "HEXA_T_BATCH_SIZE": "32",
+        "HEXA_T_NUM_WORKERS": "0",
+        "HEXA_T_MAX_TRAIN_BATCHES": "8",
+        "HEXA_T_MAX_VALID_BATCHES": "4"
+      }
+    },
+    {
+      "id": "H3",
+      "name": "Flip-Flop smoke",
+      "entrypoint": "train_flipflop_transformer.py",
+      "environment": {
+        "HEXA_T_MAX_EPOCHS": "1",
+        "HEXA_T_TRAIN_EXAMPLES": "512",
+        "HEXA_T_VALID_EXAMPLES": "256",
+        "HEXA_T_BATCH_SIZE": "32",
+        "HEXA_T_NUM_WORKERS": "0",
+        "HEXA_T_MAX_TRAIN_BATCHES": "8",
+        "HEXA_T_MAX_VALID_BATCHES": "4"
+      }
+    },
+    {
+      "id": "H4",
+      "name": "WikiText-2 smoke",
+      "entrypoint": "train_wikitext2_transformer.py",
+      "environment": {
+        "HEXA_T_MAX_EPOCHS": "1",
+        "HEXA_T_TRAIN_EXAMPLES": "512",
+        "HEXA_T_VALID_EXAMPLES": "256",
+        "HEXA_T_BATCH_SIZE": "32",
+        "HEXA_T_NUM_WORKERS": "0",
+        "HEXA_T_MAX_TRAIN_BATCHES": "8",
+        "HEXA_T_MAX_VALID_BATCHES": "4"
+      }
+    },
+    {
+      "id": "H5",
+      "name": "Speech Commands 12-class smoke",
+      "entrypoint": "train_speechcommands_transformer.py",
+      "environment": {
+        "HEXA_T_MAX_EPOCHS": "1",
+        "HEXA_T_TRAIN_EXAMPLES": "512",
+        "HEXA_T_VALID_EXAMPLES": "256",
+        "HEXA_T_BATCH_SIZE": "32",
+        "HEXA_T_NUM_WORKERS": "0",
+        "HEXA_T_MAX_TRAIN_BATCHES": "8",
+        "HEXA_T_MAX_VALID_BATCHES": "4"
+      }
+    }
+  ]
+}

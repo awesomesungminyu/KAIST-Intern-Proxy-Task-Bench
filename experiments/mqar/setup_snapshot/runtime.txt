@@ -1,0 +1,5 @@
+python: 3.11.16
+torch: 2.2.2+cu121
+torch_cuda_build: 12.1
+pandas: 3.0.5
+matplotlib: 3.11.1

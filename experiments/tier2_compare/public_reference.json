@@ -1,0 +1,27 @@
+{
+  "statistical_note": "seed 1회, 분산 미추정",
+  "verification_date": "2026-10-16",
+  "comparison": "reference only; not exact reproduction threshold",
+  "DLinear": {
+    "source": "https://arxiv.org/pdf/2205.13504",
+    "location": "Table 2",
+    "ETTh1": {
+      "mse": 0.375,
+      "mae": 0.399
+    },
+    "ETTm1": {
+      "mse": 0.299,
+      "mae": 0.343
+    }
+  },
+  "repo_default": {
+    "source": "https://github.com/cure-lab/LTSF-Linear#training-example",
+    "lookback_steps": 336,
+    "this_experiment_lookback_steps": 96
+  },
+  "S4": {
+    "source": "https://arxiv.org/pdf/2111.00396",
+    "location": "Table 6",
+    "sCIFAR_accuracy_percent": 91.13
+  }
+}

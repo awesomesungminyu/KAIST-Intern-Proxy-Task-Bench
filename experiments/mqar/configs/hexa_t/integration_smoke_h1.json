@@ -1,0 +1,22 @@
+{
+  "framework": "HEXA-T",
+  "experiment": "integration-smoke-h1",
+  "architecture": "Standard Transformer",
+  "seed": 456,
+  "gpu": "0",
+  "jobs": [
+    {
+      "id": "H1",
+      "name": "MQAR integration smoke",
+      "entrypoint": "train_mqar_baseline.py",
+      "environment": {
+        "HARNESS_SEQUENCE_LENGTH": "64",
+        "HARNESS_NUM_KV_PAIRS": "8",
+        "HARNESS_TRAIN_EXAMPLES": "512",
+        "HARNESS_VALID_EXAMPLES": "256",
+        "HARNESS_BATCH_SIZE": "64",
+        "HARNESS_MAX_EPOCHS": "1"
+      }
+    }
+  ]
+}

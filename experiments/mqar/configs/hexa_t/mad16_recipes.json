@@ -1,0 +1,151 @@
+{
+  "source": "MAD Figure 3.7",
+  "mad_commit": "0f49a452b84ca0d13f8eb9c1ffa649032376fb1b",
+  "attention_backend": "torch-sdpa-turing-compatibility",
+  "models": [
+    {
+      "id": "mh_gla_swiglu",
+      "layers": [
+        "mh-gated-linear-attention",
+        "swiglu",
+        "mh-gated-linear-attention",
+        "swiglu"
+      ]
+    },
+    {
+      "id": "mh_gla_moe",
+      "layers": [
+        "mh-gated-linear-attention",
+        "moe-mlp",
+        "mh-gated-linear-attention",
+        "moe-mlp"
+      ]
+    },
+    {
+      "id": "hyena_swiglu",
+      "layers": [
+        "hyena",
+        "swiglu",
+        "hyena",
+        "swiglu"
+      ]
+    },
+    {
+      "id": "hyena_moe",
+      "layers": [
+        "hyena",
+        "moe-mlp",
+        "hyena",
+        "moe-mlp"
+      ]
+    },
+    {
+      "id": "mamba",
+      "layers": [
+        "mamba",
+        "mamba",
+        "mamba",
+        "mamba"
+      ]
+    },
+    {
+      "id": "mh_hyena_swiglu",
+      "layers": [
+        "mh-hyena",
+        "swiglu",
+        "mh-hyena",
+        "swiglu"
+      ]
+    },
+    {
+      "id": "mh_attention_moe",
+      "layers": [
+        "mh-attention",
+        "moe-mlp",
+        "mh-attention",
+        "moe-mlp"
+      ]
+    },
+    {
+      "id": "mh_attention_swiglu",
+      "layers": [
+        "mh-attention",
+        "swiglu",
+        "mh-attention",
+        "swiglu"
+      ]
+    },
+    {
+      "id": "mh_hyena_moe",
+      "layers": [
+        "mh-hyena",
+        "moe-mlp",
+        "mh-hyena",
+        "moe-mlp"
+      ]
+    },
+    {
+      "id": "striped_mamba_swiglu",
+      "layers": [
+        "mamba",
+        "swiglu",
+        "mh-attention",
+        "swiglu"
+      ]
+    },
+    {
+      "id": "striped_mamba_moe",
+      "layers": [
+        "mamba",
+        "moe-mlp",
+        "mh-attention",
+        "moe-mlp"
+      ]
+    },
+    {
+      "id": "striped_hyena_swiglu",
+      "layers": [
+        "hyena",
+        "swiglu",
+        "mh-attention",
+        "swiglu"
+      ]
+    },
+    {
+      "id": "striped_mh_hyena_swiglu",
+      "layers": [
+        "mh-hyena",
+        "swiglu",
+        "mh-attention",
+        "swiglu"
+      ]
+    },
+    {
+      "id": "striped_hyena_moe",
+      "layers": [
+        "hyena",
+        "moe-mlp",
+        "mh-attention",
+        "moe-mlp"
+      ]
+    },
+    {
+      "id": "striped_mh_hyena_moe",
+      "layers": [
+        "mh-hyena",
+        "moe-mlp",
+        "mh-attention",
+        "moe-mlp"
+      ]
+    },
+    {
+      "id": "striped_hyena_experts_moe",
+      "layers": [
+        "hyena-experts",
+        "moe-mlp",
+        "mh-attention",
+        "moe-mlp"
+      ]
+    }
+  ]
+}
