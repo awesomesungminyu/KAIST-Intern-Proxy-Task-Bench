@@ -1,4 +1,6 @@
 # 데이터 — setup.sh 로 복원하므로 커밋하지 않는다
+/data/
+# 경로 이전(common/paths.py) 전 사본 보호용. 당분간 유지한다.
 proxy_tasks/*/data/
 *.pickle
 *.zip
@@ -23,8 +25,13 @@ __pycache__/
 *.py[cod]
 .venv/
 
+# 외부 저장소·패키지 — setup.sh 와 restore_fflm_assets.py 가 받는다
+third_party/tfl/
+third_party/fflm_vendor/
+
 # Validation artifacts and restored FFLM dependencies stay outside source control.
 artifacts/
+/artifacts/
 proxy_tasks/fflm/vendor/
 proxy_tasks/fflm/smoke_runs/
 proxy_tasks/fflm/benchmark_runs/
