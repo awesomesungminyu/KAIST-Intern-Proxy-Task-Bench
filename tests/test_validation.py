@@ -202,12 +202,12 @@ class ArtifactTests(unittest.TestCase):
         (self.root / "two/x").write_text("changed")
         self.assertNotEqual(a, runner.fingerprint({"input": self.root / "two"}))
 
-    def test_all_seven_tasks_have_explicit_metric_scope(self):
+    def test_all_tasks_have_explicit_metric_scope(self):
         catalog = json.loads(runner.PROTOCOL.read_text())["tasks"]
-        self.assertEqual(len(catalog), 7)
+        self.assertEqual(len(catalog), 13)
         for spec in catalog.values():
             self.assertTrue(spec["limitations"])
-            self.assertIn(spec["direction"], ["maximize", "minimize"])
+            self.assertIn(spec["direction"], ["maximize", "minimize", "descriptive"])
             self.assertIn("smoke", spec)
             self.assertIn("full", spec)
 

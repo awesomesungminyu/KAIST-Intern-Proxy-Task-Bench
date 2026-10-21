@@ -45,7 +45,18 @@
       ],
       "smoke": [
         "--smoke_test"
-      ]
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "budget_rule": {
+        "key": "step",
+        "full": 2000,
+        "smoke": 20,
+        "allow_early_stop": false,
+        "metric_location": "history_last"
+      }
     },
     "g2p": {
       "adapter": "native",
@@ -77,7 +88,18 @@
       ],
       "smoke": [
         "--smoke_test"
-      ]
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "budget_rule": {
+        "key": "epoch",
+        "full": 10,
+        "smoke": 1,
+        "allow_early_stop": false,
+        "metric_location": "history_last"
+      }
     },
     "zinc": {
       "adapter": "native",
@@ -111,7 +133,18 @@
       ],
       "smoke": [
         "--smoke_test"
-      ]
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "budget_rule": {
+        "key": "epoch",
+        "full": 200,
+        "smoke": 1,
+        "allow_early_stop": false,
+        "metric_location": "top"
+      }
     },
     "parity": {
       "adapter": "formal",
@@ -136,7 +169,11 @@
       "smoke": [
         "-epochs",
         "2"
-      ]
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      }
     },
     "tomita5": {
       "adapter": "formal",
@@ -161,7 +198,11 @@
       "smoke": [
         "-epochs",
         "2"
-      ]
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      }
     },
     "tomita6": {
       "adapter": "formal",
@@ -186,7 +227,11 @@
       "smoke": [
         "-epochs",
         "2"
-      ]
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      }
     },
     "fflm": {
       "adapter": "fflm",
@@ -218,7 +263,357 @@
         "2",
         "--eval-batch",
         "2"
-      ]
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      }
+    },
+    "ett": {
+      "adapter": "native",
+      "models": [
+        "linear",
+        "transformer",
+        "naive"
+      ],
+      "metric": "val_mse",
+      "direction": "minimize",
+      "split": "validation",
+      "selection": "lowest_validation_mse_checkpoint",
+      "limitations": [
+        "ETTh1 baseline: 96 input steps -> 96 forecast steps, seven channels; train-only standardization. ETTm1 is available in the direct trainer, not mixed into this protocol.",
+        "Historical linear/transformer pilots used three seeds, at most 20 epochs with early stopping; naive used seed 0 only. These pilots are not acceptance results.",
+        "Validation selects the checkpoint. Test is evaluated only with the direct trainer --final_test after freezing the candidate."
+      ],
+      "common": [
+        "--dataset",
+        "ETTh1",
+        "--batch_size",
+        "128",
+        "--lr",
+        "0.001"
+      ],
+      "full": [
+        "--epochs",
+        "20",
+        "--patience",
+        "3"
+      ],
+      "smoke": [
+        "--smoke_test"
+      ],
+      "budget_rule": {
+        "key": "epoch",
+        "full": 20,
+        "smoke": 1,
+        "allow_early_stop": true,
+        "early_stop": {
+          "kind": "patience",
+          "metric": "val_mse",
+          "patience": 3,
+          "direction": "minimize"
+        },
+        "no_training_models": [
+          "naive"
+        ],
+        "metric_location": "top"
+      },
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      }
+    },
+    "scifar": {
+      "adapter": "native",
+      "models": [
+        "transformer",
+        "lstm"
+      ],
+      "metric": "val_accuracy",
+      "direction": "maximize",
+      "split": "validation",
+      "selection": "highest_validation_accuracy_checkpoint",
+      "limitations": [
+        "budget_limited: both historical pilots were unconverged at 10 epochs (transformer 52.4%, LSTM 31.7%); these are not acceptance results.",
+        "Sequential CIFAR-10 with a fixed seed-42 45000/5000 train/validation split, train-only normalization and no augmentation. Test is reserved for frozen candidates."
+      ],
+      "common": [
+        "--batch_size",
+        "64",
+        "--lr",
+        "0.001",
+        "--weight_decay",
+        "0.01"
+      ],
+      "full": [
+        "--epochs",
+        "10"
+      ],
+      "smoke": [
+        "--smoke_test"
+      ],
+      "budget_rule": {
+        "key": "epoch",
+        "full": 10,
+        "smoke": 1,
+        "allow_early_stop": false,
+        "metric_location": "top"
+      },
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": [
+          "torchvision"
+        ]
+      }
+    },
+    "sc_raw": {
+      "adapter": "native",
+      "models": [
+        "transformer",
+        "lstm"
+      ],
+      "metric": "val_accuracy",
+      "direction": "maximize",
+      "split": "validation",
+      "selection": "final_update",
+      "limitations": [
+        "budget_limited: 2048 updates (batch 2), zero completed epochs. Historical transformer 8.3% / LSTM 8.6% are near random chance, not acceptance results.",
+        "Raw 16000-sample Speech Commands, 12 classes. Training uses a seed-dependent subset without replacement; the original pilot used seed 0. No convergence or full-epoch claim.",
+        "Validation is scored after the final update; test is reserved for frozen candidates."
+      ],
+      "common": [
+        "--batch_size",
+        "2",
+        "--lr",
+        "0.001",
+        "--weight_decay",
+        "0.01"
+      ],
+      "full": [
+        "--steps",
+        "2048"
+      ],
+      "smoke": [
+        "--smoke_test"
+      ],
+      "budget_rule": {
+        "key": "step",
+        "full": 2048,
+        "smoke": 3,
+        "allow_early_stop": false,
+        "metric_location": "top"
+      },
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      }
+    },
+    "mqar": {
+      "adapter": "native",
+      "models": [
+        "transformer",
+        "linear_attention",
+        "gated_linear_attention",
+        "gqa2"
+      ],
+      "metric": "best_valid_accuracy",
+      "direction": "maximize",
+      "split": "validation",
+      "selection": "highest_validation_accuracy_checkpoint",
+      "limitations": [
+        "Fixed zoology MQAR: vocab 8192, length 64, 8 KV pairs; train/validation generation seeds 123/2147483789. No separate final test split.",
+        "Historical harness_validation completed four models x three seeds (456,789,101112). Linear and gated attention did not reach 0.99 within 30 epochs; GQA-2 seed standard deviation was about 45 percentage points.",
+        "Historical pilots are not acceptance results. Sequence mixers must be causal and supply any position information internally."
+      ],
+      "common": [],
+      "full": [
+        "--max_epochs",
+        "30"
+      ],
+      "smoke": [
+        "--smoke_test"
+      ],
+      "budget_rule": {
+        "key": "epoch",
+        "full": 30,
+        "smoke": 1,
+        "allow_early_stop": true,
+        "early_stop": {
+          "kind": "threshold",
+          "metric": "valid_accuracy",
+          "threshold": 0.99
+        },
+        "metric_location": "top"
+      },
+      "runtime": {
+        "torch": "2.2.2",
+        "default_python": "/data/envs/hexa-mad/bin/python",
+        "packages": [
+          "pydantic",
+          "wandb",
+          "einops"
+        ]
+      }
+    },
+    "mad_tsc": {
+      "adapter": "mad",
+      "models": [
+        "mh_gla_swiglu",
+        "mh_gla_moe",
+        "hyena_swiglu",
+        "hyena_moe",
+        "mamba",
+        "mh_hyena_swiglu",
+        "mh_attention_moe",
+        "mh_attention_swiglu",
+        "mh_hyena_moe",
+        "striped_mamba_swiglu",
+        "striped_mamba_moe",
+        "striped_hyena_swiglu",
+        "striped_mh_hyena_swiglu",
+        "striped_hyena_moe",
+        "striped_mh_hyena_moe",
+        "striped_hyena_experts_moe"
+      ],
+      "metric": "val_accuracy",
+      "direction": "maximize",
+      "split": "reused_mad_test_development",
+      "selection": "final_epoch",
+      "limitations": [
+        "MAD selective copying baseline only (vocab 16, length 256, copy 16, train 12800/development 1280, lr 0.0005, wd 0, batch 128, maximum 200 epochs). Not the full MAD difficulty/hyperparameter sweep and not Jelassi et al. copy.",
+        "The upstream test split is repeatedly monitored by Lightning and treated as development data here. No untouched final test is available; unconditional upstream stopping at accuracy >=0.999 can reduce the epoch budget.",
+        "Historical official benchmark: mh_attention_swiglu completed; striped_mh_hyena_moe FAILED; one seed (12345). The other 14 recipes are unverified on Turing.",
+        "FlashAttention was replaced by PyTorch SDPA: kernel_exact=false. Some recipes require unavailable CUDA extensions; registration does not establish runtime support. Pilots are not acceptance results."
+      ],
+      "common": [],
+      "full": [
+        "--epochs",
+        "200"
+      ],
+      "smoke": [
+        "--smoke_test"
+      ],
+      "budget_rule": {
+        "key": "epoch",
+        "full": 200,
+        "smoke": 1,
+        "allow_early_stop": true,
+        "early_stop": {
+          "kind": "mad_threshold",
+          "threshold": 0.999
+        },
+        "metric_location": "top"
+      },
+      "runtime": {
+        "torch": "2.2.2",
+        "default_python": "/data/envs/hexa-mad/bin/python",
+        "packages": [
+          "pytorch-lightning",
+          "torchmetrics",
+          "einops",
+          "pandas",
+          "PyYAML"
+        ]
+      }
+    },
+    "tier0": {
+      "adapter": "tier0",
+      "models": [
+        "transformer",
+        "swa",
+        "gla",
+        "rwkv6",
+        "based",
+        "s4d",
+        "mamba",
+        "h3",
+        "hyena",
+        "lstm",
+        "cnn"
+      ],
+      "metric": "multi_metric",
+      "direction": "descriptive",
+      "metrics": [
+        {
+          "name": "snip",
+          "direction": "maximize",
+          "role": "proxy"
+        },
+        {
+          "name": "mix_nuc",
+          "direction": "maximize",
+          "role": "proxy"
+        },
+        {
+          "name": "mlp_sal",
+          "direction": "maximize",
+          "role": "proxy"
+        },
+        {
+          "name": "naswot",
+          "direction": "maximize",
+          "role": "proxy"
+        },
+        {
+          "name": "ntk_cond",
+          "direction": "maximize",
+          "role": "proxy"
+        },
+        {
+          "name": "params",
+          "direction": "minimize",
+          "role": "control"
+        },
+        {
+          "name": "flops",
+          "direction": "minimize",
+          "role": "control"
+        },
+        {
+          "name": "state_cap",
+          "direction": "minimize",
+          "role": "control"
+        }
+      ],
+      "split": "random_tokens",
+      "selection": "initialization_no_training",
+      "limitations": [
+        "Current implementation is v2. mlp_sal is constant across the 11 baseline models and must not be used for ranking.",
+        "Historical snip/mix_nuc Spearman rho was 0.82; they may be redundant. ntk_cond coordinate-count/coordinate-seed stability is unverified.",
+        "mix_nuc is not original DSS++; ntk_cond uses random output projections rather than a standard empirical NTK.",
+        "Inputs are uniform random tokens with identical targets; no task-dependent predictive validity has been established. No cross-tier Spearman is measured.",
+        "flops and state_cap are analytic controls, not measured runtime/memory. State capacity retains the v2 formulas and assumes two bytes per element even though scoring uses FP32.",
+        "Smoke uses probe_len 8 and L 64, so window attention cannot be distinguished from full attention at window 64."
+      ],
+      "common": [
+        "--device",
+        "cuda"
+      ],
+      "full": [
+        "--d-model",
+        "128",
+        "--n-layers",
+        "4",
+        "--seq-len",
+        "256",
+        "--probe-len",
+        "128",
+        "--batch",
+        "8"
+      ],
+      "smoke": [
+        "--quick"
+      ],
+      "budget_rule": {
+        "training_steps": 0,
+        "metric_location": "per_seed",
+        "full": 1,
+        "smoke": 1
+      },
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      }
     }
   }
 }

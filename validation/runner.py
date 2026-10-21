@@ -94,6 +94,12 @@ def source_identity(args):
     _, spec = load_protocol(args.task)
     if spec["adapter"] == "formal":
         paths["external_tfl_src"] = args.tfl_root / "src"
+    if args.task == "mqar":
+        paths["external_zoology"] = args.zoology_root / "zoology"
+    if spec["adapter"] == "mad":
+        paths["external_mad"] = args.mad_root / "mad"
+        paths["external_mad_configs"] = args.mad_root / "configs"
+        paths["external_mad_train"] = args.mad_root / "train.py"
     info = fingerprint(paths)
     try:
         info["git_commit"] = command_output(["git", "rev-parse", "HEAD"], ROOT)
@@ -109,7 +115,7 @@ def evaluation_identity(args):
     for p in sorted((ROOT / "validation").glob("*.py")):
         files["validation/" + p.name] = digest(p)
     spec = load_protocol(args.task)[1]
-    if spec["adapter"] == "native":
+    if spec["adapter"] in {"native", "mad", "tier0"}:
         base = ROOT / "proxy_tasks" / args.task
         for p in sorted(base.glob("*.py")):
             if p.name.startswith("models"):
@@ -117,6 +123,14 @@ def evaluation_identity(args):
             files[p.name] = digest(p)
         for p in sorted((ROOT / "proxy_tasks/common").glob("*.py")):
             files["common/" + p.name] = digest(p)
+        if args.task == "mqar":
+            files["zoology_generator"] = fingerprint({"data": args.zoology_root / "zoology/data"})["sha256"]
+        if spec["adapter"] == "mad":
+            files["mad_evaluation"] = fingerprint({
+                "train": args.mad_root / "train.py", "data": args.mad_root / "mad/data",
+                "pl_wrapper": args.mad_root / "mad/model/pl_model_wrapper.py",
+                "metrics": args.mad_root / "mad/metrics.py", "config": args.mad_root / "mad/configs.py",
+                "paths": args.mad_root / "mad/paths.py", "tasks": args.mad_root / "configs/tasks"})["sha256"]
     elif spec["adapter"] == "fflm":
         tree = ast.parse((ROOT / "proxy_tasks/fflm/run_fflm.py").read_text())
         tree.body = [node for node in tree.body if getattr(node, "name", "") not in {"LSTM", "model_for"}]
@@ -130,6 +144,17 @@ def evaluation_identity(args):
 
 
 def asset_paths(args, spec):
+    base = args.data_root or proxy_paths.DATA_ROOT / args.task
+    if args.task == "ett":
+        return {"ETTh1": base / "ETTh1.csv"}
+    if args.task == "scifar":
+        return {"cifar10": base / "cifar/cifar-10-batches-py"}
+    if args.task == "sc_raw":
+        return {f"{split}_{kind}": base / f"{split}_{kind}.npy"
+                for split in ["training", "validation", "testing"] for kind in ["x", "y"]}
+    if spec["adapter"] == "mad":
+        dataset = _load_file("mad_data", ROOT / "proxy_tasks/mad_tsc/data.py")
+        return {"mad_development_data": base / dataset.DATASET}
     if args.task == "g2p":
         base = args.data_root or proxy_paths.DATA_ROOT / "g2p"
         return {name: base / name for name in ["vocab.json", "train.tsv", "val.tsv", "test.tsv"]}
@@ -140,7 +165,6 @@ def asset_paths(args, spec):
             paths[split] = base / "subset/processed" / (split + ".pt")
         return paths
     if spec["adapter"] == "formal":
-        base = args.tfl_root / "data" / spec["dataset"]
         return {"train": base / "train_corpus.pk", "validation_bins": base / "val_corpus_bins.pk"}
     if spec["adapter"] == "fflm":
         roots = fflm_roots(args)
@@ -172,6 +196,13 @@ def preflight(args, spec):
         raise ValueError(f"{args.task} supports {spec['models']}; got {args.model}")
     assets = asset_paths(args, spec)
     data = fingerprint(assets)
+    for task, upstream, commit_file in [("mqar", args.zoology_root, "zoology.commit"),
+                                        ("mad_tsc", args.mad_root, "mad.commit")]:
+        if args.task == task:
+            expected = (ROOT / "third_party" / commit_file).read_text().strip().split()[-1]
+            actual = command_output(["git", "rev-parse", "HEAD"], upstream)
+            if actual != expected:
+                raise ValueError(f"{task} upstream commit mismatch: {actual} != {expected}")
     if args.task == "g2p":
         base = args.data_root or proxy_paths.DATA_ROOT / "g2p"
         words = [{line.split("\t", 1)[0] for line in (base / (split + ".tsv")).read_text().splitlines() if line.strip()}
@@ -187,7 +218,8 @@ def preflight(args, spec):
         actual = command_output(["git", "rev-parse", "HEAD"], args.tfl_root)
         if actual != expected:
             raise ValueError(f"TFL commit mismatch: expected {expected}, got {actual}")
-    env = command_output([args.python, "-c", (
+    interpreter = runtime_python(args, spec)
+    env = command_output([interpreter, "-c", (
         "import json,sys,torch,importlib.metadata as m; "
         "assert torch.cuda.is_available(), 'CUDA unavailable'; "
         "print(json.dumps(dict(python=sys.version.split()[0],torch=torch.__version__,"
@@ -195,13 +227,18 @@ def preflight(args, spec):
         "packages={p:m.version(p) for p in ['numpy','torch']})))"
     )])
     environment = json.loads(env)
-    if not environment["torch"].startswith("2.5.1"):
-        raise ValueError("v1 requires torch 2.5.1; change protocol version for another runtime")
+    expected_torch = spec.get("runtime", {}).get("torch", "2.5.1")
+    if environment["torch"].split("+")[0] != expected_torch:
+        raise ValueError(f"{args.task} requires torch {expected_torch}; got {environment['torch']}")
+    packages = spec.get("runtime", {}).get("packages", [])
+    if packages:
+        environment["packages"].update(json.loads(command_output([interpreter, "-c",
+            "import json,importlib.metadata as m; print(json.dumps({p:m.version(p) for p in " + repr(packages) + "}))"])))
     if args.task == "zinc":
         environment["packages"]["torch-geometric"] = command_output(
-            [args.python, "-c", "import torch_geometric; print(torch_geometric.__version__)"], timeout=120)
+            [interpreter, "-c", "import torch_geometric; print(torch_geometric.__version__)"], timeout=120)
     if spec["adapter"] == "formal":
-        environment["packages"].update(json.loads(command_output([args.python, "-c",
+        environment["packages"].update(json.loads(command_output([interpreter, "-c",
             "import json,importlib.metadata as m; print(json.dumps({p:m.version(p) for p in ['transformers','tensorboardX','pandas','scikit-learn']}))"])))
     if os.environ.get("CUDA_VISIBLE_DEVICES", "0").strip() == "":
         raise ValueError("CUDA_VISIBLE_DEVICES is empty")
@@ -209,11 +246,19 @@ def preflight(args, spec):
             "evaluation_sha256": evaluation_identity(args), "source": source_identity(args)}
 
 
+def runtime_python(args, spec):
+    return args.python or spec.get("runtime", {}).get("default_python", sys.executable)
+
+
 def training_budget(spec, profile, model):
+    rule = spec.get("budget_rule", {})
+    maximum = (0 if model in rule.get("no_training_models", []) else rule.get(profile)) if "key" in rule else None
     return {"profile": profile, "common": spec.get("common", []),
             "arguments": spec[profile],
             "steps": (3 if profile == "smoke" else spec["steps"][model]) if "steps" in spec else None,
             "evaluation_splits": spec.get("evaluation_splits"),
+            "rule": spec.get("budget_rule"), "maximum_counter": maximum,
+            "runtime": spec.get("runtime"),
             "precision": "fp32"}
 
 
@@ -224,29 +269,42 @@ def build_command(args, spec, seed, destination):
     env.update(PYTHONHASHSEED=str(seed), OMP_NUM_THREADS="1", MKL_NUM_THREADS="1",
                PYTHONDONTWRITEBYTECODE="1")
     options = spec.get("common", []) + spec[args.profile]
-    if spec["adapter"] == "native":
-        command = [args.python, "-m", args.task + ".train", "--model", args.model,
+    interpreter = runtime_python(args, spec)
+    if spec["adapter"] == "tier0":
+        native.mkdir(parents=True)
+        # The parent repeats seeds (default 0/1/2); child must not repeat internally.
+        return [interpreter, "-m", "tier0.tier0_proxy", "--models", args.model,
+                "--seed-start", str(seed), "--seeds", "1", "--out", str(native / "tier0_results.json"),
+                *options], ROOT / "proxy_tasks", env
+    if spec["adapter"] in {"native", "mad"}:
+        command = [interpreter, "-m", args.task + ".train", "--model", args.model,
                    "--seed", str(seed), "--out_dir", str(native), *options]
-        if args.task in {"g2p", "zinc"}:
+        if args.task in {"g2p", "zinc", "ett", "scifar", "sc_raw", "mad_tsc"}:
             data = args.data_root or proxy_paths.DATA_ROOT / args.task
-            command += ["--data_dir" if args.task == "g2p" else "--root", str(data)]
+            command += ["--root" if args.task == "zinc" else "--data_dir", str(data)]
+        if args.task == "mqar":
+            command += ["--zoology_root", str(args.zoology_root)]
+        if spec["adapter"] == "mad":
+            command += ["--mad_root", str(args.mad_root)]
         return command, ROOT / "proxy_tasks", env
     if spec["adapter"] == "fflm":
         roots = fflm_roots(args)
         env["FFLM_DATA_DIR"] = str(roots["data"])
         # Pin only the FFLM subprocess dependencies, not EvoScientist's Python environment.
         env["PYTHONPATH"] = str(roots["vendor"])
-        return [args.python, str(ROOT / "proxy_tasks/fflm/run_fflm.py"), "--arch", args.model,
+        return [interpreter, str(ROOT / "proxy_tasks/fflm/run_fflm.py"), "--arch", args.model,
                 "--seed", str(seed), "--data-seed", str(spec["data_seed"]), "--device", "cuda",
                 "--out", str(native), *options, "--evaluation-splits", *spec["evaluation_splits"]], ROOT, env
     # Stage only source/data symlinks; upstream checkpoints stay inside this run.
     stage = native / "tfl"
     stage.mkdir(parents=True)
     (stage / "src").symlink_to(args.tfl_root / "src", target_is_directory=True)
-    (stage / "data").symlink_to(args.tfl_root / "data", target_is_directory=True)
+    (stage / "data").mkdir()
+    (stage / "data" / spec["dataset"]).symlink_to(
+        args.data_root or proxy_paths.DATA_ROOT / args.task, target_is_directory=True)
     env.update(EXP_DIR=str(native), EXP_ID="proxy-validation-v1", N_CONCURRENT="1")
     model = _load_file("formal_models", ROOT / "proxy_tasks/formal_languages/models.py").TFL_MODELS[args.model]
-    return [args.python, str(ROOT / "proxy_tasks/formal_languages/runner.py"), "-mode", "train",
+    return [interpreter, str(ROOT / "proxy_tasks/formal_languages/runner.py"), "-mode", "train",
             "-dataset", spec["dataset"], "-opt", "rmsprop", "-batch_size", "32", "-gpu", "0",
             "-seed", str(seed), "-run_name", destination.name, *model, *options], stage, env
 
@@ -258,21 +316,54 @@ def finite(value, name):
 
 
 def extract_metrics(task, spec, native, model, seed, profile):
-    if spec["adapter"] == "native":
+    if spec["adapter"] == "tier0":
+        p = native / "tier0_results.json"
+        raw = json.loads(p.read_text())
+        if raw["seeds"] != 1 or raw["seed_start"] != seed or set(raw["results"]) != {model}:
+            raise ValueError("Tier0 model/seed mismatch")
+        expected = {"d_model": 32, "n_layers": 2, "seq_len": 64, "batch": 4} if profile == "smoke" else {
+            "d_model": 128, "n_layers": 4, "seq_len": 256, "batch": 8}
+        if any(raw["config"][k] != v for k, v in expected.items()) or raw["probe_len"] != (8 if profile == "smoke" else 128):
+            raise ValueError("Tier0 configuration mismatch")
+        result = raw["results"][model]["seeds"]
+        if len(result) != 1:
+            raise ValueError("Expected exactly one Tier0 sample")
+        return {m["name"]: finite(result[0][m["name"]], m["name"]) for m in spec["metrics"]}, str(p)
+    if spec["adapter"] in {"native", "mad"}:
         p = native / f"{model}_seed{seed}" / "history.json"
         raw = json.loads(p.read_text())
         history = raw["history"]
         if not history:
             raise ValueError("Empty training history")
-        key = "step" if task == "regbench" else "epoch"
-        expected = {"regbench": 2000, "g2p": 10, "zinc": 200}[task]
-        if profile == "smoke":
-            expected = 20 if task == "regbench" else 1
-        if history[-1][key] != expected:
-            raise ValueError(f"Incomplete budget: {history[-1][key]} != {expected}")
+        rule = spec["budget_rule"]
+        key, expected = rule["key"], rule[profile]
+        if model in rule.get("no_training_models", []):
+            expected = 0
+        completed = history[-1][key]
+        if isinstance(completed, bool) or not isinstance(completed, int) or not 0 <= completed <= expected:
+            raise ValueError(f"Invalid completed budget: {completed!r}")
+        if completed != expected:
+            if not rule.get("allow_early_stop") or completed < 1:
+                raise ValueError(f"Incomplete budget: {completed} != {expected}")
+            early = rule["early_stop"]
+            if early["kind"] == "threshold":
+                if raw.get("stop_reason") != "early_stopping" or finite(history[-1][early["metric"]], early["metric"]) < early["threshold"]:
+                    raise ValueError("Unjustified threshold early stop")
+            elif early["kind"] == "patience":
+                values = [finite(h[early["metric"]], early["metric"]) for h in history]
+                best = min(range(len(values)), key=values.__getitem__)
+                if raw.get("stop_reason") != "early_stopping" or len(values) - 1 - best < early["patience"]:
+                    raise ValueError("Unjustified patience early stop")
+            elif early["kind"] == "mad_threshold":
+                if raw.get("stop_reason") != "accuracy_threshold" or finite(raw["development_peak_accuracy"], "development_peak_accuracy") < early["threshold"]:
+                    raise ValueError("Unjustified MAD early stop")
+            else:
+                raise ValueError("Unknown early stop rule")
         if task == "zinc" and (not raw["args"].get("validation_only") or raw.get("test_mae") is not None):
             raise ValueError("Search validation must not load or evaluate the ZINC test set")
-        value = raw[spec["metric"]] if task == "zinc" else history[-1][spec["metric"]]
+        if task in {"ett", "scifar", "sc_raw", "mad_tsc"} and (raw.get("args", {}).get("final_test") or raw.get("test") is not None):
+            raise ValueError("Search validation must not evaluate the final test")
+        value = raw[spec["metric"]] if rule["metric_location"] == "top" else history[-1][spec["metric"]]
         return {spec["metric"]: finite(value, spec["metric"])}, str(p)
     if spec["adapter"] == "fflm":
         found = sorted(native.glob("*/result.json"))
@@ -358,6 +449,8 @@ def run(args):
                "budget": training_budget(spec, args.profile, args.model),
                "metric": {"name": spec["metric"], "direction": spec["direction"], "split": spec["split"]},
                "selection": spec["selection"], "limitations": spec["limitations"]}
+        if "metrics" in spec:
+            row["metric_definitions"] = spec["metrics"]
         started = time.monotonic()
         write_json(destination / "result.json", row)
         try:
@@ -432,6 +525,21 @@ def compare(baseline, candidate):
         for key in ["data", "environment", "evaluation_sha256"]:
             if r["provenance"][key] != reference["provenance"][key]:
                 raise ValueError(f"Incompatible {key}")
+    if reference["metric"]["name"] == "multi_metric":
+        definitions = reference["metric_definitions"]
+        if any(r.get("metric_definitions") != definitions for r in left + right):
+            raise ValueError("Incompatible metric definitions")
+        descriptions = {}
+        for metric in definitions:
+            name = metric["name"]
+            a = [finite(r["metrics"][name], name) for r in left]
+            b = [finite(r["metrics"][name], name) for r in right]
+            descriptions[name] = {**metric, "baseline_mean": statistics.mean(a),
+                "baseline_std_population": statistics.pstdev(a), "candidate_mean": statistics.mean(b),
+                "candidate_std_population": statistics.pstdev(b)}
+        return {"schema_version": 1, "task": reference["task"], "seeds": sorted(r["seed"] for r in left),
+                "metrics": descriptions, "limitations": reference["limitations"],
+                "interpretation": "Descriptive per-metric statistics only; no aggregate improvement or cross-tier prediction."}
     name = reference["metric"]["name"]
     a = {r["seed"]: finite(r["metrics"][name], name) for r in left}
     b = {r["seed"]: finite(r["metrics"][name], name) for r in right}
@@ -456,10 +564,12 @@ def parser():
         c = commands.add_parser(name)
         c.add_argument("--task", required=True)
         c.add_argument("--model", required=True)
-        c.add_argument("--python", default=sys.executable, help="ML interpreter, separate from EvoScientist's venv")
+        c.add_argument("--python", default=None, help="Override task runtime interpreter (protocol default, else current Python)")
         c.add_argument("--data-root", type=lambda p: Path(p).expanduser().resolve())
         c.add_argument("--tfl-root", type=lambda p: Path(p).expanduser().resolve(), default=proxy_paths.THIRD_PARTY / "tfl")
         c.add_argument("--fflm-assets", type=lambda p: Path(p).expanduser().resolve(), default=None)
+        c.add_argument("--zoology-root", type=lambda p: Path(p).expanduser().resolve(), default=proxy_paths.THIRD_PARTY / "zoology")
+        c.add_argument("--mad-root", type=lambda p: Path(p).expanduser().resolve(), default=proxy_paths.THIRD_PARTY / "mad-lab")
         if name == "run":
             c.add_argument("--seeds", type=int, nargs="+", default=[0, 1, 2])
             c.add_argument("--profile", choices=["smoke", "full"], default="smoke")
