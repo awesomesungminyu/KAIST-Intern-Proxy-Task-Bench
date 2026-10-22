@@ -614,6 +614,54 @@
         "torch": "2.5.1",
         "packages": []
       }
+    },
+    "iclreg": {
+      "adapter": "native",
+      "models": [
+        "transformer",
+        "lstm"
+      ],
+      "metric": "val_k_ge_d_mse",
+      "direction": "minimize",
+      "split": "fixed_generated_validation",
+      "selection": "final_step",
+      "limitations": [
+        "Scaled-down Garg et al. 2022 linear regression: d=20, 41 points per prompt (k=0..40), noiseless y=w.x. Error is (y_hat-y)^2/d on 2048 fixed validation prompts (seed 2147483647); metric is the mean over k=20..40. Per-k errors, the least-squares oracle and the y=0 baseline are in history.json.",
+        "Budget: 45000 steps, batch 64, Adam lr 1e-4, Garg curriculum (dims 5->20, points 11->41, every 2000 steps). Transformer 6 layers/8 heads/width 256 (Garg: 12 layers); LSTM 3 layers/width 512. No separate test split; training prompts are freshly sampled from the same distribution.",
+        "Inputs are continuous vectors, not tokens: x via Linear(d,D) and scalar y via a separate Linear(1,D), interleaved. mamba is not registered because the pure-torch scan exceeds 30 minutes per seed at this budget."
+      ],
+      "common": [
+        "--n_dims",
+        "20",
+        "--n_points",
+        "41",
+        "--batch_size",
+        "64",
+        "--lr",
+        "0.0001",
+        "--curriculum_interval",
+        "2000"
+      ],
+      "full": [
+        "--steps",
+        "45000",
+        "--eval_every",
+        "5000"
+      ],
+      "smoke": [
+        "--smoke_test"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "budget_rule": {
+        "key": "step",
+        "full": 45000,
+        "smoke": 20,
+        "allow_early_stop": false,
+        "metric_location": "top"
+      }
     }
   }
 }
