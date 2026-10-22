@@ -31,7 +31,8 @@ Tier 0 안에서 지표끼리 비교한 값뿐이고, Tier 간 예측력과는 �
 | Tier 0 | `tier0` (`proxy_tasks/tier0/tier0_proxy.py`) | 구현됨, 한계 있음 (아래) |
 | Tier 1 lose | `parity`, `tomita5`, `tomita6`, `fflm` | 구현됨 |
 | Tier 1 win | `mqar`, `mad_tsc` (MAD selective copying) | 구현됨, 런타임·파일럿 한계 있음 |
-| Tier 1 win | `iclreg`, Jelassi et al. 2024 `copy` | **미구현** |
+| Tier 1 win | `jelassi_copy` (Jelassi et al. 2024 copy) | 구현됨, **합격** (3 seed, 아래 판정 절. 한계 있음) |
+| Tier 1 win 후보 | `iclreg` (Garg et al. 2022) | 구현·등록됨, **Tier 1 win 미확정** (Transformer 우위 미검증, 아래 판정 절) |
 | Tier 2 win | `regbench`, `g2p`, `zinc` | 구현됨 |
 | Tier 2 lose | `sc_raw`, `scifar`, `ett` | 구현됨, budget_limited/미수렴 이력은 프로토콜에 명시 |
 | Tier 3 | 대규모 AR LM | 이 리포 범위 밖 (ETRI) |
@@ -55,6 +56,8 @@ Tier 0 안에서 지표끼리 비교한 값뿐이고, Tier 간 예측력과는 �
 | scifar, sc_raw | transformer, lstm |
 | mqar | transformer, linear_attention, gated_linear_attention, gqa2 |
 | mad_tsc | MAD 레시피 16종 (models.py); 과거 official benchmark는 2종 중 1종 FAILED |
+| jelassi_copy | transformer (Hard-ALiBi), lstm, mamba (순수 torch) |
+| iclreg | transformer, lstm (연속 벡터 입력) |
 | tier0 | 시퀀스 믹서 11종 (transformer, swa, gla, rwkv6, based, s4d, mamba, h3, hyena, lstm, cnn) |
 
 모든 태스크에 공통으로 들어 있는 아키텍처가 없다. 이름이 같은 `transformer`도 구현이 다르다.
@@ -65,6 +68,8 @@ Tier 0 안에서 지표끼리 비교한 값뿐이고, Tier 간 예측력과는 �
 | 정규화 | LayerNorm | RMSNorm |
 | MLP | GELU | SwiGLU |
 | 위치 정보 | 학습형 위치임베딩 | 없음 |
+
+jelassi_copy의 `transformer`는 위치 인코딩 없는 Hard-ALiBi 변형(4층/8헤드/폭 256)이라 위 두 구현과도 다르다.
 
 이 상태로는 Tier 간 Spearman을 계산할 수 없다. 같은 이름, 같은 구현의 아키텍처
 집합을 먼저 정해 모든 Tier에 꽂아야 한다.
@@ -166,6 +171,55 @@ backward를 지원하지 않는다. CPU에서는 cuDNN을 쓰지 않으므로 v1
 | params, flops, state_cap | 대조군 | |
 
 입력이 균일 랜덤 토큰이고 target이 입력과 같다는 데이터 설계 문제는 아직 정하지 않았다.
+
+## Tier 1 win 신규 편입 판정 (2026-10-22)
+
+두 과제를 새로 구현하고 학습을 돌려 "Transformer가 실제로 이기는가"를 확인했다. 실행은 모두
+`python -m validation run --profile full`, NVIDIA TITAN RTX (sm_75, 각 train.log의 GPU-GUARD 줄로 확인),
+torch 2.5.1+cu124, 소스 커밋 `fb2bc74`. 결과 파일은 `artifacts/tier1_new_20261022/`에 있고 커밋하지 않는다.
+표기는 mean ± population std (ddof=0), seed 0/1/2. 각 seed는 별도 `validation run` 호출이다
+(직전 실행 종료 직후 runner의 GPU idle 검사가 사용률 샘플 지연으로 실패해, 호출 전 10초 idle을 기다렸다).
+
+### jelassi_copy — 합격
+
+합격 기준: OOD 구간에서 transformer가 lstm/SSM보다 높고 차이가 seed 표준편차보다 클 것.
+지표는 문자열 exact match, 4000 step, 학습 길이 5..50, 구간당 고정 문자열 256개.
+
+| 모델 | 파라미터 | id 5..50 | ood 51..100 | ood 101..200 | ood 201..300 | **OOD 평균** | seed당 시간 |
+|---|---|---|---|---|---|---|---|
+| transformer | 3,174,912 | 0.999 ± 0.002 | 0.984 ± 0.003 | 0.945 ± 0.026 | 0.826 ± 0.070 | **0.918 ± 0.031** | 1.8분 |
+| lstm | 4,233,246 | 0.172 ± 0.012 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | **0.000 ± 0.000** | 2.8분 |
+| mamba | 1,767,680 | 0.378 ± 0.024 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | **0.000 ± 0.000** | 7.0분 |
+
+차이 0.918은 transformer std 0.031의 약 30배다. 기준상 합격이다. 해석 한계:
+
+- transformer는 Hard-ALiBi 변형(NoPE + 창 제한 헤드)이며 다른 태스크의 transformer와 구현이 다르다.
+- 공식 코드를 vendor하지 않고 재구현했다. 데이터 형식·손실 mask·exact match 정의만 맞췄고,
+  공식 구현과의 수치 동일성은 검증하지 않았다.
+- lstm/mamba는 4000 step 예산에서 **학습 구간(id)도 풀지 못했다** (0.172, 0.378). OOD 격차의 일부는
+  길이 일반화 실패가 아니라 학습 실패 때문이다. 학습 구간을 푼 SSM과의 OOD 비교는 하지 않았다.
+- mamba는 파라미터가 transformer의 약 절반이고, mamba-ssm 커널이 아닌 순수 torch 순차 스캔이다.
+- 3 seed, 논문보다 훨씬 작은 모델·학습량이다. 논문 수치의 정량 재현이 아니다.
+
+### iclreg — Tier 1 win 미확정
+
+합격 기준: k ≥ d 구간에서 transformer 오차가 lstm보다 seed 표준편차를 넘게 낮고 LS oracle에 접근할 것.
+지표는 k = 20..40 평균 (ŷ−y)²/d, 낮을수록 좋다. LS oracle은 0, y=0 예측은 약 0.97.
+
+| 모델 | seed 0 | seed 1 | seed 2 | 평균 |
+|---|---|---|---|---|
+| transformer | 0.084 | 0.796 | 0.476 | 0.452 ± 0.291 |
+| lstm | 0.249 | 중단 | 미실행 | n=1 |
+
+**Transformer 우위 미검증**: 45000 step에서 transformer가 수렴한 seed는 1/3(seed 0)이다. seed 1·2는
+마지막 평가까지 오차가 내려가는 중이었다. transformer 평균이 lstm seed 0보다 높고 표준편차가 0.29여서
+기준을 충족하지 못한다. lstm seed 1은 사용자 지시로 학습 도중 중단했고 seed 2는 돌리지 않았다.
+더 긴 학습은 시도하지 않았다. 그래서 iclreg는 등록(코드·프로토콜)을 유지하되 Tier 1 win 행에 넣지 않는다.
+대체 후보(induction heads, sparse regression 등)는 시도하지 않았다.
+
+참고: transformer seed 0 k별 오차는 k=5 0.744 (LS 0.736), k=10 0.548 (0.522), k=19 0.193 (0.043),
+k=20 0.187 (0), k=40 0.050 (0)으로, k<d 구간은 LS를 거의 따라가고 k ≥ d에서는 0에 다가가는 중이었다.
+transformer의 seed당 시간은 14.8분, lstm seed 0은 18.3분이다.
 
 ## 신규 편입의 해석 범위
 

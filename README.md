@@ -1,6 +1,6 @@
 # proxy tasks — 구조 변경 검증용 소규모 벤치마크
 
-EvoScientist가 제안한 아키텍처를 13개 task ID에서 검증하는 독립 저장소다.
+EvoScientist가 제안한 아키텍처를 15개 task ID에서 검증하는 독립 저장소다.
 모델 추가 방법은 [ADDING_A_MODEL](docs/ADDING_A_MODEL.md), 실제 데이터 경로와
 체크섬은 [DATA_INVENTORY](docs/DATA_INVENTORY.md)를 따른다.
 
@@ -78,10 +78,14 @@ FFLM vendor는 데이터 루트와 분리하며 `--fflm-assets`로 원 패키지
 | sc_raw | 16000-sample Speech Commands; transformer, lstm | 원 파형 x/y.npy 캐시 | lstm |
 | mqar | 8-pair associative recall; transformer, linear_attention, gated_linear_attention, gqa2 | pinned zoology 생성기 | transformer |
 | mad_tsc | MAD selective copying; 레시피 16종 | MAD baseline 캐시 | mh_attention_swiglu |
+| jelassi_copy | 문자열 전사 + 길이 일반화 (Jelassi et al. 2024); transformer (Hard-ALiBi), lstm, mamba | 실행 시 생성 | transformer |
+| iclreg | in-context 선형 회귀, **연속 벡터 입력** (Garg et al. 2022); transformer, lstm | 실행 시 생성 | transformer |
 | tier0 | 학습 없이 초기 모델의 다중 지표; mixer 11종 | 균일 랜덤 토큰 생성 | transformer |
 
 신규 태스크는 `proxy_tasks/<task>/README.md`에 설정과 한계를 적었다.
-mad_tsc는 Jelassi copy와 다르며 iclreg와 Jelassi copy는 미구현이다.
+mad_tsc는 jelassi_copy와 다른 과제다. jelassi_copy는 Tier 1 win 합격, iclreg는 등록했으나
+Tier 1 win 미확정이다 (판정 수치: [Tier 프레임워크](docs/TIER_FRAMEWORK.md#tier-1-win-신규-편입-판정-2026-10-22)).
+태스크 ID가 `copy`가 아닌 이유는 [jelassi_copy README](proxy_tasks/jelassi_copy/README.md)에 있다.
 Tier 간 Spearman과 공통 아키텍처 집합 작업은 ρ 측정 시점까지 보류했다.
 해결해야 할 구조적 문제는 [Tier 프레임워크](docs/TIER_FRAMEWORK.md)에 보존했다.
 
@@ -96,6 +100,7 @@ proxy_tasks/
   fflm/                     재구성 Flip-Flop LM
   ett/ scifar/ sc_raw/       실제 데이터 태스크
   mqar/ mad_tsc/             합성 태스크, pinned 외부 코드
+  jelassi_copy/ iclreg/      합성 태스크, 자체 구현 (실행 시 생성)
   tier0/                    mixer 레지스트리와 zero-cost evaluator
 third_party/                커밋 SHA와 패치 (checkout/vendor는 Git 제외)
 experiments/                원 실험 코드·설정 보존 (결과·데이터 제외)
