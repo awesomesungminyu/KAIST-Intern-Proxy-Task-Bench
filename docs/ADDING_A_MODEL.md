@@ -25,6 +25,8 @@ EvoScientist의 변경 지점은 각 태스크의 `models.py`다. 평가·데이
 | tier0 / `tier0/models.py` | `d` | **mixer** `[B,L,d] → [B,L,d]`, causal. `family`, `state_elements(cfg)`도 등록 |
 | parity / tomita5 / tomita6 / `formal_languages/models.py` | 이름과 TFL CLI 인자 목록 | TFL의 `src/components/` 모델 계약을 따름 (아래) |
 | mad_tsc / `mad_tsc/models.py` | 없음 (MAD layer ID 목록 반환) | MAD `LanguageModel`: `tokens[B,L] → logits[B,L,V]`. MAD registry/config/recipe를 함께 사용 |
+| iclreg / `iclreg/models.py` | `n_dims, n_points` | **연속 벡터 입력** `forward(xs[B,K,d] float32, ys[B,K] float32) → preds[B,K]`; `preds[:,i]`는 `ys[:,i]` 예측이며 `ys[:,i]`를 보면 안 됨 ([아래](#iclreg-연속-벡터-입력)) |
+| jelassi_copy / `jelassi_copy/models.py` | `vocab_size` | `tokens[B,T] → logits[B,T,30]`, causal. 평가 T가 학습 context(220)보다 길다 (최대 603) |
 
 직접 실행은 `cd proxy_tasks && python -m <task>.train --help`로 확인한다.
 모델 생성 시 다운로드·학습·외부 서비스 호출·전역 RNG 재설정을 하지 않는다.
@@ -93,6 +95,40 @@ def _candidate(d):
 validation은 seed당 한 번씩 점수화하고 기본 0/1/2를 반복한다. 기존 직접 CLI의
 기본 seed는 1234/1235/1236이며 `--seed-start`로 바꿀 수 있다.
 
+## iclreg: 연속 벡터 입력
+
+iclreg는 이 저장소에서 **입력이 토큰이 아닌 유일한 시퀀스 태스크**다. 토큰 임베딩(`nn.Embedding`)
+대신 x는 `nn.Linear(d, D)`로, 스칼라 y는 별도 `nn.Linear(1, D)`로 같은 폭 D에 올린다.
+그리고 `[x_1, y_1, x_2, y_2, …, x_K, y_K]` 길이 2K 시퀀스를 causal로 처리해 **x 위치(짝수 인덱스)의 출력**을
+`nn.Linear(D, 1)`로 읽는다. 이 배치는 Garg et al. 2022를 따른다. 원 논문은 y를 `[y, 0, …, 0]`으로 채워
+x와 같은 read-in을 쓰며, 별도 y 임베딩은 그 일반화다. `iclreg/models.py`의 `Interleave`,
+`read_x_positions`를 쓰면 이 규약이 맞춰진다.
+
+```python
+class CandidateRegressor(nn.Module):
+    def __init__(self, n_dims, n_points, d_model=256):
+        super().__init__()
+        self.read_in = Interleave(n_dims, d_model)          # x: Linear(d,D), y: Linear(1,D)
+        self.mixer = CandidateCausalMixer(d_model)          # [B,2K,D] -> [B,2K,D], causal
+        self.head = nn.Linear(d_model, 1)
+
+    def forward(self, xs, ys):
+        return read_x_positions(self.mixer(self.read_in(xs, ys)), self.head)
+
+@register_model("candidate")
+def _candidate(n_dims, n_points):
+    return CandidateRegressor(n_dims, n_points)
+```
+
+- 손실은 MSE, 출력은 회귀값이다. logits/softmax가 아니다.
+- `ys[:, i]`가 `preds[:, i]`에 새면 정답 누출이다. `ys[:, i]`를 바꿔도 `preds[:, :i+1]`이 그대로인지 확인한다
+  (`tests/test_new_synthetic_tasks.py`가 등록된 모든 모델에 대해 검사한다).
+- 길이는 학습과 평가가 같다 (2K = 82). 학습형 위치 임베딩을 써도 된다.
+- 다른 태스크의 token LM을 그대로 등록할 수 없다. read-in/read-out을 위처럼 바꿔야 한다.
+
+jelassi_copy는 토큰 입력이지만 평가 길이가 학습 context보다 길다. 학습 길이에 묶인 위치 임베딩 표를 두면
+OOD 구간에서 index 오류가 나거나 그 자체로 길이 일반화가 막힌다. 위치 정보는 모델 내부에서 처리한다.
+
 ## 외부 구현을 쓰는 태스크
 
 **parity/tomita**: `formal_languages/models.py`의 `register_model(name, tfl_args)`는
@@ -118,7 +154,7 @@ extension이 없으면 실패할 수 있다. 모델 등록은 Turing 지원을 �
   새 이름을 추가하면 프로토콜 `steps`에도 같은 예산을 기록한다. 서로 다른 예산 비교는 거부된다.
 - sc_raw의 길이는 16000이다. 메모리를 줄이려고 입력을 임의 패치화하면 평가 변경이다.
 - 공통 아키텍처 집합과 Tier 간 Spearman 작업은 ρ 측정 시점까지 보류다.
-  iclreg와 Jelassi et al. copy는 구현되어 있지 않다.
+- iclreg는 연속 벡터 입력이다. token LM을 그대로 꽂을 수 없다 (위 절).
 
 ## 확인 순서와 결과 해석
 
