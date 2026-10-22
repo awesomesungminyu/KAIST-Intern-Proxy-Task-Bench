@@ -12,7 +12,7 @@ import test_validation as fixtures
 
 measured = fixtures.measured
 
-TASKS = {'regbench','g2p','zinc','parity','tomita5','tomita6','fflm','ett','scifar','sc_raw','mqar','mad_tsc','tier0','iclreg'}
+TASKS = {'regbench','g2p','zinc','parity','tomita5','tomita6','fflm','ett','scifar','sc_raw','mqar','mad_tsc','tier0','iclreg','jelassi_copy'}
 
 
 class RegistryTests(unittest.TestCase):

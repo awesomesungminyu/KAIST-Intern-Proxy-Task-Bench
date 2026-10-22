@@ -662,6 +662,59 @@
         "allow_early_stop": false,
         "metric_location": "top"
       }
+    },
+    "jelassi_copy": {
+      "adapter": "native",
+      "models": [
+        "transformer",
+        "lstm",
+        "mamba"
+      ],
+      "metric": "ood_exact_match",
+      "direction": "maximize",
+      "split": "fixed_generated_validation",
+      "selection": "final_step",
+      "limitations": [
+        "Self-implemented Jelassi et al. 2024 copy (format of sjelassi/transformers_ssm_copy@1188c47, not vendored). Train on lengths 5..50 packed into 220-token contexts; evaluate 256 fixed strings (seed 2147483647) per bin: id 5..50, ood 51..100, 101..200, 201..300. Metric is the mean string exact match over the three OOD bins; id and per-bin character accuracy are in history.json.",
+        "Exact match is teacher-forced argmax over the copied characters, which equals greedy-decoding exact match. Budget: 4000 steps, batch 32, AdamW lr 3e-4 wd 0.1, warmup 100 + linear decay. Models are far smaller than the paper (transformer 4 layers/width 256 Hard-ALiBi NoPE, LSTM 2x512, mamba 4x256 pure-torch scan).",
+        "Task ID is jelassi_copy because a proxy_tasks/copy package would shadow the Python standard library copy module. This is not mad_tsc (MAD selective copying)."
+      ],
+      "common": [
+        "--batch_size",
+        "32",
+        "--context_len",
+        "220",
+        "--min_len",
+        "5",
+        "--max_len",
+        "50",
+        "--ood_bins",
+        "51-100,101-200,201-300",
+        "--lr",
+        "0.0003",
+        "--eval_per_bin",
+        "256"
+      ],
+      "full": [
+        "--steps",
+        "4000",
+        "--eval_every",
+        "1000"
+      ],
+      "smoke": [
+        "--smoke_test"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "budget_rule": {
+        "key": "step",
+        "full": 4000,
+        "smoke": 20,
+        "allow_early_stop": false,
+        "metric_location": "top"
+      }
     }
   }
 }

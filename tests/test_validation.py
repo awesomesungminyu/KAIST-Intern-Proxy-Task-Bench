@@ -204,7 +204,7 @@ class ArtifactTests(unittest.TestCase):
 
     def test_all_tasks_have_explicit_metric_scope(self):
         catalog = json.loads(runner.PROTOCOL.read_text())["tasks"]
-        self.assertEqual(len(catalog), 14)
+        self.assertEqual(len(catalog), 15)
         for spec in catalog.values():
             self.assertTrue(spec["limitations"])
             self.assertIn(spec["direction"], ["maximize", "minimize", "descriptive"])
