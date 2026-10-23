@@ -31,6 +31,8 @@ third_party/tfl/
 third_party/fflm_vendor/
 third_party/zoology/
 third_party/mad-lab/
+third_party/tfl-v2/
+third_party/fla_vendor/
 
 # Validation artifacts and restored FFLM dependencies stay outside source control.
 artifacts/

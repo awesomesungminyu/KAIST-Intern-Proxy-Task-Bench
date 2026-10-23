@@ -52,9 +52,22 @@ if want parity || want tomita5 || want tomita6; then
   else
     echo "[setup]   패치 이미 적용됨 (또는 third_party/tfl.patch 확인 필요)"
   fi
+  # protocol v2 (common_set): -model_type CS 를 넣은 별도 체크아웃. v1 이 쓰는 tfl/ 는 그대로 두고,
+  # 공유 PROXY_VENDOR_ROOT 가 아니라 이 저장소의 third_party/ 에 둔다.
+  TFL_V2_DIR="$PWD/third_party/tfl-v2"
+  if [ ! -d "$TFL_V2_DIR" ]; then
+    git clone "$TFL_DIR" "$TFL_V2_DIR"
+    git -C "$TFL_V2_DIR" checkout -q "$TFL_COMMIT"
+    git -C "$TFL_V2_DIR" apply "$TFL_PATCH"
+    git -C "$TFL_V2_DIR" apply "$PWD/third_party/tfl-common-set.patch" && echo "[setup]   tfl-v2 (common_set) 패치 적용"
+  fi
 fi
 
 VENDOR_DIR="${PROXY_VENDOR_ROOT:-$PWD/third_party}"
+if [ ! -d "$PWD/third_party/fla_vendor/fla" ]; then
+  echo "[setup] protocol v2 cs_retnet — fla 0.3.1 + einops 를 third_party/fla_vendor 에 (환경·공유 vendor 에는 설치하지 않음)"
+  pip install -q --no-deps --target "$PWD/third_party/fla_vendor" flash-linear-attention==0.3.1 einops==0.8.1
+fi
 if want mqar; then
   echo "[setup] mqar — zoology 고정 커밋 클론 (데이터는 실행 시 생성)"
   ZOOLOGY_COMMIT=$(awk '{print $3}' third_party/zoology.commit)
