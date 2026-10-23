@@ -5,8 +5,8 @@
 ## 전제
 
 - 파일 이동, 이름 변경, 리팩터링은 공통 아키텍처 집합 브랜치(`codex/common-arch-set`, 각 태스크 `models.py` 수정 중)가
-  머지된 뒤에 한다. 이 브랜치는 이 clone의 `git branch -a`에 보이지 않아 실제 diff를 확인하지 못했다.
-  아래의 "충돌 가능성"은 그 브랜치가 `models.py`를 고친다는 사실만으로 판단했다.
+  머지된 뒤에 한다. 이 브랜치는 점검 종료 시점(2026-10-23)에 `b45b67f`에서 추가 커밋 없이 만들어져 있어 실제 diff를
+  확인할 수 없었다. 아래의 "충돌 가능성"은 그 브랜치가 `models.py`를 고친다는 사실만으로 판단했다.
 - `proxy_tasks/common/*.py`, 태스크의 `models*.py`가 아닌 `.py`, `validation/*.py`, `validation/protocols/v1.json`을 바꾸면
   `evaluation_sha256`이 바뀐다 ([REPO_MAP](REPO_MAP.md#evaluation_sha256에-들어가는-파일)). 해시가 바뀌면 기존 결과와 `compare`할 수 없으므로
   그런 항목은 다음 프로토콜 버전(재기준 실행)과 묶어서 처리한다.
