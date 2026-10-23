@@ -7,6 +7,7 @@
 from torch import nn
 
 from common.registry import ModelRegistry
+from common_set import NAMES as COMMON_SET, TokenLM
 
 MODELS = ModelRegistry("fflm")
 register_model = MODELS.register
@@ -40,6 +41,19 @@ def _transformer(smoke=False, flash=True):
             attn_dim_head=dim//heads, ff_mult=4, ff_glu=False,
             ff_dropout=0., attn_dropout=0., pre_norm=True,
             rotary_pos_emb=False, attn_flash=flash))
+
+
+def _common_set(mixer):
+    # Protocol v2 common architecture set: the transformer's width/depth/heads, mixer-only replacement.
+    # flash is ignored: attention mixers always use torch SDPA. Every cs_ name gets the 10000-step budget.
+    def build(smoke=False, flash=True):
+        dim, depth, heads = (32, 2, 4) if smoke else (512, 6, 8)
+        return TokenLM(5, mixer, d_model=dim, n_layers=depth, n_heads=heads, l_max=512)
+    return build
+
+
+for _mixer in COMMON_SET:
+    register_model('cs_' + _mixer)(_common_set(_mixer))
 
 
 def model_for(arch, smoke=False, flash=True):

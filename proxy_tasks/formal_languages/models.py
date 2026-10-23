@@ -21,3 +21,11 @@ register_model("san_abs", ["-model_type", "SAN", "-pos_encode", "-d_model", "32"
                            "-lr", "0.001"])
 register_model("san_mask", ["-model_type", "SAN", "-no-pos_encode", "-d_model", "32", "-depth", "2",
                             "-heads", "4", "-lr", "0.001"])
+
+# Protocol v2 common architecture set (proxy_tasks/common_set/tfl.py): SAN's width/depth/heads and lr.
+# -model_type CS exists only in the patched TFL checkout third_party/tfl-v2 (tfl-common-set.patch).
+# Same list as common_set.NAMES, repeated because this file must not import torch.
+COMMON_SET = ["transformer", "gqa", "linear_attention", "gla", "mamba", "hyena", "lstm", "s4d", "retnet"]
+for _mixer in COMMON_SET:
+    register_model("cs_" + _mixer, ["-model_type", "CS", "-cs_mixer", _mixer, "-d_model", "32", "-depth", "2",
+                                    "-heads", "4", "-lr", "0.001"])

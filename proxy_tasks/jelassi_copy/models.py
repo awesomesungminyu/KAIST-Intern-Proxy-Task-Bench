@@ -20,6 +20,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from common.registry import ModelRegistry
+from common_set import NAMES as COMMON_SET, TokenLM
 
 MODELS = ModelRegistry("jelassi_copy")
 register_model = MODELS.register
@@ -197,3 +198,19 @@ def _lstm(vocab_size):
 @register_model("mamba")
 def _mamba(vocab_size):
     return MambaLM(vocab_size)
+
+
+# Longest evaluation sequence (2*300+3 = 603 tokens for the 201-300 bin) must fit hyena's filter length.
+COMMON_SET_L_MAX = 1024
+
+
+def _common_set(mixer):
+    # Protocol v2 common architecture set: the Hard-ALiBi transformer's width/depth/heads, mixer-only
+    # replacement. cs_transformer/cs_gqa use RoPE like every other task, not Hard-ALiBi.
+    def build(vocab_size):
+        return TokenLM(vocab_size, mixer, d_model=256, n_layers=4, n_heads=8, l_max=COMMON_SET_L_MAX)
+    return build
+
+
+for _mixer in COMMON_SET:
+    register_model("cs_" + _mixer)(_common_set(_mixer))

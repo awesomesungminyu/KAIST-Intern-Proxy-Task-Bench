@@ -14,6 +14,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from common.registry import ModelRegistry
+from common_set import NAMES as COMMON_SET, TokenLM
 
 MODELS = ModelRegistry("regbench")
 register_model = MODELS.register
@@ -135,6 +136,17 @@ def _transformer(vocab_size: int, max_len: int) -> nn.Module:
 @register_model("lstm")
 def _lstm(vocab_size: int, max_len: int) -> nn.Module:
     return TinyLSTM(vocab_size)
+
+
+def _common_set(mixer: str):
+    # Protocol v2 common architecture set: TinyGPT's width/depth/heads, mixer-only replacement.
+    def build(vocab_size: int, max_len: int) -> nn.Module:
+        return TokenLM(vocab_size, mixer, d_model=128, n_layers=8, n_heads=2, l_max=max_len)
+    return build
+
+
+for _mixer in COMMON_SET:
+    register_model("cs_" + _mixer)(_common_set(_mixer))
 
 
 def build_model(name: str, vocab_size: int, max_len: int) -> nn.Module:

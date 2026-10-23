@@ -12,6 +12,7 @@ from torch import nn
 from torch.nn.attention import SDPBackend, sdpa_kernel
 
 from common.registry import ModelRegistry
+from common_set import NAMES as COMMON_SET, SequenceClassifier
 
 MODELS = ModelRegistry("scifar")
 register_model = MODELS.register
@@ -74,3 +75,15 @@ def _transformer():
 @register_model("lstm")
 def _lstm():
     return Classifier("lstm")
+
+
+def _common_set(mixer):
+    # Protocol v2 common architecture set: the transformer's width/depth/heads, mixer-only replacement.
+    # All mixers are causal (the v1 transformer is bidirectional); pooling is the same time mean.
+    def build():
+        return SequenceClassifier(3, 10, mixer, d_model=32, n_layers=2, n_heads=4, l_max=1024)
+    return build
+
+
+for _mixer in COMMON_SET:
+    register_model("cs_" + _mixer)(_common_set(_mixer))

@@ -13,6 +13,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from common.registry import ModelRegistry
+from common_set import NAMES as COMMON_SET, TokenLM, make_mixer, mixer_width
 
 MODELS = ModelRegistry("mqar")
 register_model = MODELS.register
@@ -405,7 +406,9 @@ class TransformerBlock(nn.Module):
         return x
 
 
-class TransformerLM(nn.Module):
+class MixerLM(nn.Module):
+    """v1 모델 (protocol v1 이름). cs_ 이름은 TransformerLM 이 common_set.TokenLM 으로 보낸다."""
+
     def __init__(self, model, config):
         super().__init__()
         d = config["d_model"]
@@ -455,3 +458,30 @@ def _gated_linear_attention(d_model, num_heads):
 @register_model("gqa2")
 def _gqa2(d_model, num_heads):
     return GroupedQueryAttention(d_model, num_heads, num_kv_heads=2)
+
+
+# Protocol v2 common architecture set. train.py CONFIG: sequence_length 64 (hyena filter length).
+COMMON_SET_L_MAX = 64
+# mqar runs on torch 2.2.2 (zoology), where fla chunk_retention cannot load: cs_retnet uses the torch
+# parallel form of the same operator (common_set.retention.retention_reference) on every device.
+COMMON_SET_RETENTION = "torch"
+
+
+def _common_set(mixer):
+    def build(d_model, num_heads):
+        return make_mixer(mixer, d_model, num_heads, COMMON_SET_L_MAX,
+                          mixer_width(mixer, d_model, num_heads, COMMON_SET_L_MAX), COMMON_SET_RETENTION)
+    return build
+
+
+for _mixer in COMMON_SET:
+    register_model("cs_" + _mixer)(_common_set(_mixer))
+
+
+def TransformerLM(model, config):
+    """train.py 의 생성 지점. cs_ 이름은 공통 뼈대(RMSNorm + SwiGLU, untied head, PyTorch 기본 초기화)를
+    쓰고 mixer 만 바꾼다. 그 밖의 이름은 위 MixerLM (v1) 그대로다."""
+    if model.startswith("cs_"):
+        return TokenLM(config["vocab_size"], model[len("cs_"):], config["d_model"], config["num_layers"],
+                       config["num_heads"], COMMON_SET_L_MAX, COMMON_SET_RETENTION)
+    return MixerLM(model, config)
