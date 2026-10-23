@@ -64,6 +64,10 @@ v2는 `common-arch-set-v2` 브랜치 참고. 현재 브랜치에는 `v2.json`이
 
 ## 빠른 시작
 
+실험 데이터는 [Google Drive 공유 폴더](https://drive.google.com/drive/folders/1FXi_UlvUnvrlfBj7YryFY0dmoE7uoZes?usp=sharing)에서 받는다.
+다운로드한 압축 파일은 함께 제공된 `SHA256SUMS.txt`로 검증한다.
+압축을 푼 뒤 태스크별 데이터 폴더의 상위 경로를 `PROXY_DATA_ROOT`로 export한다.
+
 저장소 루트에서 실행한다. `check`는 CUDA 환경·자산 점검이며 학습하지 않는다.
 
 ```bash
