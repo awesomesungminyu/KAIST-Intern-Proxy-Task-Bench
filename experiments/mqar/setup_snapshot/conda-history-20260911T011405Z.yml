@@ -1,0 +1,6 @@
+name: ai4science
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+prefix: /data/envs/ai4science

@@ -1,0 +1,34 @@
+{
+  "framework": "HEXA-T",
+  "experiment": "core5-standard-transformer",
+  "architecture": "Standard Transformer",
+  "seed": 456,
+  "gpu": "0",
+  "jobs": [
+    {
+      "id": "H1",
+      "name": "MQAR",
+      "entrypoint": "train_mqar_baseline.py"
+    },
+    {
+      "id": "H2",
+      "name": "Streaming Parity",
+      "entrypoint": "train_streaming_parity_transformer.py"
+    },
+    {
+      "id": "H3",
+      "name": "Flip-Flop",
+      "entrypoint": "train_flipflop_transformer.py"
+    },
+    {
+      "id": "H4",
+      "name": "WikiText-2",
+      "entrypoint": "train_wikitext2_transformer.py"
+    },
+    {
+      "id": "H5",
+      "name": "Speech Commands 12-class",
+      "entrypoint": "train_speechcommands_transformer.py"
+    }
+  ]
+}

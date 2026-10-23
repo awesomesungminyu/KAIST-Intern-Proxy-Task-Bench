@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "experiment": "mqar-gqa2-three-seeds",
+  "task": "mqar",
+  "requires_gpu": true,
+  "max_gpu_utilization_percent": 10,
+  "max_gpu_memory_mib": 1024,
+  "jobs": [
+    {
+      "name": "gqa2-seed456",
+      "architecture": "GQA-2 Transformer",
+      "seed": 456,
+      "command": [
+        "python3",
+        "train_mqar_gqa.py"
+      ],
+      "env": {
+        "HARNESS_SEED": "456",
+        "HARNESS_OUTPUT_DIR": "{root}/results/harness_validation/gqa2/seed_456"
+      }
+    },
+    {
+      "name": "gqa2-seed789",
+      "architecture": "GQA-2 Transformer",
+      "seed": 789,
+      "command": [
+        "python3",
+        "train_mqar_gqa.py"
+      ],
+      "env": {
+        "HARNESS_SEED": "789",
+        "HARNESS_OUTPUT_DIR": "{root}/results/harness_validation/gqa2/seed_789"
+      }
+    },
+    {
+      "name": "gqa2-seed101112",
+      "architecture": "GQA-2 Transformer",
+      "seed": 101112,
+      "command": [
+        "python3",
+        "train_mqar_gqa.py"
+      ],
+      "env": {
+        "HARNESS_SEED": "101112",
+        "HARNESS_OUTPUT_DIR": "{root}/results/harness_validation/gqa2/seed_101112"
+      }
+    }
+  ]
+}

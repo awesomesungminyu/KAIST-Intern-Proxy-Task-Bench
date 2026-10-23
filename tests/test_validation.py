@@ -202,12 +202,12 @@ class ArtifactTests(unittest.TestCase):
         (self.root / "two/x").write_text("changed")
         self.assertNotEqual(a, runner.fingerprint({"input": self.root / "two"}))
 
-    def test_all_seven_tasks_have_explicit_metric_scope(self):
+    def test_all_tasks_have_explicit_metric_scope(self):
         catalog = json.loads(runner.PROTOCOL.read_text())["tasks"]
-        self.assertEqual(len(catalog), 7)
+        self.assertEqual(len(catalog), 15)
         for spec in catalog.values():
             self.assertTrue(spec["limitations"])
-            self.assertIn(spec["direction"], ["maximize", "minimize"])
+            self.assertIn(spec["direction"], ["maximize", "minimize", "descriptive"])
             self.assertIn("smoke", spec)
             self.assertIn("full", spec)
 
@@ -226,6 +226,17 @@ class ArtifactTests(unittest.TestCase):
             self.assertEqual(original, runner.evaluation_identity(self.args))
             (task / "train.py").write_text("learning_rate = 0.01\n")
             self.assertNotEqual(original, runner.evaluation_identity(self.args))
+
+
+class DefaultPathTests(unittest.TestCase):
+    def test_default_asset_paths_follow_common_paths(self):
+        data, vendor = runner.proxy_paths.DATA_ROOT, runner.proxy_paths.THIRD_PARTY
+        for task, model in [("g2p", "transformer"), ("zinc", "gine"), ("fflm", "lstm")]:
+            args = runner.parser().parse_args(["check", "--task", task, "--model", model])
+            spec = runner.load_protocol(task)[1]
+            for label, p in runner.asset_paths(args, spec).items():
+                root = vendor if label == "fflm_vendor" else data
+                self.assertEqual(Path(p).parts[:len(root.parts)], root.parts, (task, label))
 
 
 class RestoreTests(unittest.TestCase):
@@ -248,6 +259,22 @@ class RestoreTests(unittest.TestCase):
             (target / "data/one").write_text("user change")
             with self.assertRaises(FileExistsError):
                 restore(source, target, manifest)
+
+    def test_restores_each_prefix_into_its_own_root(self):
+        from scripts.restore_fflm_assets import restore
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            source = base / "source"
+            for rel in ["data/one", "vendor/pkg/two"]:
+                (source / rel).parent.mkdir(parents=True, exist_ok=True)
+                (source / rel).write_text(rel)
+            manifest = base / "manifest.json"
+            manifest.write_text(json.dumps([{"path": rel, "sha256": runner.digest(source / rel)}
+                                            for rel in ["data/one", "vendor/pkg/two"]]))
+            roots = {"data": base / "data_root/fflm", "vendor": base / "vendor_root/fflm_vendor"}
+            self.assertEqual(restore(source, roots, manifest), 2)
+            self.assertEqual((roots["data"] / "one").read_text(), "data/one")
+            self.assertEqual((roots["vendor"] / "pkg/two").read_text(), "vendor/pkg/two")
 
 
 if __name__ == "__main__":

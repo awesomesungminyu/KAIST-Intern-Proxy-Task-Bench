@@ -1,5 +1,8 @@
 """ZINC-12K 그래프 회귀 베이스라인: GCN(edge feature 무시) / GINE(edge feature 사용).
 
+Builder(num_atom_types, num_bond_types, hidden_dim=None, **model_options) returns
+a PyG Data batch -> prediction[B] regressor with num_params() -> int.
+
 파라미터 예산은 문헌 관례(Dwivedi et al. 2020, ~500K)를 기준으로 hidden_dim을
 잡았다. 실제 파라미터 수는 build_model()이 반환하는 model.num_params()로 확인.
 """
@@ -9,6 +12,11 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch_geometric.nn import GCNConv, GINEConv, global_mean_pool
+
+from common.registry import ModelRegistry
+
+MODELS = ModelRegistry("zinc")
+register_model = MODELS.register
 
 
 class GCNRegressor(nn.Module):
@@ -86,8 +94,23 @@ def build_model(name: str, num_atom_types: int, num_bond_types: int, hidden_dim:
     """hidden_dim을 None으로 두면 문헌 관례상의 기본값을 쓴다. 실제 파라미터 수는
     항상 model.num_params()로 직접 확인하고, ~500K 예산에 맞춰 --hidden_dim으로
     조정할 것 (이 파일의 계산은 근사치이며 검증되지 않음)."""
-    if name == "gcn":
-        return GCNRegressor(num_atom_types, hidden_dim=hidden_dim or 145)
-    if name == "gine":
-        return GINERegressor(num_atom_types, num_bond_types, hidden_dim=hidden_dim or 110)
-    raise ValueError(f"unknown model: {name}")
+    return MODELS.build(name, num_atom_types=num_atom_types, num_bond_types=num_bond_types,
+                        hidden_dim=hidden_dim)
+
+
+@register_model("gcn")
+def _gcn(num_atom_types: int, num_bond_types: int, hidden_dim: int | None = None, **_unused) -> nn.Module:
+    return GCNRegressor(num_atom_types, hidden_dim=hidden_dim or 145)
+
+
+@register_model("gine")
+def _gine(num_atom_types: int, num_bond_types: int, hidden_dim: int | None = None, **_unused) -> nn.Module:
+    return GINERegressor(num_atom_types, num_bond_types, hidden_dim=hidden_dim or 110)
+
+
+@register_model("gps")
+def _gps(num_atom_types: int, num_bond_types: int, hidden_dim: int | None = None,
+         heads: int = 8, attn_dropout: float = 0.0, **_unused) -> nn.Module:
+    from .models_gps import build_gps
+    return build_gps(num_atom_types, num_bond_types, hidden_dim, n_layers=4, heads=heads,
+                     attn_dropout=attn_dropout)

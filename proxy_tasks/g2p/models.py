@@ -1,4 +1,9 @@
-"""G2P seq2seq 베이스라인: Transformer encoder-decoder / LSTM+attention encoder-decoder."""
+"""G2P encoder-decoder registry.
+
+Builder(src_vocab, tgt_vocab, max_len) returns nn.Module:
+forward(src[B,S], tgt_in[B,T]) -> logits[B,T,tgt_vocab]; num_params() -> int.
+PAD/BOS/EOS = 0/1/2. The trainer owns greedy decoding and mode restoration.
+"""
 from __future__ import annotations
 
 import math
@@ -6,6 +11,11 @@ import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+
+from common.registry import ModelRegistry
+
+MODELS = ModelRegistry("g2p")
+register_model = MODELS.register
 
 PAD_ID = 0
 BOS_ID = 1
@@ -144,9 +154,15 @@ class LSTMG2P(nn.Module):
         return sum(p.numel() for p in self.parameters())
 
 
+@register_model("transformer")
+def _transformer(src_vocab: int, tgt_vocab: int, max_len: int) -> nn.Module:
+    return TransformerG2P(src_vocab, tgt_vocab, max_len=max_len)
+
+
+@register_model("lstm")
+def _lstm(src_vocab: int, tgt_vocab: int, max_len: int) -> nn.Module:
+    return LSTMG2P(src_vocab, tgt_vocab)
+
+
 def build_model(name: str, src_vocab: int, tgt_vocab: int, max_len: int) -> nn.Module:
-    if name == "transformer":
-        return TransformerG2P(src_vocab, tgt_vocab, max_len=max_len)
-    if name == "lstm":
-        return LSTMG2P(src_vocab, tgt_vocab)
-    raise ValueError(f"unknown model: {name}")
+    return MODELS.build(name, src_vocab=src_vocab, tgt_vocab=tgt_vocab, max_len=max_len)

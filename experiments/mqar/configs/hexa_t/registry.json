@@ -1,0 +1,101 @@
+{
+  "framework": {
+    "short_name": "HEXA-T",
+    "full_name": "Holistic Evaluation across Six Axes for Transformers",
+    "korean_name": "트랜스포머 6축 종합 평가 프레임워크",
+    "version": "0.2.0",
+    "stage": "integration",
+    "single_composite_score": false
+  },
+  "evaluation_policy": {
+    "required_diagnostic_axes": [
+      "H1",
+      "H2",
+      "H3"
+    ],
+    "required_real_domain_axes": [
+      "H4",
+      "H5"
+    ],
+    "optional_extension_axes": [
+      "H6"
+    ],
+    "new_architecture_core_requirement": "Pass through all three diagnostic harnesses and both required real-domain harnesses under matched comparison conditions.",
+    "reported_metrics": [
+      "accuracy",
+      "loss_or_perplexity",
+      "runtime_or_throughput",
+      "peak_vram",
+      "length_generalization_when_applicable"
+    ]
+  },
+  "axes": [
+    {
+      "id": "H1",
+      "category": "diagnostic",
+      "name": "MQAR",
+      "capability": "multiple key-value association, memory, and retrieval",
+      "data": "synthetic generator",
+      "required": true,
+      "declared_status": "complete"
+    },
+    {
+      "id": "H2",
+      "category": "diagnostic",
+      "name": "Streaming Parity",
+      "capability": "sequential state updates and length generalization",
+      "data": "synthetic generator",
+      "required": true,
+      "declared_status": "complete"
+    },
+    {
+      "id": "H3",
+      "category": "diagnostic",
+      "name": "Flip-Flop",
+      "capability": "long-term state retention and distance-dependent errors",
+      "data": "synthetic symbolic sequences",
+      "required": true,
+      "declared_status": "complete"
+    },
+    {
+      "id": "H4",
+      "category": "real_domain",
+      "name": "WikiText-2",
+      "capability": "causal language modeling",
+      "data": "Wikipedia text",
+      "required": true,
+      "declared_status": "complete"
+    },
+    {
+      "id": "H5",
+      "category": "real_domain",
+      "name": "Speech Commands 12-class",
+      "capability": "non-text audio classification",
+      "data": "one-second speech audio",
+      "required": true,
+      "declared_status": "complete"
+    },
+    {
+      "id": "H6",
+      "category": "optional_extension",
+      "name": "CIFAR-10",
+      "capability": "image classification",
+      "data": "32x32 images",
+      "required": false,
+      "declared_status": "not_started"
+    }
+  ],
+  "survey_background": {
+    "purpose": "Literature evidence motivating the evaluation framework; these are not the six executable HEXA-T harnesses.",
+    "direction_A": [
+      "Transformer-XL vs QRNN",
+      "KWT vs MHAtt-RNN",
+      "CCT vs ResNet"
+    ],
+    "direction_B": [
+      "S4 vs Transformer",
+      "Hyena vs Transformer",
+      "Based vs Transformer"
+    ]
+  }
+}

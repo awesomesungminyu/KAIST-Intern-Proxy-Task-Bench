@@ -1,0 +1,19 @@
+Official MAD commit:
+0f49a452b84ca0d13f8eb9c1ffa649032376fb1b
+
+Hardware:
+NVIDIA TITAN RTX, compute capability 7.5
+
+Required adaptation:
+flash_attn.modules.mha.MHA replaced with PyTorch SDPA because
+FlashAttention-2 does not support NVIDIA Turing GPUs.
+
+Protocol:
+Official datasets, task configurations, model width, layer recipes,
+optimizer sweep, independent evaluation sets, and MAD aggregation remain
+unchanged.
+
+Reproduction classification:
+protocol_exact=true
+kernel_exact=false
+hardware_exact=false

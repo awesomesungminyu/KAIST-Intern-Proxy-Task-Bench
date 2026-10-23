@@ -19,8 +19,9 @@ import urllib.request
 from pathlib import Path
 from typing import List, Tuple
 
+from common.paths import task_data
+
 CMUDICT_URL = "https://raw.githubusercontent.com/cmusphinx/cmudict/master/cmudict.dict"
-DEFAULT_OUT = Path(__file__).parent / "data"
 
 
 def download_cmudict(out_path: Path) -> Path:
@@ -101,11 +102,11 @@ def build_vocab(entries: List[Tuple[str, List[str]]]):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--out_dir", type=str, default=str(DEFAULT_OUT))
+    ap.add_argument("--out_dir", type=str, default=None, help="기본: $PROXY_DATA_ROOT/g2p")
     ap.add_argument("--seed", type=int, default=0)
     args = ap.parse_args()
 
-    out_dir = Path(args.out_dir)
+    out_dir = Path(args.out_dir) if args.out_dir else task_data("g2p")
     raw_path = out_dir / "cmudict.dict"
     download_cmudict(raw_path)
 

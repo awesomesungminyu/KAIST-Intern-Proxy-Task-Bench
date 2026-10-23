@@ -1,5 +1,7 @@
 """RegBench 베이스라인: 작은 causal Transformer / LSTM.
 
+Builder(vocab_size, max_len): tokens[B,T] -> logits[B,T,V], causal; num_params() -> int.
+
 sm_75(Turing)에서는 FlashAttention-2가 없으므로 PyTorch 기본
 scaled_dot_product_attention(SDPA, math/efficient 커널 자동 선택)만 사용.
 """
@@ -10,6 +12,11 @@ import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+
+from common.registry import ModelRegistry
+
+MODELS = ModelRegistry("regbench")
+register_model = MODELS.register
 
 
 class CausalSelfAttention(nn.Module):
@@ -120,9 +127,15 @@ class TinyLSTM(nn.Module):
         return sum(p.numel() for p in self.parameters())
 
 
+@register_model("transformer")
+def _transformer(vocab_size: int, max_len: int) -> nn.Module:
+    return TinyGPT(vocab_size, max_len=max_len)
+
+
+@register_model("lstm")
+def _lstm(vocab_size: int, max_len: int) -> nn.Module:
+    return TinyLSTM(vocab_size)
+
+
 def build_model(name: str, vocab_size: int, max_len: int) -> nn.Module:
-    if name == "transformer":
-        return TinyGPT(vocab_size, max_len=max_len)
-    if name == "lstm":
-        return TinyLSTM(vocab_size)
-    raise ValueError(f"unknown model: {name}")
+    return MODELS.build(name, vocab_size=vocab_size, max_len=max_len)

@@ -18,27 +18,25 @@ from torch_geometric.datasets import ZINC
 from torch_geometric.loader import DataLoader
 
 from common.seed import set_seed
-from .models import build_model
-from .models_gps import build_gps
+from .models import MODELS
 from common.gpu_guard import require_cuda
-
-DEFAULT_ROOT = Path(__file__).parent / "data"
+from common.paths import task_data, task_output
 
 
 def parse_args():
     p = argparse.ArgumentParser()
     p.add_argument("--seed", type=int, default=0)
-    p.add_argument("--model", choices=["gcn", "gine", "gps"], default="gine")
+    p.add_argument("--model", choices=MODELS.names(), default="gine")
     p.add_argument("--hidden_dim", type=int, default=None)
     p.add_argument("--heads", type=int, default=8)          # gps 전용
     p.add_argument("--attn_dropout", type=float, default=0.0)  # gps 전용
     p.add_argument("--ckpt_epoch", type=int, default=200)   # 중간 지점 best-val 체크포인트
-    p.add_argument("--root", type=str, default=str(DEFAULT_ROOT))
+    p.add_argument("--root", type=str, default=None, help="기본: $PROXY_DATA_ROOT/zinc")
     p.add_argument("--epochs", type=int, default=200)  # Dwivedi et al. 관례상 100~400 epoch
     p.add_argument("--batch_size", type=int, default=128)
     p.add_argument("--lr", type=float, default=1e-3)
     p.add_argument("--num_workers", type=int, default=2)
-    p.add_argument("--out_dir", type=str, default="runs/zinc")
+    p.add_argument("--out_dir", type=str, default=None, help="기본: $PROXY_OUTPUT_ROOT/zinc/<model>-s<seed>")
     p.add_argument("--smoke_test", action="store_true")
     p.add_argument("--amp", action="store_true")
     p.add_argument("--validation_only", action="store_true", help="구조 탐색용: test를 로드하거나 평가하지 않음")
@@ -68,7 +66,7 @@ def main():
     device = require_cuda()
     use_amp = args.amp and device == "cuda"
 
-    root = Path(args.root)
+    root = Path(args.root) if args.root else task_data("zinc")
     meta_path = root / "metadata.json"
     if not meta_path.exists():
         raise FileNotFoundError(
@@ -91,12 +89,9 @@ def main():
     val_loader = DataLoader(val_ds, batch_size=args.batch_size, shuffle=False)
     test_loader = None if test_ds is None else DataLoader(test_ds, batch_size=args.batch_size, shuffle=False)
 
-    if args.model == "gps":
-        model = build_gps(num_atom_types, num_bond_types, args.hidden_dim,
-                          n_layers=4, heads=args.heads,
-                          attn_dropout=args.attn_dropout).to(device)
-    else:
-        model = build_model(args.model, num_atom_types, num_bond_types, args.hidden_dim).to(device)
+    model = MODELS.build(args.model, num_atom_types=num_atom_types, num_bond_types=num_bond_types,
+                         hidden_dim=args.hidden_dim, heads=args.heads,
+                         attn_dropout=args.attn_dropout).to(device)
     n_params = model.num_params()
     print(f"[zinc] model={args.model} params={n_params:,} device={device} "
           f"train={len(train_ds)} val={len(val_ds)} test={len(test_ds) if test_ds is not None else 'not_loaded'}")
@@ -108,8 +103,11 @@ def main():
     scaler = torch.cuda.amp.GradScaler(enabled=use_amp)
     loss_fn = nn.L1Loss()  # MAE — 문헌 평가지표와 동일
 
-    out_dir = Path(args.out_dir) / f"{args.model}_seed{args.seed}"
-    out_dir.mkdir(parents=True, exist_ok=True)
+    if args.out_dir:
+        out_dir = Path(args.out_dir) / f"{args.model}_seed{args.seed}"
+        out_dir.mkdir(parents=True, exist_ok=True)
+    else:
+        out_dir = task_output("zinc", args.model, args.seed)
     history = []
     best_val = float("inf")
     best_val_early = float("inf")

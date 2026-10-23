@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "experiment": "runner-environment-self-test",
+  "task": "self-test",
+  "requires_gpu": false,
+  "jobs": [
+    {
+      "name": "seed456",
+      "architecture": "self-test",
+      "seed": 456,
+      "command": [
+        "python3",
+        "harness/environment_self_test.py"
+      ],
+      "env": {
+        "HARNESS_SEED": "456",
+        "HARNESS_OUTPUT_DIR": "{job_dir}/artifacts"
+      }
+    }
+  ]
+}

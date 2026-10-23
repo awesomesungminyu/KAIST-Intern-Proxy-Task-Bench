@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "experiment": "mqar-three-model-smoke",
+  "task": "mqar",
+  "requires_gpu": true,
+  "max_gpu_utilization_percent": 10,
+  "max_gpu_memory_mib": 1024,
+  "jobs": [
+    {
+      "name": "transformer-smoke",
+      "architecture": "Transformer",
+      "seed": 456,
+      "command": [
+        "python3",
+        "train_mqar_baseline.py"
+      ],
+      "env": {
+        "HARNESS_SEED": "456",
+        "HARNESS_SEQUENCE_LENGTH": "64",
+        "HARNESS_NUM_KV_PAIRS": "8",
+        "HARNESS_TRAIN_EXAMPLES": "512",
+        "HARNESS_VALID_EXAMPLES": "256",
+        "HARNESS_BATCH_SIZE": "64",
+        "HARNESS_MAX_EPOCHS": "1",
+        "HARNESS_OUTPUT_DIR": "{job_dir}/artifacts"
+      }
+    },
+    {
+      "name": "linear-smoke",
+      "architecture": "Linear attention",
+      "seed": 456,
+      "command": [
+        "python3",
+        "train_mqar_linear_attention.py"
+      ],
+      "env": {
+        "HARNESS_SEED": "456",
+        "HARNESS_SEQUENCE_LENGTH": "64",
+        "HARNESS_NUM_KV_PAIRS": "8",
+        "HARNESS_TRAIN_EXAMPLES": "512",
+        "HARNESS_VALID_EXAMPLES": "256",
+        "HARNESS_BATCH_SIZE": "64",
+        "HARNESS_MAX_EPOCHS": "1",
+        "HARNESS_OUTPUT_DIR": "{job_dir}/artifacts"
+      }
+    },
+    {
+      "name": "gated-smoke",
+      "architecture": "Gated prototype",
+      "seed": 456,
+      "command": [
+        "python3",
+        "train_mqar_gated_linear_attention.py"
+      ],
+      "env": {
+        "HARNESS_SEED": "456",
+        "HARNESS_SEQUENCE_LENGTH": "64",
+        "HARNESS_NUM_KV_PAIRS": "8",
+        "HARNESS_TRAIN_EXAMPLES": "512",
+        "HARNESS_VALID_EXAMPLES": "256",
+        "HARNESS_BATCH_SIZE": "64",
+        "HARNESS_MAX_EPOCHS": "1",
+        "HARNESS_OUTPUT_DIR": "{job_dir}/artifacts"
+      }
+    }
+  ]
+}

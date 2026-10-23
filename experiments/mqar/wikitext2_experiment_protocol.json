@@ -1,0 +1,39 @@
+{
+  "baseline_summary": "/data/mqar/results/wikitext2_transformer_baseline/summary.json",
+  "baseline_best_valid_ppl": 202.06014830781982,
+  "baseline_best_epoch": 12,
+  "fixed_config": {
+    "run": "wikitext2_transformer_plus_baseline",
+    "dataset": "Salesforce/wikitext",
+    "dataset_config": "wikitext-2-raw-v1",
+    "tokenizer": "gpt2",
+    "context_length": 256,
+    "batch_size": 32,
+    "d_model": 128,
+    "num_heads": 4,
+    "num_layers": 2,
+    "ffn_dim": 384,
+    "dropout": 0.1,
+    "learning_rate": 0.0005,
+    "weight_decay": 0.1,
+    "warmup_steps": 100,
+    "max_epochs": 15,
+    "early_stop_patience": 3,
+    "seed": 456,
+    "dtype": "float32"
+  },
+  "candidate_script": "/data/mqar/train_wikitext2_candidate.py",
+  "change_only": "build_sequence_mixer()",
+  "sequence_mixer_interface": "(B, T, D) -> (B, T, D)",
+  "screening_seed": 456,
+  "screening_dataset": "WikiText-2",
+  "final_dataset": "WikiText-103",
+  "comparison_metrics": [
+    "validation PPL",
+    "tokens per second",
+    "peak VRAM",
+    "total parameters",
+    "theoretical sequence complexity"
+  ],
+  "decision_rule": "Compare candidates on a Pareto frontier; do not combine quality and efficiency into one score."
+}

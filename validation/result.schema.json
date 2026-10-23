@@ -2,26 +2,184 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Proxy validation per-seed result",
   "type": "object",
-  "required": ["schema_version", "run_id", "status", "task", "model", "seed", "profile", "protocol_version", "protocol_sha256", "metric", "budget"],
+  "required": [
+    "schema_version",
+    "run_id",
+    "status",
+    "task",
+    "model",
+    "seed",
+    "profile",
+    "protocol_version",
+    "protocol_sha256",
+    "metric",
+    "budget"
+  ],
   "properties": {
-    "schema_version": {"const": 1},
-    "run_id": {"type": "string"},
-    "status": {"enum": ["running", "done", "failed", "timeout"]},
-    "task": {"enum": ["regbench", "g2p", "zinc", "parity", "tomita5", "tomita6", "fflm"]},
-    "model": {"type": "string"},
-    "seed": {"type": "integer", "minimum": 0},
-    "profile": {"enum": ["smoke", "full"]},
-    "protocol_version": {"const": "proxy-validation-v1"},
-    "protocol_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-    "budget": {"type": "object"},
-    "metric": {"type": "object", "required": ["name", "direction", "split"]},
-    "metrics": {"type": "object", "additionalProperties": {"type": "number"}},
-    "provenance": {"type": "object", "required": ["source", "data", "environment", "evaluation_sha256"]},
-    "error": {"type": "string"},
-    "evidence": {"enum": ["smoke_only", "measured"]}
+    "schema_version": {
+      "const": 1
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "running",
+        "done",
+        "failed",
+        "timeout"
+      ]
+    },
+    "task": {
+      "enum": [
+        "regbench",
+        "g2p",
+        "zinc",
+        "parity",
+        "tomita5",
+        "tomita6",
+        "fflm",
+        "ett",
+        "scifar",
+        "sc_raw",
+        "mqar",
+        "mad_tsc",
+        "tier0"
+      ]
+    },
+    "model": {
+      "type": "string"
+    },
+    "seed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "profile": {
+      "enum": [
+        "smoke",
+        "full"
+      ]
+    },
+    "protocol_version": {
+      "const": "proxy-validation-v1"
+    },
+    "protocol_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "budget": {
+      "type": "object"
+    },
+    "metric": {
+      "type": "object",
+      "required": [
+        "name",
+        "direction",
+        "split"
+      ],
+      "description": "Single metric, or multi_metric/descriptive with metric_definitions for Tier 0."
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "source",
+        "data",
+        "environment",
+        "evaluation_sha256"
+      ]
+    },
+    "error": {
+      "type": "string"
+    },
+    "evidence": {
+      "enum": [
+        "smoke_only",
+        "measured"
+      ]
+    },
+    "metric_definitions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "direction",
+          "role"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "direction": {
+            "enum": [
+              "maximize",
+              "minimize"
+            ]
+          },
+          "role": {
+            "enum": [
+              "proxy",
+              "control"
+            ]
+          }
+        }
+      }
+    }
   },
   "allOf": [
-    {"if": {"properties": {"status": {"const": "done"}}}, "then": {"required": ["metrics", "provenance", "evidence", "raw_artifact"]}},
-    {"if": {"properties": {"status": {"enum": ["failed", "timeout"]}}}, "then": {"required": ["error"]}}
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "done"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "metrics",
+          "provenance",
+          "evidence",
+          "raw_artifact"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "failed",
+              "timeout"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "error"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "task": {
+            "const": "tier0"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "metric_definitions"
+        ]
+      }
+    }
   ]
 }

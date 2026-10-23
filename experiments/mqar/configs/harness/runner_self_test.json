@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "experiment": "runner-self-test",
+  "task": "infrastructure",
+  "requires_gpu": false,
+  "jobs": [
+    {
+      "name": "python-subprocess-test",
+      "architecture": "none",
+      "seed": 0,
+      "command": ["python3", "harness/self_test_job.py"],
+      "protected_outputs": []
+    }
+  ]
+}

@@ -1,3 +1,7 @@
+> 자동화 진입점은 저장소 루트의 `python -m validation`이다 (13 task ID).
+> 아래 직접 실행/레거시 스크립트 안내는 기존 실험을 보존한다.
+> [모델 추가](../docs/ADDING_A_MODEL.md) · [데이터 준비](../docs/DATA_INVENTORY.md) · [공통 실행](../README.md).
+
 # Proxy Tasks: RegBench / G2P (CMUDict) / ZINC-12K
 
 세 개의 소규모 proxy 검증 과제 구현. Track 1 (RegBench, G2P, ZINC-12K) 재현용 코드.
