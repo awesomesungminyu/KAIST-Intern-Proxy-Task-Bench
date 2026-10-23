@@ -1,0 +1,399 @@
+{
+  "version": "proxy-validation-v2",
+  "precision": "fp32",
+  "default_seeds": [
+    0,
+    1,
+    2
+  ],
+  "tasks": {
+    "regbench": {
+      "adapter": "native",
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "metric": "next_token_acc",
+      "direction": "maximize",
+      "split": "reused_test_stream",
+      "selection": "final_step",
+      "limitations": [
+        "The existing test stream is evaluated repeatedly during training. Treat it as development data, not an untouched final test.",
+        "This is the repo PFA preset, not an exact RegBench paper reproduction.",
+        "Protocol v2 common architecture set (proxy_tasks/common_set): every cs_ model shares one skeleton (pre-RMSNorm, SwiGLU, untied head, PyTorch default init) and differs only in the sequence mixer; width/depth/heads are the task's v1 transformer's. Mixer internal widths are matched to +-10% of the transformer block parameters. v2 results are not comparable with v1 (different protocol_sha256)."
+      ],
+      "common": [
+        "--preset",
+        "repo",
+        "--examples_per_seq",
+        "20",
+        "--max_total_len",
+        "256",
+        "--lr",
+        "0.0003",
+        "--num_workers",
+        "0"
+      ],
+      "full": [
+        "--steps",
+        "2000",
+        "--eval_every",
+        "500",
+        "--eval_steps",
+        "50",
+        "--batch_size",
+        "64"
+      ],
+      "smoke": [
+        "--smoke_test"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "budget_rule": {
+        "key": "step",
+        "full": 2000,
+        "smoke": 20,
+        "allow_early_stop": false,
+        "metric_location": "history_last"
+      }
+    },
+    "mqar": {
+      "adapter": "native",
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "metric": "best_valid_accuracy",
+      "direction": "maximize",
+      "split": "validation",
+      "selection": "highest_validation_accuracy_checkpoint",
+      "limitations": [
+        "Fixed zoology MQAR: vocab 8192, length 64, 8 KV pairs; train/validation generation seeds 123/2147483789. No separate final test split.",
+        "Historical harness_validation completed four models x three seeds (456,789,101112). Linear and gated attention did not reach 0.99 within 30 epochs; GQA-2 seed standard deviation was about 45 percentage points.",
+        "Historical pilots are not acceptance results. Sequence mixers must be causal and supply any position information internally.",
+        "cs_retnet uses the torch parallel form of retention (common_set.retention.retention_reference), not fla 0.3.1 chunk_retention as in the other tasks: fla needs torch>=2.5 and this task runs on the torch 2.2.2 runtime required by zoology. tests/test_common_set.py checks the two against each other on CUDA.",
+        "Protocol v2 common architecture set (proxy_tasks/common_set): every cs_ model shares one skeleton (pre-RMSNorm, SwiGLU, untied head, PyTorch default init) and differs only in the sequence mixer; width/depth/heads are the task's v1 transformer's. Mixer internal widths are matched to +-10% of the transformer block parameters. v2 results are not comparable with v1 (different protocol_sha256)."
+      ],
+      "common": [],
+      "full": [
+        "--max_epochs",
+        "30"
+      ],
+      "smoke": [
+        "--smoke_test"
+      ],
+      "budget_rule": {
+        "key": "epoch",
+        "full": 30,
+        "smoke": 1,
+        "allow_early_stop": true,
+        "early_stop": {
+          "kind": "threshold",
+          "metric": "valid_accuracy",
+          "threshold": 0.99
+        },
+        "metric_location": "top"
+      },
+      "runtime": {
+        "torch": "2.2.2",
+        "default_python": "/data/envs/hexa-mad/bin/python",
+        "packages": [
+          "pydantic",
+          "wandb",
+          "einops"
+        ]
+      }
+    },
+    "jelassi_copy": {
+      "adapter": "native",
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "metric": "ood_exact_match",
+      "direction": "maximize",
+      "split": "fixed_generated_validation",
+      "selection": "final_step",
+      "limitations": [
+        "Self-implemented Jelassi et al. 2024 copy (format of sjelassi/transformers_ssm_copy@1188c47, not vendored). Train on lengths 5..50 packed into 220-token contexts; evaluate 256 fixed strings (seed 2147483647) per bin: id 5..50, ood 51..100, 101..200, 201..300. Metric is the mean string exact match over the three OOD bins; id and per-bin character accuracy are in history.json.",
+        "Exact match is teacher-forced argmax over the copied characters, which equals greedy-decoding exact match. Budget: 4000 steps, batch 32, AdamW lr 3e-4 wd 0.1, warmup 100 + linear decay. Models are far smaller than the paper (transformer 4 layers/width 256 Hard-ALiBi NoPE, LSTM 2x512, mamba 4x256 pure-torch scan).",
+        "Task ID is jelassi_copy because a proxy_tasks/copy package would shadow the Python standard library copy module. This is not mad_tsc (MAD selective copying).",
+        "cs_transformer and cs_gqa use RoPE like every other v2 task, not the v1 Hard-ALiBi NoPE transformer, so their length generalisation is not comparable with v1 transformer.",
+        "Protocol v2 common architecture set (proxy_tasks/common_set): every cs_ model shares one skeleton (pre-RMSNorm, SwiGLU, untied head, PyTorch default init) and differs only in the sequence mixer; width/depth/heads are the task's v1 transformer's. Mixer internal widths are matched to +-10% of the transformer block parameters. v2 results are not comparable with v1 (different protocol_sha256)."
+      ],
+      "common": [
+        "--batch_size",
+        "32",
+        "--context_len",
+        "220",
+        "--min_len",
+        "5",
+        "--max_len",
+        "50",
+        "--ood_bins",
+        "51-100,101-200,201-300",
+        "--lr",
+        "0.0003",
+        "--eval_per_bin",
+        "256"
+      ],
+      "full": [
+        "--steps",
+        "4000",
+        "--eval_every",
+        "1000"
+      ],
+      "smoke": [
+        "--smoke_test"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "budget_rule": {
+        "key": "step",
+        "full": 4000,
+        "smoke": 20,
+        "allow_early_stop": false,
+        "metric_location": "top"
+      }
+    },
+    "parity": {
+      "adapter": "formal",
+      "dataset": "Parity",
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "metric": "mean_best_val_accuracy",
+      "direction": "maximize",
+      "split": "diagnostic_validation_bins",
+      "selection": "independent_best_epoch_per_bin",
+      "limitations": [
+        "Each bin can select a different epoch. The average is a diagnostic, not the score of one selected checkpoint or a final test.",
+        "The pinned upstream can stop early at mean validation accuracy >= 0.999; epochs specify a maximum budget.",
+        "cs_ models run through -model_type CS of the patched TFL checkout (third_party/tfl-common-set.patch); run them with scripts/validation_v2.py, whose --tfl-root defaults to <repo>/third_party/tfl-v2.",
+        "Protocol v2 common architecture set (proxy_tasks/common_set): every cs_ model shares one skeleton (pre-RMSNorm, SwiGLU, untied head, PyTorch default init) and differs only in the sequence mixer; width/depth/heads are the task's v1 transformer's. Mixer internal widths are matched to +-10% of the transformer block parameters. v2 results are not comparable with v1 (different protocol_sha256)."
+      ],
+      "full": [
+        "-epochs",
+        "100"
+      ],
+      "smoke": [
+        "-epochs",
+        "2"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      }
+    },
+    "tomita5": {
+      "adapter": "formal",
+      "dataset": "Tomita-5",
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "metric": "mean_best_val_accuracy",
+      "direction": "maximize",
+      "split": "diagnostic_validation_bins",
+      "selection": "independent_best_epoch_per_bin",
+      "limitations": [
+        "Each bin can select a different epoch. The average is a diagnostic, not the score of one selected checkpoint or a final test.",
+        "The pinned upstream can stop early at mean validation accuracy >= 0.999; epochs specify a maximum budget.",
+        "cs_ models run through -model_type CS of the patched TFL checkout (third_party/tfl-common-set.patch); run them with scripts/validation_v2.py, whose --tfl-root defaults to <repo>/third_party/tfl-v2.",
+        "Protocol v2 common architecture set (proxy_tasks/common_set): every cs_ model shares one skeleton (pre-RMSNorm, SwiGLU, untied head, PyTorch default init) and differs only in the sequence mixer; width/depth/heads are the task's v1 transformer's. Mixer internal widths are matched to +-10% of the transformer block parameters. v2 results are not comparable with v1 (different protocol_sha256)."
+      ],
+      "full": [
+        "-epochs",
+        "100"
+      ],
+      "smoke": [
+        "-epochs",
+        "2"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      }
+    },
+    "tomita6": {
+      "adapter": "formal",
+      "dataset": "Tomita-6",
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "metric": "mean_best_val_accuracy",
+      "direction": "maximize",
+      "split": "diagnostic_validation_bins",
+      "selection": "independent_best_epoch_per_bin",
+      "limitations": [
+        "Each bin can select a different epoch. The average is a diagnostic, not the score of one selected checkpoint or a final test.",
+        "The pinned upstream can stop early at mean validation accuracy >= 0.999; epochs specify a maximum budget.",
+        "cs_ models run through -model_type CS of the patched TFL checkout (third_party/tfl-common-set.patch); run them with scripts/validation_v2.py, whose --tfl-root defaults to <repo>/third_party/tfl-v2.",
+        "Protocol v2 common architecture set (proxy_tasks/common_set): every cs_ model shares one skeleton (pre-RMSNorm, SwiGLU, untied head, PyTorch default init) and differs only in the sequence mixer; width/depth/heads are the task's v1 transformer's. Mixer internal widths are matched to +-10% of the transformer block parameters. v2 results are not comparable with v1 (different protocol_sha256)."
+      ],
+      "full": [
+        "-epochs",
+        "100"
+      ],
+      "smoke": [
+        "-epochs",
+        "2"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      }
+    },
+    "scifar": {
+      "adapter": "native",
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "metric": "val_accuracy",
+      "direction": "maximize",
+      "split": "validation",
+      "selection": "highest_validation_accuracy_checkpoint",
+      "limitations": [
+        "budget_limited: both historical pilots were unconverged at 10 epochs (transformer 52.4%, LSTM 31.7%); these are not acceptance results.",
+        "Sequential CIFAR-10 with a fixed seed-42 45000/5000 train/validation split, train-only normalization and no augmentation. Test is reserved for frozen candidates.",
+        "v2 mixers are causal (the v1 transformer is bidirectional); the head pools the time mean.",
+        "Protocol v2 common architecture set (proxy_tasks/common_set): every cs_ model shares one skeleton (pre-RMSNorm, SwiGLU, untied head, PyTorch default init) and differs only in the sequence mixer; width/depth/heads are the task's v1 transformer's. Mixer internal widths are matched to +-10% of the transformer block parameters. v2 results are not comparable with v1 (different protocol_sha256)."
+      ],
+      "common": [
+        "--batch_size",
+        "64",
+        "--lr",
+        "0.001",
+        "--weight_decay",
+        "0.01"
+      ],
+      "full": [
+        "--epochs",
+        "10"
+      ],
+      "smoke": [
+        "--smoke_test"
+      ],
+      "budget_rule": {
+        "key": "epoch",
+        "full": 10,
+        "smoke": 1,
+        "allow_early_stop": false,
+        "metric_location": "top"
+      },
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": [
+          "torchvision"
+        ]
+      }
+    },
+    "fflm": {
+      "adapter": "fflm",
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "metric": "id_read_error_rate",
+      "direction": "minimize",
+      "split": "id_development_prefix",
+      "selection": "final_step_no_ood_selection",
+      "limitations": [
+        "A reconstruction, not the authors' original training implementation.",
+        "Every cs_ model trains 10000 steps (the v1 transformer budget and the fixed 10001-step learning-rate schedule endpoint); v1's 500-step LSTM budget does not apply.",
+        "Only the repeatedly monitored ID prefix is scored here. Sparse/dense OOD evaluation must be reserved for frozen candidates. Zero observed errors does not establish universal correctness.",
+        "Protocol v2 common architecture set (proxy_tasks/common_set): every cs_ model shares one skeleton (pre-RMSNorm, SwiGLU, untied head, PyTorch default init) and differs only in the sequence mixer; width/depth/heads are the task's v1 transformer's. Mixer internal widths are matched to +-10% of the transformer block parameters. v2 results are not comparable with v1 (different protocol_sha256)."
+      ],
+      "data_seed": 1000,
+      "evaluation_splits": [
+        "id"
+      ],
+      "steps": {
+        "cs_transformer": 10000,
+        "cs_gqa": 10000,
+        "cs_linear_attention": 10000,
+        "cs_gla": 10000,
+        "cs_mamba": 10000,
+        "cs_hyena": 10000,
+        "cs_lstm": 10000,
+        "cs_s4d": 10000,
+        "cs_retnet": 10000
+      },
+      "full": [],
+      "smoke": [
+        "--smoke",
+        "--batch",
+        "2",
+        "--eval-batch",
+        "2"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      }
+    }
+  }
+}
