@@ -27,6 +27,8 @@ class RegistryTests(unittest.TestCase):
                 models = [d.args[0].value for node in ast.walk(tree)
                           if isinstance(node, (ast.FunctionDef, ast.ClassDef)) for d in node.decorator_list
                           if isinstance(d, ast.Call) and isinstance(d.func, ast.Name) and d.func.id == 'register_model']
+            # cs_ names are protocol v2's common set (tests/test_common_set.py checks them against v2.json).
+            models = [m for m in models if not m.startswith('cs_')]
             self.assertEqual(set(spec['models']), set(models), task)
             self.assertTrue(spec['runtime']['torch'])
 
