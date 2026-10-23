@@ -1,5 +1,7 @@
 # proxy tasks — 구조 변경 검증용 소규모 벤치마크
 
+> 태스크 한눈에 보기: [TASK_INDEX](docs/TASK_INDEX.md) · 저장소 구조와 규칙: [REPO_MAP](docs/REPO_MAP.md)
+
 EvoScientist가 제안한 아키텍처를 15개 task ID에서 검증하는 독립 저장소다.
 모델 추가 방법은 [ADDING_A_MODEL](docs/ADDING_A_MODEL.md), 실제 데이터 경로와
 체크섬은 [DATA_INVENTORY](docs/DATA_INVENTORY.md)를 따른다.
