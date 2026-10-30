@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 from torch.nn import functional as F
-from .base import DATA, ArrayCls, Part, batched
+from .base import ArrayCls, Part, batched
 
 class GenPart(Part):
     """Parts whose data is generated on the fly (training) and from fixed CPU-seeded sets (evaluation)."""
@@ -26,7 +26,7 @@ class MadCompression(ArrayCls):
 
     @property
     def path(self):
-        return DATA.parent / 'mad_tsc' / self.cache / 'train'
+        return self.data_dir
 
     def _arrays(self):
         x = np.load(self.path / 'inputs.npy')

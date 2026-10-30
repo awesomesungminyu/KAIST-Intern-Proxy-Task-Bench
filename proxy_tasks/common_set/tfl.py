@@ -1,8 +1,7 @@
-"""Transformer-Formal-Languages adapter (T1-R0-04, T1-R0-05, T1-R0-06) for -model_type CS.
+"""Parity adapter for the patched Transformer-Formal-Languages runner.
 
-TFL feeds src [T,B] int64 (right-padded with 0) and trains outputs [T,B,noutputs] in [0,1] with MSE,
-like its SAN. The TFL v2 patch (third_party/tfl-common-set.patch) imports this module as
-proxy_tasks.common_set.tfl; proxy_tasks/formal_languages/runner.py puts the repository root on sys.path.
+Consumes token indices [T,B] and emits sigmoid outputs [T,B,noutputs] for MSE training.
+Prepare the upstream code with bash setup.sh parity.
 """
 import torch
 from torch import nn

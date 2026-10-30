@@ -7,9 +7,19 @@
 | 입력 | 토큰 |
 | 지표 | `token_accuracy` ↑ |
 | 평가 | `validation` / `final_step` |
-| 구현 | [proxy_tasks/final16/synth.py](../../proxy_tasks/final16/synth.py) |
+| 구현 | [proxy_tasks/final16/compression.py](../../proxy_tasks/final16/compression.py) |
 
 실행 설정: [protocol.json](../../validation/protocol.json). 데이터 준비: [DATA.md](../../docs/DATA.md).
+
+## 데이터
+
+[Drive 배포본과 압축 해제 안내](../../docs/DATA.md)를 따른다. 준비 후 `data/T1-R1-05/` 안에 `inputs.npy`가 있어야 한다.
+
+```bash
+python -m validation prepare --source downloads/extracted --data-root data --task T1-R1-05
+```
+
+## 실행
 
 ```bash
 python -m validation check --task T1-R1-05 --model cs_transformer

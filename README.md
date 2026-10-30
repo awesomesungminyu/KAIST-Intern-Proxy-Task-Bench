@@ -2,7 +2,7 @@
 
 한국어 · [English](README.en.md)
 
-EvoScientist가 제안한 새 Transformer 대안 구조를 싼 실험으로 미리 걸러내는 4단계(Tier) 검증 하니스.
+Transformer 대안 구조를 합성 과제와 소규모 실제 데이터로 평가하는 16개 과제 벤치마크. 셸 명령을 실행할 수 있는 EvoScientist에서도 사용할 수 있다.
 
 ## 왜 하는가
 
@@ -82,37 +82,61 @@ EvoScientist가 제안한 새 Transformer 대안 구조를 싼 실험으로 미�
 
 ## 빠른 시작
 
-**데이터 위치: [proxy-task-bench-data (Google Drive)](https://drive.google.com/drive/folders/1FXi_UlvUnvrlfBj7YryFY0dmoE7uoZes?usp=drive_link)**
-
-실행 시 데이터를 생성하는 과제를 제외한 나머지 과제는 위 Drive에서 제공하는 데이터·캐시를 내려받아 사용한다. EvoScientist도 해당 폴더를 먼저 참고하고, 제공된 데이터를 새로 생성하거나 다른 데이터로 대체하지 않는다.
-다운로드한 압축 파일은 함께 제공된 `SHA256SUMS.txt`로 검증한다.
-데이터 폴더 구조와 과제별 필수 파일은 [데이터 안내](docs/DATA.md)를 따른다.
+Linux, Python 3.11, NVIDIA CUDA GPU를 사용한다. 과제 목록 조회와 CPU 테스트는 GPU 없이도 가능하다.
 
 ```bash
+git clone https://github.com/awesomesungminyu/KAIST-Intern-Proxy-Task-Bench.git
 cd KAIST-Intern-Proxy-Task-Bench
-export PROXY_DATA_ROOT=/absolute/path/to/data
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu124
+python -m pip install -r requirements.txt
 python -m validation list
-python -m validation check --task T1-R0-07 --model cs_transformer
-CUDA_VISIBLE_DEVICES="" python -m unittest discover -s tests -v
 ```
 
-CUDA용 PyTorch 2.5.1과 `requirements.txt`의 의존성이 필요하다. Parity의 외부 실행기는 `bash setup.sh parity`, RetNet의 CUDA 커널은 `bash setup.sh retnet`으로 준비한다.
-`check`는 환경·필수 파일 점검이며 학습하지 않는다. `list`에는 최종 16개 과제만 표시된다.
+PyTorch 설치 예시는 CUDA 12.4 빌드다. 다른 드라이버 환경은 [공식 설치 표](https://pytorch.org/get-started/previous-versions/#v251)를 참고하되 PyTorch 2.5.1을 유지한다.
+
+**데이터: [proxy-task-bench-data (Google Drive)](https://drive.google.com/drive/folders/1FXi_UlvUnvrlfBj7YryFY0dmoE7uoZes?usp=drive_link)**
+
+생성형 과제는 실행 시 데이터를 만든다. 나머지는 Drive에서 제공하는 데이터·캐시를 받아 사용한다. 다운로드할 파일과 체크섬 검증·압축 해제 방법은 [데이터 준비](docs/DATA.md)에 있다.
 
 ```bash
-python -m validation run --task T1-R2-02 --model cs_transformer \
-  --profile smoke --seeds 0 --out artifacts/string-matching-smoke
-# 전체 예산 실행
+# 다운로드한 압축 파일을 풀어 둔 폴더에서 입력을 준비한다.
+python -m validation prepare --source downloads/extracted --data-root data
+# GPU 없이 필요한 파일의 준비 상태를 확인한다.
+python -m validation data --data-root data
+# 별도 데이터가 없는 생성형 과제로 실행을 먼저 확인한다.
+python -m validation check --task T1-R2-02 --model cs_transformer
+python -m validation run --task T1-R2-02 --model cs_transformer --profile smoke --seeds 0
+```
+
+기본 데이터 위치는 `data/<과제 ID>/`, 결과 위치는 `artifacts/<과제 ID>/<모델>/<실행 ID>/`다. 다른 저장장치는 `--data-root` 또는 `.env.example`의 선택 설정으로 지정한다. `.env`는 자동으로 읽지 않는다.
+
+Parity는 `bash setup.sh parity`, RetNet은 `bash setup.sh retnet`으로 외부 실행기·커널을 먼저 준비한다.
+
+```bash
+# 전체 예산 실행: 저장 폴더는 새 경로를 사용한다.
 python -m validation run --task T1-R2-02 --model cs_transformer \
   --profile full --seeds 0 1 2 --out artifacts/string-matching-full
+# 같은 과제·데이터·설정·시드의 완료된 두 실행을 비교한다.
+python -m validation compare --baseline artifacts/baseline --candidate artifacts/candidate
+# CPU 계약 테스트
+CUDA_VISIBLE_DEVICES="" python -m unittest discover -s tests -v
+# 16개 과제의 Transformer import + 학습 1스텝 확인 (데이터 준비 후)
+python scripts/smoke_tasks.py --data-root data --device cuda
 ```
 
-9종 공통 모델과 과제별 설정은 [모델 안내](docs/MODELS.md), 실행 설정은 `validation/protocol.json`에 있다.
+`check`는 환경·파일 점검, `smoke`와 1스텝 검사는 동작 확인이며 성능 비교 근거가 아니다. 결과 JSON의 상태가 `done`인 `full` 실행만 비교할 수 있다.
+새 구조 추가와 동일 조건 비교는 [모델 안내](docs/MODELS.md), 에이전트 실행 순서는 [EvoScientist 안내](docs/EVOSCIENTIST.md)를 참고한다.
+
+## 알려진 문제
+
+- Drive 최종 데이터 하위 폴더에서 `proxy-data-final-pool-small.tar.gz`가 보이지 않으면 폴더 소유자에게 요청해야 한다. 해당 원자료가 필요한 과제는 준비할 수 없다.
 
 ## 한계
 
-- 16개 과제의 최종 선정은 모든 모델·시드의 반복 검증 완료를 뜻하지 않는다.
-- 결과·데이터·체크포인트는 저장소에 포함하지 않는다.
-- `smoke`는 동작 점검이며 성능 비교 근거가 아니다.
-- RegBench는 반복 관측한 개발 스트림을 평가한다. Parity는 bin별 최고 정확도의 평균으로, 단일 체크포인트의 점수가 아니다.
-- Tier 2는 언어·비언어 과제가 섞여 있으므로 Tier 3 예측 근거는 과제별로 검토한다.
+- 16개 과제 선정과 import·학습 1스텝 검증은 전체 학습·모든 모델 조합의 성능 검증 완료를 뜻하지 않는다.
+- 결과·데이터·체크포인트는 Git에 포함하지 않는다.
+- RegBench는 반복 관측한 개발 스트림을 평가한다. Parity는 bin별 최고 정확도의 평균이며 단일 체크포인트의 점수가 아니다.
+- Tier 0·3은 검증 체계 설명용이며 이 저장소의 실행 목록에는 Tier 1·2의 최종 16개만 포함한다.

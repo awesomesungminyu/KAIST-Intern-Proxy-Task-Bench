@@ -10,6 +10,8 @@ import sys
 import time
 import uuid
 
+from proxy_tasks.common.paths import data_root, output_root
+
 from .util import (canonical_hash, command_output, compare, digest, execute, finite,
                    fingerprint, gpu_lock, require_idle_gpu, write_json)
 
@@ -23,12 +25,8 @@ def load_protocol(task=None):
 
 
 def data_base(args, spec):
-    if args.data_root:
-        return args.data_root
-    root = Path(os.environ.get('PROXY_DATA_ROOT', ROOT / 'data')).expanduser().resolve()
-    if spec['adapter'] == 'part':
-        return Path(os.environ.get('SMOKE_V21_DATA', root / 'smoke_v21')).expanduser().resolve()
-    return root / args.task
+    root = args.data_root if args.data_root else data_root()
+    return Path(root).expanduser().resolve() / args.task
 
 
 def asset_paths(args, spec):
@@ -53,7 +51,11 @@ def identities(args, spec):
 def preflight(args, spec):
     if args.model not in spec['models']:
         raise ValueError(f'Unsupported model: {args.model}')
-    data = fingerprint(asset_paths(args, spec))
+    assets = asset_paths(args, spec)
+    missing = [p.name for p in assets.values() if not p.is_file()]
+    if missing:
+        raise FileNotFoundError(f"{args.task}: missing {', '.join(missing)} in {data_base(args, spec)}. See docs/DATA.md and run python -m validation prepare --source <extracted-folder> --task {args.task}")
+    data = fingerprint(assets)
     if spec['adapter'] == 'formal':
         expected = (ROOT / 'third_party/tfl.commit').read_text().strip().split()[-1]
         actual = command_output(['git', 'rev-parse', 'HEAD'], args.tfl_root)
@@ -78,7 +80,7 @@ def build_command(args, spec, seed, destination):
     env = os.environ.copy()
     env.update(PYTHONHASHSEED=str(seed), OMP_NUM_THREADS='1', MKL_NUM_THREADS='1', PYTHONDONTWRITEBYTECODE='1')
     if spec['adapter'] == 'part':
-        env['SMOKE_V21_DATA'] = str(data_base(args, spec))
+        env['PROXY_TASK_DATA_DIR'] = str(data_base(args, spec))
         return [args.python, '-m', 'proxy_tasks.final16.train', '--task', args.task,
                 '--model', args.model, '--seed', str(seed), '--profile', args.profile,
                 '--out', str(native)], ROOT, env
@@ -125,13 +127,15 @@ def extract_metrics(args, spec, native, seed):
 def run(args, spec):
     if len(set(args.seeds)) != len(args.seeds) or any(seed < 0 for seed in args.seeds):
         raise ValueError('Seeds must be unique nonnegative integers')
+    if args.out is None:
+        args.out = output_root() / args.task / args.model / datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
     args.out.mkdir(parents=True, exist_ok=False)
     rows = []
     for seed in args.seeds:
         destination = args.out / f'{args.task}-{args.model}-s{seed}-{uuid.uuid4().hex[:8]}'
         destination.mkdir()
         row = dict(schema_version=1, task=args.task, model=args.model, seed=seed, profile=args.profile,
-                   protocol_version='proxy-final16', protocol_sha256=digest(PROTOCOL), status='running',
+                   protocol_version=load_protocol()['version'], protocol_sha256=digest(PROTOCOL), status='running',
                    started_at=datetime.now(timezone.utc).isoformat(), budget=dict(profile=args.profile, configuration=spec),
                    metric=dict(name=spec['metric'], direction=spec['direction'], split=spec['split']),
                    selection=spec['selection'], limitations=spec.get('limitations', []))
@@ -168,6 +172,13 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     actions = parser.add_subparsers(dest='action', required=True)
     actions.add_parser('list')
+    command = actions.add_parser('prepare', help='Prepare supplied local files without downloading or training')
+    command.add_argument('--source', required=True, type=lambda p: Path(p).expanduser().resolve())
+    command.add_argument('--task', choices=['all', *load_protocol()['tasks']], default='all')
+    command.add_argument('--data-root', type=lambda p: Path(p).expanduser().resolve())
+    command = actions.add_parser('data', help='Check data availability without CUDA')
+    command.add_argument('--task', choices=['all', *load_protocol()['tasks']], default='all')
+    command.add_argument('--data-root', type=lambda p: Path(p).expanduser().resolve())
     for action in ['check', 'run']:
         command = actions.add_parser(action)
         command.add_argument('--task', required=True, choices=list(load_protocol()['tasks']))
@@ -179,7 +190,7 @@ def main(argv=None):
             command.add_argument('--profile', choices=['smoke', 'full'], default='smoke')
             command.add_argument('--seeds', nargs='+', type=int, default=[0, 1, 2])
             command.add_argument('--timeout', type=float, default=3600)
-            command.add_argument('--out', required=True, type=lambda p: Path(p).expanduser().resolve())
+            command.add_argument('--out', type=lambda p: Path(p).expanduser().resolve())
     command = actions.add_parser('compare')
     command.add_argument('--baseline', required=True, type=Path)
     command.add_argument('--candidate', required=True, type=Path)
@@ -187,6 +198,20 @@ def main(argv=None):
     try:
         if args.action == 'list':
             print(PROTOCOL.read_text())
+        elif args.action == 'prepare':
+            from .prepare import prepare
+            return prepare(args)
+        elif args.action == 'data':
+            tasks = load_protocol()['tasks']
+            rows = []
+            for cid, spec in tasks.items():
+                if args.task != 'all' and args.task != cid:
+                    continue
+                task_args = argparse.Namespace(task=cid, data_root=args.data_root)
+                missing = [str(p) for p in asset_paths(task_args, spec).values() if not p.is_file()]
+                rows.append(dict(task=cid, ready=not missing, missing=missing))
+            print(json.dumps(rows, indent=2))
+            return int(any(not row['ready'] for row in rows))
         elif args.action == 'compare':
             print(json.dumps(compare(args.baseline, args.candidate), indent=2, allow_nan=False))
         else:

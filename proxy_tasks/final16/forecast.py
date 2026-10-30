@@ -1,8 +1,7 @@
 import numpy as np
 import torch
 from torch.nn import functional as F
-from ..base import Part
-from .common import R2_DATA
+from .base import Part
 
 class Forecast(Part):
     in_kind, readout = ('vec', 'last')
@@ -96,7 +95,7 @@ class BeijingPM25(Forecast):
 
     def _series(self):
         import pandas as pd
-        df = pd.read_csv(R2_DATA / 'n10_beijing/x/PRSA_data_2010.1.1-2014.12.31.csv', na_values=['NA'])
+        df = pd.read_csv(self.data_dir / 'PRSA_data_2010.1.1-2014.12.31.csv', na_values=['NA'])
         n_tr = int((df.year <= 2013).sum())
         pm = df['pm2.5'].values.astype(np.float64)
         ok = ~np.isnan(pm)

@@ -93,9 +93,9 @@ class SyntheticExecutionTests(unittest.TestCase):
                 self.assertTrue(grads and all(torch.isfinite(g).all() for g in grads))
 
     def test_mad_cache_loader_and_reconstruction_shape(self):
-        from proxy_tasks.final16 import synth
-        with tempfile.TemporaryDirectory() as tmp, patch.object(synth, 'DATA', Path(tmp) / 'smoke_v21'):
+        with tempfile.TemporaryDirectory() as tmp:
             part = build_part('T1-R1-05')
+            part.data_dir_override = Path(tmp) / 'T1-R1-05'
             part.path.mkdir(parents=True)
             np.save(part.path / 'inputs.npy', np.random.default_rng(7).integers(0, 16, (12800, 32), dtype=np.int64))
             part.load('cpu')

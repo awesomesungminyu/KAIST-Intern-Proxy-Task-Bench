@@ -1,6 +1,5 @@
-from ..base import DATA, batched
-from ..synth import GenPart
-R2_DATA = DATA / 'round2'
+from ..base import batched
+from ..compression import GenPart
 
 class SynthPart(GenPart):
     """Generated data: training batches come from the CPU generator, evaluation sets are fixed (own seeds).

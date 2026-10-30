@@ -1,5 +1,5 @@
 {
-  "version": "proxy-final16",
+  "version": "proxy-final16-portable",
   "precision": "fp32",
   "default_seeds": [
     0,
@@ -20,7 +20,7 @@
   "tasks": {
     "T1-R1-05": {
       "adapter": "part",
-      "module": "synth",
+      "module": "compression",
       "part_class": "MadCompression",
       "steps": 4500,
       "full": [],
@@ -48,13 +48,13 @@
       "tier": 1,
       "transformer_label": "win",
       "assets": [
-        "../mad_tsc/t-C_vs-16_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+        "inputs.npy"
       ],
       "limitations": []
     },
     "T1-R2-01": {
       "adapter": "part",
-      "module": "r2.t1f",
+      "module": "generated.histogram",
       "part_class": "Histogram",
       "steps": 22600,
       "full": [],
@@ -86,7 +86,7 @@
     },
     "T1-R2-02": {
       "adapter": "part",
-      "module": "r2.t1h",
+      "module": "generated.string_matching",
       "part_class": "StringMatch",
       "steps": 20900,
       "full": [],
@@ -222,7 +222,7 @@
     },
     "T1-R2-03": {
       "adapter": "part",
-      "module": "r2.chomsky",
+      "module": "generated.state_tracking",
       "part_class": "ModArith",
       "steps": 35200,
       "full": [],
@@ -254,7 +254,7 @@
     },
     "T1-R2-04": {
       "adapter": "part",
-      "module": "r2.chomsky",
+      "module": "generated.state_tracking",
       "part_class": "CycleNav",
       "steps": 40000,
       "full": [],
@@ -286,7 +286,7 @@
     },
     "T1-R2-05": {
       "adapter": "part",
-      "module": "r2.t1p",
+      "module": "generated.random_automaton",
       "part_class": "RandomAutomaton",
       "steps": 38100,
       "full": [],
@@ -346,8 +346,8 @@
       "tier": 2,
       "transformer_label": "win",
       "assets": [
-        "t2k_mnist/train-images-idx3-ubyte.gz",
-        "t2k_mnist/train-labels-idx1-ubyte.gz"
+        "train-images-idx3-ubyte.gz",
+        "train-labels-idx1-ubyte.gz"
       ],
       "limitations": []
     },
@@ -381,8 +381,8 @@
       "tier": 2,
       "transformer_label": "win",
       "assets": [
-        "round4/T2-R3-05/train_x.npy",
-        "round4/T2-R3-05/train_y.npy"
+        "train_x.npy",
+        "train_y.npy"
       ],
       "limitations": []
     },
@@ -416,16 +416,16 @@
       "tier": 2,
       "transformer_label": "win",
       "assets": [
-        "round4_diversity/T2-R4-02/train_x.npy",
-        "round4_diversity/T2-R4-02/train_y.npy",
-        "round4_diversity/T2-R4-02/val_x.npy",
-        "round4_diversity/T2-R4-02/val_y.npy"
+        "train_x.npy",
+        "train_y.npy",
+        "val_x.npy",
+        "val_y.npy"
       ],
       "limitations": []
     },
     "T2-R2-07": {
       "adapter": "part",
-      "module": "r2.forecast",
+      "module": "forecast",
       "part_class": "BeijingPM25",
       "steps": 23233,
       "full": [],
@@ -453,7 +453,7 @@
       "tier": 2,
       "transformer_label": "win",
       "assets": [
-        "round2/n10_beijing/x/PRSA_data_2010.1.1-2014.12.31.csv"
+        "PRSA_data_2010.1.1-2014.12.31.csv"
       ],
       "limitations": []
     },
@@ -487,8 +487,8 @@
       "tier": 2,
       "transformer_label": "lose",
       "assets": [
-        "t2d_protein/stability/train.csv",
-        "t2d_protein/stability/valid.csv"
+        "train.csv",
+        "valid.csv"
       ],
       "limitations": []
     },
@@ -522,7 +522,7 @@
       "tier": 2,
       "transformer_label": "lose",
       "assets": [
-        "t2i_enwik8/enwik8.zip"
+        "enwik8.zip"
       ],
       "limitations": []
     },
@@ -556,16 +556,16 @@
       "tier": 2,
       "transformer_label": "lose",
       "assets": [
-        "t2h_imdb/train_x.npy",
-        "t2h_imdb/train_y.npy",
-        "t2h_imdb/val_x.npy",
-        "t2h_imdb/val_y.npy"
+        "train_x.npy",
+        "train_y.npy",
+        "val_x.npy",
+        "val_y.npy"
       ],
       "limitations": []
     },
     "T2-R2-02": {
       "adapter": "part",
-      "module": "r2.t2m",
+      "module": "lipophilicity",
       "part_class": "Lipophilicity",
       "steps": 2625,
       "full": [],
@@ -593,8 +593,8 @@
       "tier": 2,
       "transformer_label": "lose",
       "assets": [
-        "round2/t2m_lipo/Lipophilicity.csv",
-        "round2/t2m_lipo/split.npz"
+        "Lipophilicity.csv",
+        "split.npz"
       ],
       "limitations": []
     }

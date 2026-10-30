@@ -4,7 +4,7 @@ import zipfile
 import numpy as np
 import torch
 from torch.nn import functional as F
-from .base import DATA, ArrayCls, Part, batched, use_pylib
+from .base import ArrayCls, Part, batched
 
 def split_idx(n, frac, seed, y=None):
     """Fixed validation indices (stratified when y is given): returns (train_idx, val_idx)."""
@@ -34,7 +34,7 @@ class Stability(Part):
 
     @property
     def path(self):
-        return DATA / 't2d_protein' / 'stability'
+        return self.data_dir
 
     def _read(self, split):
         import pandas as pd
@@ -93,12 +93,11 @@ class ImdbBytes(ArrayCls):
 
     @property
     def path(self):
-        return DATA / 't2h_imdb'
+        return self.data_dir
 
     def prepare(self):
         if (self.path / 'val_y.npy').exists():
             return
-        use_pylib()
         import pandas as pd
         df = pd.read_parquet(self.path / 'train.parquet')
         x = np.zeros((len(df), self.l_max), np.uint16)
@@ -134,7 +133,7 @@ class Enwik8(Part):
 
     @property
     def file(self):
-        return DATA / 't2i_enwik8' / 'enwik8.zip'
+        return self.data_dir / 'enwik8.zip'
 
     def _bytes(self):
         return np.frombuffer(zipfile.ZipFile(self.file).read('enwik8'), np.uint8)
@@ -187,7 +186,7 @@ class PsMnist(ArrayCls):
 
     @property
     def path(self):
-        return DATA / 't2k_mnist'
+        return self.data_dir
 
     def _read(self):
 

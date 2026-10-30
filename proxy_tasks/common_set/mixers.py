@@ -1,17 +1,8 @@
-"""Common-set sequence mixers: float (B, T, d) -> float (B, T, d), causal, position handled inside.
+"""Causal sequence mixers: float [B,T,d] -> float [B,T,d].
 
-Sources (code copied so the per-task v1 models stay byte-for-byte unchanged):
-  transformer, gqa, linear_attention  proxy_tasks/T1_R0_01/models.py (RoPE inside the mixer)
-  gla                                 proxy_tasks/tier0/models.py LinearAttnDecay, gla branch only
-  mamba                               proxy_tasks/T1_R0_02/models.py MambaMixer (pure-torch scan),
-                                      d_inner given directly instead of expand * d_model
-  hyena                               hyena.py (vendored safari standalone_hyena.py)
-  s4d                                 s4d.py (vendored state-spaces/s4 models/s4/s4d.py)
-  retnet                              fla MultiScaleRetention layout; retention kernel in retention.py
-  lstm                                torch.nn.LSTM + output projection
-
-`width` is the one internal width a mixer exposes for parameter matching (backbone.mixer_width):
-mamba d_inner, lstm hidden, retnet value_dim, hyena filter_order, s4d d_state. The others ignore it.
+Attention uses RoPE. Mamba uses a pure-PyTorch scan; LSTM uses torch.nn.LSTM.
+Hyena and S4D source licences are preserved in licenses/. RetNet uses retention.py.
+Internal widths are chosen by backbone.mixer_width to match the Transformer block budget.
 """
 import math
 
@@ -36,7 +27,7 @@ OFFICIAL_WIDTH = {
 
 
 # ----------------------------------------------------------------------------
-# Attention family (from proxy_tasks/T1_R0_01/models.py)
+# Attention family
 # ----------------------------------------------------------------------------
 
 class RotaryEmbedding(nn.Module):

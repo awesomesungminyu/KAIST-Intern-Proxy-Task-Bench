@@ -11,6 +11,16 @@
 
 실행 설정: [protocol.json](../../validation/protocol.json). 데이터 준비: [DATA.md](../../docs/DATA.md).
 
+## 데이터
+
+[Drive 배포본과 압축 해제 안내](../../docs/DATA.md)를 따른다. 준비 후 `data/T1-R0-04/` 안에 `train_corpus.pk`, `val_corpus_bins.pk`가 있어야 한다.
+
+```bash
+python -m validation prepare --source downloads/extracted --data-root data --task T1-R0-04
+```
+
+## 실행
+
 ```bash
 python -m validation check --task T1-R0-04 --model cs_transformer
 python -m validation run --task T1-R0-04 --model cs_transformer \

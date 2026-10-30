@@ -1,20 +1,8 @@
-"""Retention kernel for the retnet mixer.
+"""Retention kernels for the RetNet mixer.
 
-CUDA tensors use fla's chunk_retention (fla-org/flash-linear-attention v0.3.1, MIT, Triton). fla is not
-installed into any environment: setup.sh puts it with einops under <repo>/third_party/fla_vendor
-(protocol v2 keeps its own vendored code in the repository, not in the shared $PROXY_VENDOR_ROOT;
-$PROXY_FLA_VENDOR overrides the location). fla/__init__.py imports its HF model zoo,
-which needs transformers>=4.45 (the 2.5.1 environment has 4.39.3), so the package is registered
-without running __init__ and only fla.ops.retention is imported.
-
-CPU tensors use retention_reference, the parallel form of the same operator, for unit tests and for
-checking the kernel. There is no silent fallback: a CUDA input without a loadable fla is an error
-(e.g. the torch 2.2.2 runtime, fla 0.3.1 requires torch>=2.5).
-
-backend="torch" uses retention_reference on every device. It is chosen explicitly by a task, never as a
-fallback: T1-R0-01 runs on the torch 2.2.2 runtime required by zoology, where fla cannot load. The parallel
-form costs O(T^2) memory per head, which is small at T1-R0-01's length 64. tests/test_common_set.py checks it
-against chunk_retention on CUDA.
+CUDA uses flash-linear-attention 0.3.1 (MIT), installed with bash setup.sh retnet.
+CPU uses the equivalent PyTorch reference for contract tests. CUDA kernel failures are reported explicitly.
+Set PROXY_FLA_VENDOR only to relocate the optional vendor directory.
 """
 import functools
 import os
@@ -47,7 +35,7 @@ def fla_vendor_root():
 def fla_chunk_retention():
     root = fla_vendor_root()
     if not (root / "fla").is_dir():
-        raise RuntimeError(f"fla not found at {root}; run setup.sh (retnet needs fla 0.3.1 on CUDA)")
+        raise RuntimeError(f"fla not found at {root}; run bash setup.sh retnet")
     if str(root) not in sys.path:
         sys.path.append(str(root))     # after the environment, so its own packages win
     if "fla" not in sys.modules:

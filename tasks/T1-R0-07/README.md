@@ -11,6 +11,12 @@
 
 실행 설정: [protocol.json](../../validation/protocol.json). 데이터 준비: [DATA.md](../../docs/DATA.md).
 
+## 데이터
+
+실행 시 고정된 생성기를 사용하므로 데이터 다운로드가 필요 없다.
+
+## 실행
+
 ```bash
 python -m validation check --task T1-R0-07 --model cs_transformer
 python -m validation run --task T1-R0-07 --model cs_transformer \

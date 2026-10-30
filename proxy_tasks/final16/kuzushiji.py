@@ -1,7 +1,7 @@
 """Permuted Kuzushiji-49; 5,000 validation images, split seed 1, permutation seed 0."""
 import numpy as np
 import torch
-from .base import DATA, ArrayCls
+from .base import ArrayCls
 from .real import split_idx
 
 class Kuzushiji49(ArrayCls):
@@ -11,7 +11,7 @@ class Kuzushiji49(ArrayCls):
     chance, ceiling = 1 / 49, None
     @property
     def path(self):
-        return DATA / 'round4' / self.cid
+        return self.data_dir
     def prepare(self):
         self.path.mkdir(parents=True, exist_ok=True)
         if (self.path / 'train_x.npy').exists():

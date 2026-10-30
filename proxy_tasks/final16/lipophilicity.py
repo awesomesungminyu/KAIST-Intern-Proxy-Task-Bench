@@ -7,12 +7,10 @@ import numpy as np
 import torch
 from torch.nn import functional as F
 
-from ..base import Part, batched, use_pylib
-from .common import R2_DATA
+from .base import Part, batched
 
 
 def scaffold_split(smiles, frac_train=0.8, frac_valid=0.1):
-    use_pylib()
     from rdkit import Chem
     from rdkit.Chem.Scaffolds import MurckoScaffold
     groups = {}
@@ -41,7 +39,7 @@ class Lipophilicity(Part):
 
     @property
     def path(self):
-        return R2_DATA / "t2m_lipo"
+        return self.data_dir
 
     def _table(self):
         import pandas as pd

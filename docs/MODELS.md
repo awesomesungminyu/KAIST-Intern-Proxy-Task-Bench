@@ -4,7 +4,7 @@
 
 `cs_transformer`, `cs_gqa`, `cs_linear_attention`, `cs_gla`, `cs_mamba`, `cs_hyena`, `cs_lstm`, `cs_s4d`, `cs_retnet`
 
-구현은 `proxy_tasks/common_set/`에 있다. 새 모델은 `mixers.py`의 factory와 `NAMES`, `validation/protocol.json`의 모델 목록에 등록한다.
+구현은 `proxy_tasks/common_set/`에 있다. 새 모델은 `mixers.py`의 factory와 `NAMES`, `validation/protocol.json`의 공통 및 과제별 모델 목록에 등록한다. 기준·후보 비교에서는 양쪽 프로토콜이 같아야 하므로, 새 이름을 추가했다면 양쪽에 동일하게 등록한다.
 Part 과제는 `proxy_tasks/final16/catalog.py`에서 생성하고 각 Part의 `build()`가 모델을 만든다. RegBench factory는 `proxy_tasks/T1_R0_07/models.py`, Parity adapter는 `proxy_tasks/common_set/tfl.py`다.
 
 RegBench는 폭 128·8층·2헤드, Parity는 폭 32·2층·4헤드, 나머지 과제는 폭 128·2층·4헤드를 유지한다. 입력·출력 헤드와 평가 방법은 과제에 따라 다르다.

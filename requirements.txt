@@ -1,8 +1,10 @@
 torch==2.5.1
-numpy
+numpy<2
 scipy
 pandas
+pyarrow
 rdkit
 transformers==4.39.3
 tensorboardX
 scikit-learn
+ipdb

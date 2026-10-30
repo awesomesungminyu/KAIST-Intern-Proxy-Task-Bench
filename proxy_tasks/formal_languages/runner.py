@@ -7,7 +7,7 @@ from validation.torch_compat import install_cpu_sequence_lengths
 install_cpu_sequence_lengths()
 T_PROC_START = time.perf_counter()
 STARTED_AT = datetime.datetime.now().astimezone().isoformat(timespec="seconds")
-EXP_DIR = os.environ.get("EXP_DIR", "/workspace/AI4Science_2026summer_archive/sungminyu/proxy-bench/exp/2026-10-12")
+EXP_DIR = os.environ.get("EXP_DIR", str(Path(__file__).resolve().parents[2] / "artifacts" / "T1-R0-04"))
 RUNS_FILE = os.path.join(EXP_DIR, "runs.jsonl")
 def sync():
     if torch.cuda.is_available(): torch.cuda.synchronize()
@@ -37,7 +37,7 @@ def write_record(status):
     t_end = time.perf_counter()
     t_loop = (TRAIN["t1"] - TRAIN["t0"]) if TRAIN["t0"] and TRAIN["t1"] else None
     skip = ("bins_max_acc", "best_epoch_bins", "train_acc", "best_train_epoch", "train_loss")
-    rec = {"run_id": arg_value("-run_name", "unnamed"), "exp": os.environ.get("EXP_ID", "E1-mini"),
+    rec = {"run_id": arg_value("-run_name", "unnamed"), "exp": os.environ.get("EXP_ID", "proxy-final16"),
            "task": arg_value("-dataset"), "status": status, "started_at": STARTED_AT, "argv": sys.argv[1:],
            "config": {k: v for k, v in RES.items() if k not in skip},
            "n_concurrent": int(os.environ.get("N_CONCURRENT", "1")),

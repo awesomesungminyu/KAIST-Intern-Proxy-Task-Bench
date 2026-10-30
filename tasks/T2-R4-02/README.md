@@ -11,6 +11,16 @@
 
 실행 설정: [protocol.json](../../validation/protocol.json). 데이터 준비: [DATA.md](../../docs/DATA.md).
 
+## 데이터
+
+[Drive 배포본과 압축 해제 안내](../../docs/DATA.md)를 따른다. 준비 후 `data/T2-R4-02/` 안에 `train_x.npy`, `train_y.npy`, `val_x.npy`, `val_y.npy`가 있어야 한다.
+
+```bash
+python -m validation prepare --source downloads/extracted --data-root data --task T2-R4-02
+```
+
+## 실행
+
 ```bash
 python -m validation check --task T2-R4-02 --model cs_transformer
 python -m validation run --task T2-R4-02 --model cs_transformer \

@@ -1,20 +1,11 @@
 import math
 import os
-import sys
-from pathlib import Path
 import numpy as np
 import torch
 from torch import nn
 from torch.nn import functional as F
 from ..common_set.backbone import Backbone, RMSNorm
-DATA = Path(os.environ.get('SMOKE_V21_DATA', str(Path(os.environ.get('PROXY_DATA_ROOT', Path(__file__).resolve().parents[2] / 'data')) / 'smoke_v21')))
-
-def use_pylib():
-    """pyarrow lives in DATA/_pylib (installed with pip --target so the shared conda env stays untouched)."""
-    lib = str(DATA / '_pylib')
-    if lib not in sys.path:
-        sys.path.append(lib)
-
+from ..common.paths import task_data
 def sincos_1d(length, dim):
     pos = torch.arange(length, dtype=torch.float32)[:, None]
     freq = torch.exp(-math.log(10000.0) * torch.arange(0, dim, 2, dtype=torch.float32) / dim)
@@ -81,8 +72,14 @@ class Part:
     kind = 'cls'
     gen_on_cpu = False
 
+    @property
+    def data_dir(self):
+        from pathlib import Path
+        override = getattr(self, 'data_dir_override', None) or os.environ.get('PROXY_TASK_DATA_DIR')
+        return Path(override).expanduser().resolve() if override else task_data(self.task_id)
+
     def prepare(self):
-        """CPU-side, idempotent: download/process into DATA (not part of any cell's wall time)."""
+        """Preprocess supplied local files; never download or train."""
 
     def load(self, device):
         """Move data to the GPU."""

@@ -9,7 +9,7 @@ import numpy as np
 import torch
 from torch.nn import functional as F
 
-from .chomsky import LenExtrapPart
+from .state_tracking import LenExtrapPart
 
 Q, SIG = 6, 3
 

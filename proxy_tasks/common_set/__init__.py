@@ -1,9 +1,6 @@
-"""Common architecture set (protocol v2): the same mixers, by name and code, in every sequence task.
+"""Shared causal sequence mixers and model backbones for the sixteen tasks.
 
-Task models.py files register them as cs_<name>; the existing per-task model IDs are untouched.
-Pure PyTorch except retnet, whose retention kernel is fla on CUDA (retention.py).
-This package lives outside proxy_tasks/common/ so adding it does not change any evaluation_sha256,
-and it uses only relative imports so the TFL adapter can import it as proxy_tasks.common_set.
+Registered names use the cs_ prefix. RetNet uses an FLA CUDA kernel and a PyTorch CPU reference.
 """
 from .backbone import (PARAM_TOLERANCE, Backbone, Block, SequenceClassifier, TokenLM, block_parameters,
                        mixer_width)

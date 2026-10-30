@@ -2,7 +2,7 @@
 
 [한국어](README.md) · English
 
-A four-tier validation harness that screens new Transformer alternatives proposed by EvoScientist using inexpensive experiments.
+A benchmark of 16 synthetic and small real-data tasks for evaluating Transformer alternatives. EvoScientist can use it through shell commands.
 
 ## Why this exists
 
@@ -82,37 +82,60 @@ Win/lose labels are from the **Transformer's perspective**.
 
 ## Quick start
 
-**Data location: [proxy-task-bench-data (Google Drive)](https://drive.google.com/drive/folders/1FXi_UlvUnvrlfBj7YryFY0dmoE7uoZes?usp=drive_link)**
-
-Tasks that generate their data at runtime use their built-in generators. For all other tasks, download and use the data and caches provided in this Drive folder. EvoScientist should consult this folder first and use the supplied data rather than regenerate it or substitute another dataset.
-Verify archives with the accompanying `SHA256SUMS.txt`.
-See [data setup](docs/DATA.md) for the directory layout and required files.
+Use Linux, Python 3.11, and an NVIDIA CUDA GPU. Listing tasks and running CPU contract tests do not require a GPU.
 
 ```bash
+git clone https://github.com/awesomesungminyu/KAIST-Intern-Proxy-Task-Bench.git
 cd KAIST-Intern-Proxy-Task-Bench
-export PROXY_DATA_ROOT=/absolute/path/to/data
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu124
+python -m pip install -r requirements.txt
 python -m validation list
-python -m validation check --task T1-R0-07 --model cs_transformer
-CUDA_VISIBLE_DEVICES="" python -m unittest discover -s tests -v
 ```
 
-Install a CUDA build of PyTorch 2.5.1 and the dependencies in `requirements.txt`. Prepare Parity's external runner with `bash setup.sh parity`, and RetNet's CUDA kernel with `bash setup.sh retnet`.
-`check` inspects the environment and required files without training. `list` contains exactly the final 16 tasks.
+The example installs the CUDA 12.4 build. Consult the [official installation table](https://pytorch.org/get-started/previous-versions/#v251) for other driver setups, keeping PyTorch 2.5.1.
+
+**Data: [proxy-task-bench-data (Google Drive)](https://drive.google.com/drive/folders/1FXi_UlvUnvrlfBj7YryFY0dmoE7uoZes?usp=drive_link)**
+
+Generated tasks create their inputs at runtime. Other tasks use the supplied Drive datasets and caches. See [data preparation](docs/DATA.md) for downloads, checksums, and extraction.
 
 ```bash
-python -m validation run --task T1-R2-02 --model cs_transformer \
-  --profile smoke --seeds 0 --out artifacts/string-matching-smoke
-# Full training budget
+# Prepare files from the directory containing your extracted downloads.
+python -m validation prepare --source downloads/extracted --data-root data
+# Check data availability without CUDA.
+python -m validation data --data-root data
+# Start with a generated task that needs no downloaded data.
+python -m validation check --task T1-R2-02 --model cs_transformer
+python -m validation run --task T1-R2-02 --model cs_transformer --profile smoke --seeds 0
+```
+
+Defaults are `data/<task ID>/` for inputs and `artifacts/<task ID>/<model>/<run ID>/` for outputs. Use `--data-root` or the optional settings in `.env.example` to relocate storage. `.env` is not loaded automatically.
+Prepare Parity's external runner with `bash setup.sh parity`, and RetNet's CUDA kernel with `bash setup.sh retnet`.
+
+```bash
+# Full training budget; choose a new output directory.
 python -m validation run --task T1-R2-02 --model cs_transformer \
   --profile full --seeds 0 1 2 --out artifacts/string-matching-full
+# Compare completed runs with the same task, data, settings, and seeds.
+python -m validation compare --baseline artifacts/baseline --candidate artifacts/candidate
+# CPU contract tests
+CUDA_VISIBLE_DEVICES="" python -m unittest discover -s tests -v
+# Import and train one Transformer step on each of the 16 tasks, after preparing data.
+python scripts/smoke_tasks.py --data-root data --device cuda
 ```
 
-See [models](docs/MODELS.md) for the nine shared models and task-specific settings. Execution settings are in `validation/protocol.json`.
+`check` inspects files and the runtime. Smoke and one-step checks are execution checks, not performance evidence. Only completed `full` runs with result status `done` can be compared.
+See [models](docs/MODELS.md) for architecture changes and matched comparisons, and the [EvoScientist guide](docs/EVOSCIENTIST.md) for agent instructions.
+
+## Known issues
+
+- If `proxy-data-final-pool-small.tar.gz` is absent from the final-data Drive subfolder, request it from the folder owner. Tasks requiring its source files cannot be prepared without it.
 
 ## Limitations
 
-- Final task selection does not imply completed repeated-seed validation of every model.
-- Results, datasets, and checkpoints are not included.
-- `smoke` checks execution; it is not performance evidence.
+- Selection, imports, and one-step training checks do not establish full-training performance or validate every model/task combination.
+- Results, datasets, and checkpoints are excluded from Git.
 - RegBench evaluates a repeatedly observed development stream. Parity averages the best accuracy per bin and does not represent one selected checkpoint.
-- Tier 2 mixes language and non-language tasks; predicting Tier 3 performance requires task-by-task review.
+- Tiers 0 and 3 describe the wider validation framework. This repository executes only the final 16 Tier 1 and Tier 2 tasks.

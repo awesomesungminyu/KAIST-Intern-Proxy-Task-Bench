@@ -1,7 +1,7 @@
 """35-class Speech Commands, raw waveform resampled from 16kHz to 2kHz."""
 import numpy as np
 import torch
-from .base import DATA, ArrayCls
+from .base import ArrayCls
 
 class SpeechCommands(ArrayCls):
     name = 'T2-R4-02'
@@ -10,7 +10,7 @@ class SpeechCommands(ArrayCls):
     ceiling = None
     @property
     def path(self):
-        return DATA / 'round4_diversity' / self.name
+        return self.data_dir
     def load(self, device):
         for split, suffix in [('train', 'tr'), ('val', 'va')]:
             for kind in ['x', 'y']:

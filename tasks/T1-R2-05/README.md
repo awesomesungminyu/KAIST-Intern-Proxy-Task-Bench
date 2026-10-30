@@ -7,9 +7,15 @@
 | 입력 | 토큰 |
 | 지표 | `last_state_accuracy_id50_ex50` ↑ |
 | 평가 | `validation` / `final_step` |
-| 구현 | [proxy_tasks/final16/r2/t1p.py](../../proxy_tasks/final16/r2/t1p.py) |
+| 구현 | [proxy_tasks/final16/generated/random_automaton.py](../../proxy_tasks/final16/generated/random_automaton.py) |
 
 실행 설정: [protocol.json](../../validation/protocol.json). 데이터 준비: [DATA.md](../../docs/DATA.md).
+
+## 데이터
+
+실행 시 고정된 생성기를 사용하므로 데이터 다운로드가 필요 없다.
+
+## 실행
 
 ```bash
 python -m validation check --task T1-R2-05 --model cs_transformer
