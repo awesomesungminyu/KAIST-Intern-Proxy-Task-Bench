@@ -4,15 +4,15 @@
 
 ## 1. 받을 파일
 
-[drive_upload_20261030 (Google Drive)](<drive_upload_20261030 폴더 링크>) 폴더에서 아래 5개 파일을 모두 받아 저장소의 `downloads/`에 넣는다.
+[drive_upload_20261030 (Google Drive)](https://drive.google.com/drive/folders/1KAhMI1h7CzB8pR4h6JvhyoG4rD_1dH7l) 폴더에서 아래 5개 파일을 모두 받아 저장소의 `downloads/`에 넣는다.
 
 | 파일 | 크기 | 들어 있는 과제 |
 |---|---|---|
 | `proxy-data-final-pool-small.tar.gz` | 153 MB | Permuted MNIST, Permuted Kuzushiji-49, Beijing PM2.5, TAPE Stability, enwik8, IMDB, Lipophilicity |
 | `proxy-data-final-pool-speech_commands.tar.gz` | 2.43 GB | Speech Commands (원 파형) |
-| `proxy-data-final-pool-mad.tar.gz` | 340 KB | MAD Compression 캐시 |
-| `proxy-data-final-pool-parity.tar.gz` | 281 KB | Parity 코퍼스 |
-| `SHA256SUMS.txt` | — | 위 4개 묶음의 체크섬 |
+| `proxy-data-final-pool-mad.tar.gz` | 327 KB (327,195 B) | MAD Compression 캐시 |
+| `proxy-data-final-pool-parity.tar.gz` | 280 KB (279,977 B) | Parity 코퍼스 |
+| `SHA256SUMS.txt` | 413 B | 위 4개 묶음의 체크섬 |
 
 파일이 보이지 않거나 접근 권한이 없으면 폴더 소유자에게 요청한다. 다른 데이터나 임의로 만든 입력으로 대체하지 않는다.
 
@@ -76,4 +76,4 @@ python -m validation data --data-root data
 | Lipophilicity | 3,360 / 420 | 제공된 분할 파일을 재사용. 없으면 Bemis–Murcko scaffold 80/10/10으로 고정 분할. test는 평가하지 않음 |
 | TAPE Stability | 53,614 / 2,512 | 공식 분할. test는 평가하지 않음 |
 
-test 세트는 어느 과제에서도 평가에 쓰지 않는다.
+실제 데이터 과제의 최종 test 세트는 평가에 쓰지 않는다. RegBench의 `test` 스트림은 반복 관측하는 개발용 지표이며, 최종 test 세트와 구분한다.

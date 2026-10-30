@@ -97,7 +97,7 @@ python -m validation list
 
 The example installs the CUDA 12.4 build. Consult the [official installation table](https://pytorch.org/get-started/previous-versions/#v251) for other driver setups, keeping PyTorch 2.5.1.
 
-**Data: [drive_upload_20261030 (Google Drive)](<drive_upload_20261030 folder link>)**
+**Data: [drive_upload_20261030 (Google Drive)](https://drive.google.com/drive/folders/1KAhMI1h7CzB8pR4h6JvhyoG4rD_1dH7l)**
 
 The 6 generated tasks need no download; the other 10 are prepared from the 4 bundles in this one folder. See [data preparation](docs/DATA.md) for downloads, checksums, and extraction.
 

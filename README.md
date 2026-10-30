@@ -97,7 +97,7 @@ python -m validation list
 
 PyTorch 설치 예시는 CUDA 12.4 빌드다. 다른 드라이버 환경은 [공식 설치 표](https://pytorch.org/get-started/previous-versions/#v251)를 참고하되 PyTorch 2.5.1을 유지한다.
 
-**데이터: [drive_upload_20261030 (Google Drive)](<drive_upload_20261030 폴더 링크>)**
+**데이터: [drive_upload_20261030 (Google Drive)](https://drive.google.com/drive/folders/1KAhMI1h7CzB8pR4h6JvhyoG4rD_1dH7l)**
 
 생성형 과제 6개는 다운로드 불필요, 나머지 10개는 이 폴더의 묶음 4개로 준비한다. 다운로드할 파일과 체크섬 검증·압축 해제 방법은 [데이터 준비](docs/DATA.md)에 있다.
 
