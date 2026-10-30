@@ -97,9 +97,9 @@ python -m validation list
 
 The example installs the CUDA 12.4 build. Consult the [official installation table](https://pytorch.org/get-started/previous-versions/#v251) for other driver setups, keeping PyTorch 2.5.1.
 
-**Data: [proxy-task-bench-data (Google Drive)](https://drive.google.com/drive/folders/1FXi_UlvUnvrlfBj7YryFY0dmoE7uoZes?usp=drive_link)**
+**Data: [drive_upload_20261030 (Google Drive)](<drive_upload_20261030 folder link>)**
 
-Generated tasks create their inputs at runtime. Other tasks use the supplied Drive datasets and caches. See [data preparation](docs/DATA.md) for downloads, checksums, and extraction.
+The 6 generated tasks need no download; the other 10 are prepared from the 4 bundles in this one folder. See [data preparation](docs/DATA.md) for downloads, checksums, and extraction.
 
 ```bash
 # Prepare files from the directory containing your extracted downloads.
@@ -131,7 +131,7 @@ See [models](docs/MODELS.md) for architecture changes and matched comparisons, a
 
 ## Known issues
 
-- If `proxy-data-final-pool-small.tar.gz` is absent from the final-data Drive subfolder, request it from the folder owner. Tasks requiring its source files cannot be prepared without it.
+- If any of the four bundles (`proxy-data-final-pool-{mad,parity,small,speech_commands}.tar.gz`) is missing from the Drive folder, request it from the folder owner. Tasks that need its data cannot be prepared without it.
 
 ## Limitations
 

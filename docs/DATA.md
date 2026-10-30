@@ -1,17 +1,17 @@
 # 데이터 준비
 
-16개 과제 중 6개는 실행할 때 데이터를 생성하므로 받을 것이 없다. 나머지 10개는 Google Drive 폴더 하나에서 묶음 4개를 받아 준비한다.
+생성형 과제 6개는 다운로드 불필요, 나머지 10개는 이 폴더의 묶음 4개로 준비
 
 ## 1. 받을 파일
 
-[proxy-task-bench-data (Google Drive)](https://drive.google.com/drive/folders/1FXi_UlvUnvrlfBj7YryFY0dmoE7uoZes?usp=drive_link) 안의 **`drive_upload_20261030`** 폴더에서 아래 5개 파일을 모두 받아 저장소의 `downloads/`에 넣는다.
+[drive_upload_20261030 (Google Drive)](<drive_upload_20261030 폴더 링크>) 폴더에서 아래 5개 파일을 모두 받아 저장소의 `downloads/`에 넣는다.
 
 | 파일 | 크기 | 들어 있는 과제 |
 |---|---|---|
 | `proxy-data-final-pool-small.tar.gz` | 153 MB | Permuted MNIST, Permuted Kuzushiji-49, Beijing PM2.5, TAPE Stability, enwik8, IMDB, Lipophilicity |
 | `proxy-data-final-pool-speech_commands.tar.gz` | 2.43 GB | Speech Commands (원 파형) |
-| `proxy-data-final-pool-mad.tar.gz` | — | MAD Compression 캐시 |
-| `proxy-data-final-pool-parity.tar.gz` | — | Parity 코퍼스 |
+| `proxy-data-final-pool-mad.tar.gz` | 340 KB | MAD Compression 캐시 |
+| `proxy-data-final-pool-parity.tar.gz` | 281 KB | Parity 코퍼스 |
 | `SHA256SUMS.txt` | — | 위 4개 묶음의 체크섬 |
 
 파일이 보이지 않거나 접근 권한이 없으면 폴더 소유자에게 요청한다. 다른 데이터나 임의로 만든 입력으로 대체하지 않는다.

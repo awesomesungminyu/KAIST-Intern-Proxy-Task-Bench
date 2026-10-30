@@ -97,9 +97,9 @@ python -m validation list
 
 PyTorch 설치 예시는 CUDA 12.4 빌드다. 다른 드라이버 환경은 [공식 설치 표](https://pytorch.org/get-started/previous-versions/#v251)를 참고하되 PyTorch 2.5.1을 유지한다.
 
-**데이터: [proxy-task-bench-data (Google Drive)](https://drive.google.com/drive/folders/1FXi_UlvUnvrlfBj7YryFY0dmoE7uoZes?usp=drive_link)**
+**데이터: [drive_upload_20261030 (Google Drive)](<drive_upload_20261030 폴더 링크>)**
 
-생성형 과제는 실행 시 데이터를 만든다. 나머지는 Drive에서 제공하는 데이터·캐시를 받아 사용한다. 다운로드할 파일과 체크섬 검증·압축 해제 방법은 [데이터 준비](docs/DATA.md)에 있다.
+생성형 과제 6개는 다운로드 불필요, 나머지 10개는 이 폴더의 묶음 4개로 준비한다. 다운로드할 파일과 체크섬 검증·압축 해제 방법은 [데이터 준비](docs/DATA.md)에 있다.
 
 ```bash
 # 다운로드한 압축 파일을 풀어 둔 폴더에서 입력을 준비한다.
@@ -132,7 +132,7 @@ python scripts/smoke_tasks.py --data-root data --device cuda
 
 ## 알려진 문제
 
-- Drive 최종 데이터 하위 폴더에서 `proxy-data-final-pool-small.tar.gz`가 보이지 않으면 폴더 소유자에게 요청해야 한다. 해당 원자료가 필요한 과제는 준비할 수 없다.
+- Drive 폴더에서 묶음 4개(`proxy-data-final-pool-{mad,parity,small,speech_commands}.tar.gz`) 중 보이지 않는 것이 있으면 폴더 소유자에게 요청해야 한다. 해당 데이터가 필요한 과제는 준비할 수 없다.
 
 ## 한계
 
