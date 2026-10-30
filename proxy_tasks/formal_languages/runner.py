@@ -7,7 +7,7 @@ from validation.torch_compat import install_cpu_sequence_lengths
 install_cpu_sequence_lengths()
 T_PROC_START = time.perf_counter()
 STARTED_AT = datetime.datetime.now().astimezone().isoformat(timespec="seconds")
-EXP_DIR = os.environ.get("EXP_DIR", "/workspace/exp/2026-10-12")
+EXP_DIR = os.environ.get("EXP_DIR", "/workspace/AI4Science_2026summer_archive/sungminyu/proxy-bench/exp/2026-10-12")
 RUNS_FILE = os.path.join(EXP_DIR, "runs.jsonl")
 def sync():
     if torch.cuda.is_available(): torch.cuda.synchronize()

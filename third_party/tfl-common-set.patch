@@ -1,0 +1,90 @@
+--- a/src/args.py
++++ b/src/args.py
+@@ -51,7 +51,8 @@
+ 
+ 	# LSTM parameters
+ 	parser.add_argument('-emb_size', type=int, default=64, help='Embedding dimensions of inputs')
+-	parser.add_argument('-model_type', type=str, default='SAN', choices= ['RNN', 'SAN','SAN-Rel', 'Mogrify', 'SARNN', 'SAN-Simple'],  help='Model Type: RNN or Transformer or Mogrifier or SARNN')
++	parser.add_argument('-model_type', type=str, default='SAN', choices= ['RNN', 'SAN','SAN-Rel', 'Mogrify', 'SARNN', 'SAN-Simple', 'CS'],  help='Model Type: RNN or Transformer or Mogrifier or SARNN')
++	parser.add_argument('-cs_mixer', type=str, default='transformer', help='Common-set mixer name for -model_type CS (proxy_tasks/common_set)')
+ 	parser.add_argument('-cell_type', type=str, default='LSTM', choices= ['LSTM', 'GRU', 'RNN'],  help='RNN cell type, default: lstm')
+ 	# parser.add_argument('-use_attn', action='store_true', help='To use attention mechanism?')
+ 	# parser.add_argument('-attn_type', type=str, default='general', help='Attention mechanism: (general, concat), default: general')
+--- a/src/model.py
++++ b/src/model.py
+@@ -73,6 +73,12 @@
+ 												freeze_v = self.config.freeze_v, freeze_f = self.config.freeze_f,
+ 												zero_keys = self.config.zero_k, pos_encode_type= self.config.pos_encode_type,
+ 												max_period = self.config.max_period).to(self.device)
++		elif self.config.model_type == 'CS':
++			# proxy-task-bench common architecture set (proxy_tasks/common_set/tfl.py)
++			from proxy_tasks.common_set.tfl import CommonSetTFLModel
++			self.model = CommonSetTFLModel(self.voc.nwords, self.voc.noutputs, self.config.cs_mixer,
++										self.config.d_model, self.config.heads, self.config.depth,
++										bias = self.config.bias).to(self.device)
+ 		elif self.config.model_type == 'SAN-Rel':
+ 			self.model = TransformerXLModel(self.voc.nwords, self.voc.noutputs, self.config.d_model, self.config.heads, self.config.d_ffn, self.config.depth, self.config.dropout).to(self.device)
+ 		elif self.config.model_type == 'Mogrify':
+@@ -103,7 +109,7 @@
+ 
+ 		if config.model_type == 'RNN':
+ 			output, hidden = self.model(source, hidden, lengths)
+-		elif config.model_type == 'SAN' or config.model_type == 'SAN-Rel' or config.model_type == 'SAN-Simple':
++		elif config.model_type == 'SAN' or config.model_type == 'SAN-Rel' or config.model_type == 'SAN-Simple' or config.model_type == 'CS':
+ 			output = self.model(source)
+ 		elif config.model_type == 'Mogrify':
+ 			output, hidden = self.model(source, hidden)
+@@ -123,7 +129,7 @@
+ 		# for p in self.model.parameters():
+ 			# p.data.add_(-self.lr, p.grad.data)
+ 
+-		if config.model_type != 'SAN' and config.model_type != 'SAN-Simple' and config.model_type != 'SAN-Rel':
++		if config.model_type != 'SAN' and config.model_type != 'SAN-Simple' and config.model_type != 'SAN-Rel' and config.model_type != 'CS':
+ 			hidden = self.repackage_hidden(hidden)
+ 
+ 		return loss.item(), hidden
+@@ -132,7 +138,7 @@
+ 
+ 		if config.model_type == 'RNN':
+ 			output, hidden = self.model(source, hidden, lengths)
+-		elif config.model_type == 'SAN' or config.model_type == 'SAN-Rel' or config.model_type == 'SAN-Simple':
++		elif config.model_type == 'SAN' or config.model_type == 'SAN-Rel' or config.model_type == 'SAN-Simple' or config.model_type == 'CS':
+ 			output = self.model(source)
+ 		elif config.model_type == 'Mogrify':
+ 			output, hidden = self.model(source, hidden)
+@@ -159,7 +165,7 @@
+ 		batch_acc = batch_acc/source.size(1)
+ 
+ 
+-		if config.model_type != 'SAN' and config.model_type != 'SAN-Simple' and config.model_type != 'SAN-Rel':
++		if config.model_type != 'SAN' and config.model_type != 'SAN-Simple' and config.model_type != 'SAN-Rel' and config.model_type != 'CS':
+ 			hidden = self.repackage_hidden(hidden)
+ 
+ 		return  batch_acc, hidden
+@@ -237,7 +243,7 @@
+ 						bin_acc_dict = {'bin{}_score'.format(i+1) : val_acc_bins[i] for i in range(3)}
+ 						writer.add_scalars('acc/val_acc_iters', bin_acc_dict, iters)
+ 
+-				if config.model_type != 'SAN' and config.model_type != 'SAN-Simple' and config.model_type != 'SAN-Rel':
++				if config.model_type != 'SAN' and config.model_type != 'SAN-Simple' and config.model_type != 'SAN-Rel' and config.model_type != 'CS':
+ 					hidden = model.model.init_hidden(config.batch_size)
+ 				else:
+ 					hidden = None
+@@ -393,7 +399,7 @@
+ 
+ 	with torch.no_grad():
+ 		for batch, i in enumerate(range(0, len(val_loader), val_loader.batch_size)):
+-			if config.model_type != 'SAN' and config.model_type != 'SAN-Simple' and config.model_type != 'SAN-Rel':
++			if config.model_type != 'SAN' and config.model_type != 'SAN-Simple' and config.model_type != 'SAN-Rel' and config.model_type != 'CS':
+ 				hidden = model.model.init_hidden(config.batch_size)
+ 			else:
+ 				hidden = None
+@@ -422,7 +428,7 @@
+ 
+ 	with torch.no_grad():
+ 		for batch, i in enumerate(range(len(test_loader) - 1)):
+-			if config.model_type != 'SAN' and config.model_type != 'SAN-Simple' and config.model_type != 'SAN-Rel':
++			if config.model_type != 'SAN' and config.model_type != 'SAN-Simple' and config.model_type != 'SAN-Rel' and config.model_type != 'CS':
+ 				hidden = model.model.init_hidden(config.batch_size)
+ 			else:
+ 				hidden = None

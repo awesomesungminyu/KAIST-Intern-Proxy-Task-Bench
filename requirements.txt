@@ -1,6 +1,8 @@
-# torch 는 CUDA 빌드가 필요하므로 setup.sh 가 별도 index-url 로 설치한다.
 torch==2.5.1
-torch-geometric==2.8.0
 numpy
-matplotlib
+scipy
 pandas
+rdkit
+transformers==4.39.3
+tensorboardX
+scikit-learn

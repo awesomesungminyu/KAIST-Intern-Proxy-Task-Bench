@@ -1,0 +1,602 @@
+{
+  "version": "proxy-final16",
+  "precision": "fp32",
+  "default_seeds": [
+    0,
+    1,
+    2
+  ],
+  "models": [
+    "cs_transformer",
+    "cs_gqa",
+    "cs_linear_attention",
+    "cs_gla",
+    "cs_mamba",
+    "cs_hyena",
+    "cs_lstm",
+    "cs_s4d",
+    "cs_retnet"
+  ],
+  "tasks": {
+    "T1-R1-05": {
+      "adapter": "part",
+      "module": "synth",
+      "part_class": "MadCompression",
+      "steps": 4500,
+      "full": [],
+      "smoke": [],
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "metric": "token_accuracy",
+      "direction": "maximize",
+      "split": "validation",
+      "selection": "final_step",
+      "name": "MAD Compression",
+      "tier": 1,
+      "transformer_label": "win",
+      "assets": [
+        "../mad_tsc/t-C_vs-16_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train/inputs.npy"
+      ],
+      "limitations": []
+    },
+    "T1-R2-01": {
+      "adapter": "part",
+      "module": "r2.t1f",
+      "part_class": "Histogram",
+      "steps": 22600,
+      "full": [],
+      "smoke": [],
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "metric": "slot_accuracy",
+      "direction": "maximize",
+      "split": "validation",
+      "selection": "final_step",
+      "name": "Positional Histogram",
+      "tier": 1,
+      "transformer_label": "win",
+      "assets": [],
+      "limitations": []
+    },
+    "T1-R2-02": {
+      "adapter": "part",
+      "module": "r2.t1h",
+      "part_class": "StringMatch",
+      "steps": 20900,
+      "full": [],
+      "smoke": [],
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "metric": "accuracy",
+      "direction": "maximize",
+      "split": "validation",
+      "selection": "final_step",
+      "name": "String Matching",
+      "tier": 1,
+      "transformer_label": "win",
+      "assets": [],
+      "limitations": []
+    },
+    "T1-R0-07": {
+      "adapter": "native",
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "metric": "next_token_acc",
+      "direction": "maximize",
+      "split": "reused_test_stream",
+      "selection": "final_step",
+      "limitations": [
+        "The existing test stream is evaluated repeatedly during training. Treat it as development data, not an untouched final test.",
+        "This is the repo PFA preset, not an exact RegBench paper reproduction."
+      ],
+      "common": [
+        "--preset",
+        "repo",
+        "--examples_per_seq",
+        "20",
+        "--max_total_len",
+        "256",
+        "--lr",
+        "0.0003",
+        "--num_workers",
+        "0"
+      ],
+      "full": [
+        "--steps",
+        "2000",
+        "--eval_every",
+        "500",
+        "--eval_steps",
+        "50",
+        "--batch_size",
+        "64"
+      ],
+      "smoke": [
+        "--smoke_test"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "budget_rule": {
+        "key": "step",
+        "full": 2000,
+        "smoke": 20,
+        "allow_early_stop": false,
+        "metric_location": "history_last"
+      },
+      "name": "RegBench",
+      "tier": 1,
+      "transformer_label": "win",
+      "assets": []
+    },
+    "T1-R0-04": {
+      "adapter": "formal",
+      "dataset": "Parity",
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "metric": "mean_best_val_accuracy",
+      "direction": "maximize",
+      "split": "diagnostic_validation_bins",
+      "selection": "independent_best_epoch_per_bin",
+      "limitations": [
+        "Each bin can select a different epoch. The average is a diagnostic, not the score of one selected checkpoint or a final test.",
+        "The pinned upstream can stop early at mean validation accuracy >= 0.999; epochs specify a maximum budget."
+      ],
+      "full": [
+        "-epochs",
+        "100"
+      ],
+      "smoke": [
+        "-epochs",
+        "2"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "name": "Parity",
+      "tier": 1,
+      "transformer_label": "lose",
+      "assets": [
+        "train_corpus.pk",
+        "val_corpus_bins.pk"
+      ]
+    },
+    "T1-R2-03": {
+      "adapter": "part",
+      "module": "r2.chomsky",
+      "part_class": "ModArith",
+      "steps": 35200,
+      "full": [],
+      "smoke": [],
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "metric": "accuracy_id50_ex50",
+      "direction": "maximize",
+      "split": "validation",
+      "selection": "final_step",
+      "name": "Modular Arithmetic",
+      "tier": 1,
+      "transformer_label": "lose",
+      "assets": [],
+      "limitations": []
+    },
+    "T1-R2-04": {
+      "adapter": "part",
+      "module": "r2.chomsky",
+      "part_class": "CycleNav",
+      "steps": 40000,
+      "full": [],
+      "smoke": [],
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "metric": "accuracy_id50_ex50",
+      "direction": "maximize",
+      "split": "validation",
+      "selection": "final_step",
+      "name": "Cycle Navigation",
+      "tier": 1,
+      "transformer_label": "lose",
+      "assets": [],
+      "limitations": []
+    },
+    "T1-R2-05": {
+      "adapter": "part",
+      "module": "r2.t1p",
+      "part_class": "RandomAutomaton",
+      "steps": 38100,
+      "full": [],
+      "smoke": [],
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "metric": "last_state_accuracy_id50_ex50",
+      "direction": "maximize",
+      "split": "validation",
+      "selection": "final_step",
+      "name": "Random Automaton",
+      "tier": 1,
+      "transformer_label": "lose",
+      "assets": [],
+      "limitations": []
+    },
+    "T2-R1-11": {
+      "adapter": "part",
+      "module": "real",
+      "part_class": "PsMnist",
+      "steps": 2600,
+      "full": [],
+      "smoke": [],
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "metric": "accuracy",
+      "direction": "maximize",
+      "split": "validation",
+      "selection": "final_step",
+      "name": "Permuted MNIST",
+      "tier": 2,
+      "transformer_label": "win",
+      "assets": [
+        "t2k_mnist/train-images-idx3-ubyte.gz",
+        "t2k_mnist/train-labels-idx1-ubyte.gz"
+      ],
+      "limitations": []
+    },
+    "T2-R3-05": {
+      "adapter": "part",
+      "module": "kuzushiji",
+      "part_class": "Kuzushiji49",
+      "steps": 2400,
+      "full": [],
+      "smoke": [],
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "metric": "accuracy",
+      "direction": "maximize",
+      "split": "validation",
+      "selection": "final_step",
+      "name": "Permuted Kuzushiji-49",
+      "tier": 2,
+      "transformer_label": "win",
+      "assets": [
+        "round4/T2-R3-05/train_x.npy",
+        "round4/T2-R3-05/train_y.npy"
+      ],
+      "limitations": []
+    },
+    "T2-R4-02": {
+      "adapter": "part",
+      "module": "speech",
+      "part_class": "SpeechCommands",
+      "steps": 1400,
+      "full": [],
+      "smoke": [],
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "metric": "accuracy",
+      "direction": "maximize",
+      "split": "validation",
+      "selection": "final_step",
+      "name": "Speech Commands (raw waveform)*",
+      "tier": 2,
+      "transformer_label": "win",
+      "assets": [
+        "round4_diversity/T2-R4-02/train_x.npy",
+        "round4_diversity/T2-R4-02/train_y.npy",
+        "round4_diversity/T2-R4-02/val_x.npy",
+        "round4_diversity/T2-R4-02/val_y.npy"
+      ],
+      "limitations": []
+    },
+    "T2-R2-07": {
+      "adapter": "part",
+      "module": "r2.forecast",
+      "part_class": "BeijingPM25",
+      "steps": 23233,
+      "full": [],
+      "smoke": [],
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "metric": "mse_ctx_id50_long50",
+      "direction": "minimize",
+      "split": "validation",
+      "selection": "final_step",
+      "name": "Beijing PM2.5*",
+      "tier": 2,
+      "transformer_label": "win",
+      "assets": [
+        "round2/n10_beijing/x/PRSA_data_2010.1.1-2014.12.31.csv"
+      ],
+      "limitations": []
+    },
+    "T2-R1-04": {
+      "adapter": "part",
+      "module": "real",
+      "part_class": "Stability",
+      "steps": 17200,
+      "full": [],
+      "smoke": [],
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "metric": "spearman_valid",
+      "direction": "maximize",
+      "split": "validation",
+      "selection": "final_step",
+      "name": "TAPE Stability",
+      "tier": 2,
+      "transformer_label": "lose",
+      "assets": [
+        "t2d_protein/stability/train.csv",
+        "t2d_protein/stability/valid.csv"
+      ],
+      "limitations": []
+    },
+    "T2-R1-09": {
+      "adapter": "part",
+      "module": "real",
+      "part_class": "Enwik8",
+      "steps": 7600,
+      "full": [],
+      "smoke": [],
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "metric": "val_bpc",
+      "direction": "minimize",
+      "split": "validation",
+      "selection": "final_step",
+      "name": "enwik8",
+      "tier": 2,
+      "transformer_label": "lose",
+      "assets": [
+        "t2i_enwik8/enwik8.zip"
+      ],
+      "limitations": []
+    },
+    "T2-R1-08": {
+      "adapter": "part",
+      "module": "real",
+      "part_class": "ImdbBytes",
+      "steps": 1600,
+      "full": [],
+      "smoke": [],
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "metric": "accuracy",
+      "direction": "maximize",
+      "split": "validation",
+      "selection": "final_step",
+      "name": "IMDB (byte-level)",
+      "tier": 2,
+      "transformer_label": "lose",
+      "assets": [
+        "t2h_imdb/train_x.npy",
+        "t2h_imdb/train_y.npy",
+        "t2h_imdb/val_x.npy",
+        "t2h_imdb/val_y.npy"
+      ],
+      "limitations": []
+    },
+    "T2-R2-02": {
+      "adapter": "part",
+      "module": "r2.t2m",
+      "part_class": "Lipophilicity",
+      "steps": 2625,
+      "full": [],
+      "smoke": [],
+      "models": [
+        "cs_transformer",
+        "cs_gqa",
+        "cs_linear_attention",
+        "cs_gla",
+        "cs_mamba",
+        "cs_hyena",
+        "cs_lstm",
+        "cs_s4d",
+        "cs_retnet"
+      ],
+      "runtime": {
+        "torch": "2.5.1",
+        "packages": []
+      },
+      "metric": "rmse_valid",
+      "direction": "minimize",
+      "split": "validation",
+      "selection": "final_step",
+      "name": "Lipophilicity (SMILES)*",
+      "tier": 2,
+      "transformer_label": "lose",
+      "assets": [
+        "round2/t2m_lipo/Lipophilicity.csv",
+        "round2/t2m_lipo/split.npz"
+      ],
+      "limitations": []
+    }
+  }
+}

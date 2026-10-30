@@ -30,64 +30,60 @@ EvoScientist가 제안한 새 Transformer 대안 구조를 싼 실험으로 미�
 | Tier 3 | - | (ETRI) | 대규모 AR LM |
 
 최종 과제는 Tier 1 8개, Tier 2 8개로 총 16개다. Tier 0과 Tier 3은 이 개수에 포함하지 않는다.
-승·패는 **Transformer 기준** 분류다. 별표(*)는 선정 목록의 표기를 유지했으며 의미는 아직 명시되지 않았다.
-
-## 프로토콜 두 버전
-
-아래 두 버전은 이전 과제 구성을 기록한 프로토콜이며 최종 16개 과제용 프로토콜이 아니다. 최종 목록 선정과 실행 구현·프로토콜 갱신은 구분한다.
-
-| 프로토콜 | 대상과 모델 |
-|---|---|
-| `v1.json` | 7개 태스크(regbench, g2p, zinc, parity, tomita5, tomita6, fflm), 태스크별 기준 모델 |
-| v2.json | 공통 집합: 같은 뼈대에 mixer만 바꾼 9종(transformer, gqa, linear_attention, gla, mamba, hyena, lstm, s4d, retnet)을 8개 태스크(regbench, mqar, jelassi_copy, parity, tomita5, tomita6, scifar, fflm)에 적용 |
-
-v2는 원본 벤치마크 저장소의 `common-arch-set-v2` 브랜치 참고. 이 스냅샷에는 `v2.json`이 없다. **두 프로토콜 결과는 `compare` 불가.**
+승·패는 **Transformer 기준** 분류다.
 
 ## 테스트 대상
 
 | 태스크 | 입력 | 지표(↑ 높을수록, ↓ 낮을수록 좋음) | 데이터 |
 |---|---|---|---|
-| T1-R1-05 · MAD Compression | 토큰 | 미확정 | 생성(합성) |
-| T1-R2-01 · Positional Histogram | 토큰 | 미확정 | 생성(합성) |
-| T1-R2-02 · String Matching | 토큰 | 미확정 | 생성(합성) |
-| T1-R0-07 · RegBench | 토큰 | `next_token_acc` ↑ | 생성(PFA) |
-| T1-R0-04 · Parity | 토큰 | `mean_best_val_accuracy` ↑ | 파일(TFL corpus) |
-| T1-R2-03 · Modular Arithmetic | 토큰 | 미확정 | 생성(합성) |
-| T1-R2-04 · Cycle Navigation | 토큰 | 미확정 | 생성(합성) |
-| T1-R2-05 · Random Automaton | 토큰 | 미확정 | 생성(합성) |
-| T2-R1-11 · Permuted MNIST | 이미지 시퀀스 | 미확정 | 파일(MNIST) |
-| T2-R3-05 · Permuted Kuzushiji-49 | 이미지 시퀀스 | 미확정 | 파일(Kuzushiji-49) |
-| T2-R4-02 · Speech Commands (raw waveform)\* | 연속값 | 미확정 | 파일(Speech Commands) |
-| T2-R2-07 · Beijing PM2.5\* | 연속값 | 미확정 | 파일(Beijing PM2.5) |
-| T2-R1-04 · TAPE Stability | 아미노산 서열 | 미확정 | 파일(TAPE Stability) |
-| T2-R1-09 · enwik8 | 바이트 | 미확정 | 파일(enwik8) |
-| T2-R1-08 · IMDB (byte-level) | 바이트 | 미확정 | 파일(IMDB) |
-| T2-R2-02 · Lipophilicity (SMILES)\* | SMILES 토큰 | 미확정 | 파일(Lipophilicity) |
-
-지표 키는 기존 RegBench·Parity 구현에서 확인된 항목만 기재했다. 나머지 과제의 최종 지표 키와 평가 집계 방식은 프로토콜 갱신 시 확정한다.
-
-<a id="실행-인터페이스"></a>
+| [T1-R1-05 · MAD Compression](tasks/T1-R1-05/README.md) | 토큰 | `token_accuracy` ↑ | 파일(합성 캐시) |
+| [T1-R2-01 · Positional Histogram](tasks/T1-R2-01/README.md) | 토큰 | `slot_accuracy` ↑ | 실행 시 생성 |
+| [T1-R2-02 · String Matching](tasks/T1-R2-02/README.md) | 토큰 | `accuracy` ↑ | 실행 시 생성 |
+| [T1-R0-07 · RegBench](tasks/T1-R0-07/README.md) | 토큰 | `next_token_acc` ↑ | 실행 시 생성 |
+| [T1-R0-04 · Parity](tasks/T1-R0-04/README.md) | 토큰 | `mean_best_val_accuracy` ↑ | 파일 |
+| [T1-R2-03 · Modular Arithmetic](tasks/T1-R2-03/README.md) | 토큰 | `accuracy_id50_ex50` ↑ | 실행 시 생성 |
+| [T1-R2-04 · Cycle Navigation](tasks/T1-R2-04/README.md) | 토큰 | `accuracy_id50_ex50` ↑ | 실행 시 생성 |
+| [T1-R2-05 · Random Automaton](tasks/T1-R2-05/README.md) | 토큰 | `last_state_accuracy_id50_ex50` ↑ | 실행 시 생성 |
+| [T2-R1-11 · Permuted MNIST](tasks/T2-R1-11/README.md) | 이미지 시퀀스 | `accuracy` ↑ | 파일 |
+| [T2-R3-05 · Permuted Kuzushiji-49](tasks/T2-R3-05/README.md) | 이미지 시퀀스 | `accuracy` ↑ | 파일 |
+| [T2-R4-02 · Speech Commands (raw waveform)\*](tasks/T2-R4-02/README.md) | 연속값 | `accuracy` ↑ | 파일 |
+| [T2-R2-07 · Beijing PM2.5\*](tasks/T2-R2-07/README.md) | 연속값 | `mse_ctx_id50_long50` ↓ | 파일 |
+| [T2-R1-04 · TAPE Stability](tasks/T2-R1-04/README.md) | 아미노산 서열 | `spearman_valid` ↑ | 파일 |
+| [T2-R1-09 · enwik8](tasks/T2-R1-09/README.md) | 바이트 | `val_bpc` ↓ | 파일 |
+| [T2-R1-08 · IMDB (byte-level)](tasks/T2-R1-08/README.md) | 바이트 | `accuracy` ↑ | 파일 |
+| [T2-R2-02 · Lipophilicity (SMILES)\*](tasks/T2-R2-02/README.md) | SMILES 토큰 | `rmse_valid` ↓ | 파일 |
 
 ## 빠른 시작
 
-아래 명령은 현재 스냅샷의 기존 실행 인터페이스를 점검한다. `validation list` 출력은 최종 16개 선정 목록과 다를 수 있다.
-
 실험 데이터는 [proxy-task-bench-data](https://drive.google.com/drive/folders/1FXi_UlvUnvrlfBj7YryFY0dmoE7uoZes?usp=drive_link)에서 받는다.
 다운로드한 압축 파일은 함께 제공된 `SHA256SUMS.txt`로 검증한다.
-압축을 푼 뒤 태스크별 데이터 폴더의 상위 경로를 `PROXY_DATA_ROOT`로 export한다.
-
-개인 저장소를 clone한 상위 경로에서 아래와 같이 프로젝트 폴더로 이동한다. `check`는 CUDA 환경·자산 점검이며 학습하지 않는다.
+데이터 폴더 구조와 과제별 필수 파일은 [데이터 안내](docs/DATA.md)를 따른다.
 
 ```bash
 cd KAIST-Intern-Proxy-Task-Bench
+export PROXY_DATA_ROOT=/absolute/path/to/data
 python -m validation list
-python -m validation check --task regbench --model transformer
+python -m validation check --task T1-R0-07 --model cs_transformer
 CUDA_VISIBLE_DEVICES="" python -m unittest discover -s tests -v
 ```
 
+CUDA용 PyTorch 2.5.1과 `requirements.txt`의 의존성이 필요하다. Parity의 외부 실행기는 `bash setup.sh parity`, RetNet의 CUDA 커널은 `bash setup.sh retnet`으로 준비한다.
+`check`는 환경·필수 파일 점검이며 학습하지 않는다. `list`에는 최종 16개 과제만 표시된다.
+
+```bash
+python -m validation run --task T1-R2-02 --model cs_transformer \
+  --profile smoke --seeds 0 --out artifacts/string-matching-smoke
+# 전체 예산 실행
+python -m validation run --task T1-R2-02 --model cs_transformer \
+  --profile full --seeds 0 1 2 --out artifacts/string-matching-full
+```
+
+9종 공통 모델과 과제별 설정은 [모델 안내](docs/MODELS.md), 실행 설정은 `validation/protocol.json`에 있다.
+
 ## 한계
 
-- v1은 태스크마다 transformer 구현이 달랐다.
-- 결과·데이터는 저장소에 포함하지 않는다.
-- 최종 16개 선정 목록과 기존 스냅샷의 구현·프로토콜 사이에 차이가 있다.
+- 16개 과제의 최종 선정은 모든 모델·시드의 반복 검증 완료를 뜻하지 않는다.
+- 결과·데이터·체크포인트는 저장소에 포함하지 않는다.
+- `smoke`는 동작 점검이며 성능 비교 근거가 아니다.
+- RegBench는 반복 관측한 개발 스트림을 평가한다. Parity는 bin별 최고 정확도의 평균으로, 단일 체크포인트의 점수가 아니다.
 - Tier 2는 언어·비언어 과제가 섞여 있으므로 Tier 3 예측 근거는 과제별로 검토한다.
