@@ -20,16 +20,43 @@ EvoScientist가 제안한 새 Transformer 대안 구조를 싼 실험으로 미�
 
 ## 티어별 소속 태스크
 
-| Tier | 구분 | 태스크 | 무엇을 하나 |
-|---|---|---|---|
-| Tier 0 | - | tier0 | 학습 없이 지표 계산 |
-| Tier 1 | Transformer 승 | MAD Compression, Positional Histogram, String Matching, RegBench | 압축, 위치별 빈도, 문자열 매칭, 정규언어 ICL |
-| Tier 1 | Transformer 패 | Parity, Modular Arithmetic, Cycle Navigation, Random Automaton | 패리티, 모듈러 연산, 순환 경로 탐색, 오토마톤 상태 추적 |
-| Tier 2 | Transformer 승 | Permuted MNIST, Permuted Kuzushiji-49, Speech Commands (raw waveform)*, Beijing PM2.5* | 순열 이미지 분류, 음성 분류, 대기 시계열 예측 |
-| Tier 2 | Transformer 패 | TAPE Stability, enwik8, IMDB (byte-level), Lipophilicity (SMILES)* | 단백질 안정성, 바이트 언어 모델링, 감성 분류, 분자 물성 예측 |
-| Tier 3 | - | (ETRI) | 대규모 AR LM |
+### Tier 0
 
-최종 과제는 Tier 1 8개, Tier 2 8개로 총 16개다. Tier 0과 Tier 3은 이 개수에 포함하지 않는다.
+- **tier0**: 학습 없이 지표 계산
+
+### Tier 1 · 합성 과제 · Transformer 승
+
+- **MAD Compression**: 압축
+- **Positional Histogram**: 위치별 빈도
+- **String Matching**: 문자열 매칭
+- **RegBench**: 정규언어 ICL
+
+### Tier 1 · 합성 과제 · Transformer 패
+
+- **Parity**: 패리티
+- **Modular Arithmetic**: 모듈러 연산
+- **Cycle Navigation**: 순환 경로 탐색
+- **Random Automaton**: 오토마톤 상태 추적
+
+### Tier 2 · 실제 데이터 · Transformer 승
+
+- **Permuted MNIST**: 순열 이미지 분류
+- **Permuted Kuzushiji-49**: 순열 이미지 분류
+- **Speech Commands (raw waveform)\***: 음성 분류
+- **Beijing PM2.5\***: 대기 시계열 예측
+
+### Tier 2 · 실제 데이터 · Transformer 패
+
+- **TAPE Stability**: 단백질 안정성
+- **enwik8**: 바이트 언어 모델링
+- **IMDB (byte-level)**: 감성 분류
+- **Lipophilicity (SMILES)\***: 분자 물성 예측
+
+### Tier 3
+
+- **(ETRI)**: 대규모 AR LM
+
+최종 과제는 **Tier 1 8개 + Tier 2 8개 = 총 16개**다. Tier 0과 Tier 3은 이 개수에 포함하지 않는다.
 승·패는 **Transformer 기준** 분류다.
 
 ## 테스트 대상
@@ -55,7 +82,9 @@ EvoScientist가 제안한 새 Transformer 대안 구조를 싼 실험으로 미�
 
 ## 빠른 시작
 
-실험 데이터는 [proxy-task-bench-data](https://drive.google.com/drive/folders/1FXi_UlvUnvrlfBj7YryFY0dmoE7uoZes?usp=drive_link)에서 받는다.
+**데이터 위치: [proxy-task-bench-data (Google Drive)](https://drive.google.com/drive/folders/1FXi_UlvUnvrlfBj7YryFY0dmoE7uoZes?usp=drive_link)**
+
+실행 시 데이터를 생성하는 과제를 제외한 나머지 과제는 위 Drive에서 제공하는 데이터·캐시를 내려받아 사용한다. EvoScientist도 해당 폴더를 먼저 참고하고, 제공된 데이터를 새로 생성하거나 다른 데이터로 대체하지 않는다.
 다운로드한 압축 파일은 함께 제공된 `SHA256SUMS.txt`로 검증한다.
 데이터 폴더 구조와 과제별 필수 파일은 [데이터 안내](docs/DATA.md)를 따른다.
 

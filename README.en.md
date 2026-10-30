@@ -20,16 +20,43 @@ The aim is to screen candidates before large-scale training using initial-state 
 
 ## Tasks by tier
 
-| Tier | Label | Tasks | Purpose |
-|---|---|---|---|
-| Tier 0 | - | tier0 | Compute metrics without training |
-| Tier 1 | Transformer win | MAD Compression, Positional Histogram, String Matching, RegBench | Compression, positional frequencies, string matching, regular-language ICL |
-| Tier 1 | Transformer lose | Parity, Modular Arithmetic, Cycle Navigation, Random Automaton | Parity, modular arithmetic, cycle navigation, automaton state tracking |
-| Tier 2 | Transformer win | Permuted MNIST, Permuted Kuzushiji-49, Speech Commands (raw waveform)*, Beijing PM2.5* | Permuted image classification, speech classification, air-quality forecasting |
-| Tier 2 | Transformer lose | TAPE Stability, enwik8, IMDB (byte-level), Lipophilicity (SMILES)* | Protein stability, byte-level language modeling, sentiment classification, molecular property prediction |
-| Tier 3 | - | (ETRI) | Large-scale autoregressive LM |
+### Tier 0
 
-The final selection contains 16 tasks: 8 in Tier 1 and 8 in Tier 2. Tier 0 and Tier 3 are outside this count.
+- **tier0**: Compute metrics without training
+
+### Tier 1 · Synthetic tasks · Transformer win
+
+- **MAD Compression**: Compression
+- **Positional Histogram**: Positional frequencies
+- **String Matching**: String matching
+- **RegBench**: Regular-language ICL
+
+### Tier 1 · Synthetic tasks · Transformer lose
+
+- **Parity**: Parity
+- **Modular Arithmetic**: Modular arithmetic
+- **Cycle Navigation**: Cycle navigation
+- **Random Automaton**: Automaton state tracking
+
+### Tier 2 · Real data · Transformer win
+
+- **Permuted MNIST**: Permuted image classification
+- **Permuted Kuzushiji-49**: Permuted image classification
+- **Speech Commands (raw waveform)\***: Speech classification
+- **Beijing PM2.5\***: Air-quality forecasting
+
+### Tier 2 · Real data · Transformer lose
+
+- **TAPE Stability**: Protein stability
+- **enwik8**: Byte-level language modeling
+- **IMDB (byte-level)**: Sentiment classification
+- **Lipophilicity (SMILES)\***: Molecular property prediction
+
+### Tier 3
+
+- **(ETRI)**: Large-scale autoregressive LM
+
+The final selection contains **8 Tier 1 tasks + 8 Tier 2 tasks = 16 tasks**. Tier 0 and Tier 3 are outside this count.
 Win/lose labels are from the **Transformer's perspective**.
 
 ## Task interfaces
@@ -55,7 +82,9 @@ Win/lose labels are from the **Transformer's perspective**.
 
 ## Quick start
 
-Download data from [proxy-task-bench-data](https://drive.google.com/drive/folders/1FXi_UlvUnvrlfBj7YryFY0dmoE7uoZes?usp=drive_link).
+**Data location: [proxy-task-bench-data (Google Drive)](https://drive.google.com/drive/folders/1FXi_UlvUnvrlfBj7YryFY0dmoE7uoZes?usp=drive_link)**
+
+Tasks that generate their data at runtime use their built-in generators. For all other tasks, download and use the data and caches provided in this Drive folder. EvoScientist should consult this folder first and use the supplied data rather than regenerate it or substitute another dataset.
 Verify archives with the accompanying `SHA256SUMS.txt`.
 See [data setup](docs/DATA.md) for the directory layout and required files.
 
