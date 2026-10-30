@@ -57,7 +57,7 @@ The aim is to screen candidates before large-scale training using initial-state 
 - **(ETRI)**: Large-scale autoregressive LM
 
 The final selection contains **8 Tier 1 tasks + 8 Tier 2 tasks = 16 tasks**. Tier 0 and Tier 3 are outside this count.
-Win/lose labels are from the **Transformer's perspective**.
+Win/loss labels come from comparing the Transformer with the LSTM. The ranking across all nine architectures differs by task.
 
 ## Task interfaces
 
@@ -99,7 +99,7 @@ The example installs the CUDA 12.4 build. Consult the [official installation tab
 
 **Data: [drive_upload_20261030 (Google Drive)](https://drive.google.com/drive/folders/1KAhMI1h7CzB8pR4h6JvhyoG4rD_1dH7l)**
 
-The 6 generated tasks need no download; the other 10 are prepared from the 4 bundles in this one folder. See [data preparation](docs/DATA.md) for downloads, checksums, and extraction.
+Of the 16 tasks, 6 generate their data at run time, so there is nothing to download. The other 10 are prepared from 4 bundles downloaded from a single Google Drive folder. See [data preparation](docs/DATA.md) for downloads, checksums, and extraction.
 
 ```bash
 # Prepare files from the directory containing your extracted downloads.

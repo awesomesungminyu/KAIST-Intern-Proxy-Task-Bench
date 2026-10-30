@@ -57,7 +57,7 @@ Transformer 대안 구조를 합성 과제와 소규모 실제 데이터로 평�
 - **(ETRI)**: 대규모 AR LM
 
 최종 과제는 **Tier 1 8개 + Tier 2 8개 = 총 16개**다. Tier 0과 Tier 3은 이 개수에 포함하지 않는다.
-승·패는 **Transformer 기준** 분류다.
+승·패는 Transformer와 LSTM을 비교한 결과다. 9개 구조 전체의 순위는 과제마다 다르다.
 
 ## 테스트 대상
 
@@ -99,7 +99,7 @@ PyTorch 설치 예시는 CUDA 12.4 빌드다. 다른 드라이버 환경은 [공
 
 **데이터: [drive_upload_20261030 (Google Drive)](https://drive.google.com/drive/folders/1KAhMI1h7CzB8pR4h6JvhyoG4rD_1dH7l)**
 
-생성형 과제 6개는 다운로드 불필요, 나머지 10개는 이 폴더의 묶음 4개로 준비한다. 다운로드할 파일과 체크섬 검증·압축 해제 방법은 [데이터 준비](docs/DATA.md)에 있다.
+16개 과제 중 6개는 실행할 때 데이터를 생성하므로 받을 것이 없다. 나머지 10개는 Google Drive 폴더 하나에서 묶음 4개를 받아 준비한다. 다운로드할 파일과 체크섬 검증·압축 해제 방법은 [데이터 준비](docs/DATA.md)에 있다.
 
 ```bash
 # 다운로드한 압축 파일을 풀어 둔 폴더에서 입력을 준비한다.
