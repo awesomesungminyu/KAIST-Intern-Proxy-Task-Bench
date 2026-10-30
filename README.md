@@ -1,92 +1,93 @@
-# proxy tasks — 구조 변경 검증용 소규모 벤치마크
+# proxy-task-bench
 
-Transformer 계열 구조 변경을 큰 모델로 검증하기 전에 빠르게 돌려볼 수 있는
-6개 proxy 태스크를 하나의 실행 인터페이스로 모았다.
+한국어 · [English](README.en.md)
 
-## EvoScientist 검증 인터페이스
+EvoScientist가 제안한 새 Transformer 대안 구조를 싼 실험으로 미리 걸러내는 4단계(Tier) 검증 하니스.
 
-자동 검증에는 `python -m validation`을 사용한다. 7개 task ID에 대해
-평가 설정·입력 해시·소스 버전·실패 상태를 공통 JSON으로 기록한다.
+## 왜 하는가
+
+새 구조를 대규모 학습으로 바로 검증하면 비용이 큽니다.
+학습 없는 지표, 합성 단위 테스트, 축소한 실제 과제를 단계적으로 활용해 대규모 학습 전에 후보를 선별하려 합니다.
+
+## Tier 0~3
+
+| Tier | 이름 | 무엇을 재는가 | 비용 |
+|---|---|---|---|
+| 0 | Zero-cost | 학습 없이 초기 상태 지표 | 초 단위 |
+| 1 | 합성 단위 테스트 | 능력 하나를 격리해 검증 | 분 단위 |
+| 2 | 축소한 실제 데이터 | 작은 규모에서 실제 과제 수행 능력 | 시간 단위 |
+| 3 | ETRI 대규모 AR LM | 대규모 AR LM 성능 | 대규모 학습 |
+
+## 티어별 소속 태스크
+
+| Tier | 구분 | 태스크 | 무엇을 하나 |
+|---|---|---|---|
+| Tier 0 | - | tier0 | 학습 없이 지표 계산 |
+| Tier 1 | Transformer 승 | MAD Compression, Positional Histogram, String Matching, RegBench | 압축, 위치별 빈도, 문자열 매칭, 정규언어 ICL |
+| Tier 1 | Transformer 패 | Parity, Modular Arithmetic, Cycle Navigation, Random Automaton | 패리티, 모듈러 연산, 순환 경로 탐색, 오토마톤 상태 추적 |
+| Tier 2 | Transformer 승 | Permuted MNIST, Permuted Kuzushiji-49, Speech Commands (raw waveform)*, Beijing PM2.5* | 순열 이미지 분류, 음성 분류, 대기 시계열 예측 |
+| Tier 2 | Transformer 패 | TAPE Stability, enwik8, IMDB (byte-level), Lipophilicity (SMILES)* | 단백질 안정성, 바이트 언어 모델링, 감성 분류, 분자 물성 예측 |
+| Tier 3 | - | (ETRI) | 대규모 AR LM |
+
+최종 과제는 Tier 1 8개, Tier 2 8개로 총 16개다. Tier 0과 Tier 3은 이 개수에 포함하지 않는다.
+승·패는 **Transformer 기준** 분류다. 별표(*)는 선정 목록의 표기를 유지했으며 의미는 아직 명시되지 않았다.
+
+## 프로토콜 두 버전
+
+아래 두 버전은 이전 과제 구성을 기록한 프로토콜이며 최종 16개 과제용 프로토콜이 아니다. 최종 목록 선정과 실행 구현·프로토콜 갱신은 구분한다.
+
+| 프로토콜 | 대상과 모델 |
+|---|---|
+| `v1.json` | 7개 태스크(regbench, g2p, zinc, parity, tomita5, tomita6, fflm), 태스크별 기준 모델 |
+| v2.json | 공통 집합: 같은 뼈대에 mixer만 바꾼 9종(transformer, gqa, linear_attention, gla, mamba, hyena, lstm, s4d, retnet)을 8개 태스크(regbench, mqar, jelassi_copy, parity, tomita5, tomita6, scifar, fflm)에 적용 |
+
+v2는 원본 벤치마크 저장소의 `common-arch-set-v2` 브랜치 참고. 이 스냅샷에는 `v2.json`이 없다. **두 프로토콜 결과는 `compare` 불가.**
+
+## 테스트 대상
+
+| 태스크 | 입력 | 지표(↑ 높을수록, ↓ 낮을수록 좋음) | 데이터 |
+|---|---|---|---|
+| T1-R1-05 · MAD Compression | 토큰 | 미확정 | 생성(합성) |
+| T1-R2-01 · Positional Histogram | 토큰 | 미확정 | 생성(합성) |
+| T1-R2-02 · String Matching | 토큰 | 미확정 | 생성(합성) |
+| T1-R0-07 · RegBench | 토큰 | `next_token_acc` ↑ | 생성(PFA) |
+| T1-R0-04 · Parity | 토큰 | `mean_best_val_accuracy` ↑ | 파일(TFL corpus) |
+| T1-R2-03 · Modular Arithmetic | 토큰 | 미확정 | 생성(합성) |
+| T1-R2-04 · Cycle Navigation | 토큰 | 미확정 | 생성(합성) |
+| T1-R2-05 · Random Automaton | 토큰 | 미확정 | 생성(합성) |
+| T2-R1-11 · Permuted MNIST | 이미지 시퀀스 | 미확정 | 파일(MNIST) |
+| T2-R3-05 · Permuted Kuzushiji-49 | 이미지 시퀀스 | 미확정 | 파일(Kuzushiji-49) |
+| T2-R4-02 · Speech Commands (raw waveform)\* | 연속값 | 미확정 | 파일(Speech Commands) |
+| T2-R2-07 · Beijing PM2.5\* | 연속값 | 미확정 | 파일(Beijing PM2.5) |
+| T2-R1-04 · TAPE Stability | 아미노산 서열 | 미확정 | 파일(TAPE Stability) |
+| T2-R1-09 · enwik8 | 바이트 | 미확정 | 파일(enwik8) |
+| T2-R1-08 · IMDB (byte-level) | 바이트 | 미확정 | 파일(IMDB) |
+| T2-R2-02 · Lipophilicity (SMILES)\* | SMILES 토큰 | 미확정 | 파일(Lipophilicity) |
+
+지표 키는 기존 RegBench·Parity 구현에서 확인된 항목만 기재했다. 나머지 과제의 최종 지표 키와 평가 집계 방식은 프로토콜 갱신 시 확정한다.
+
+<a id="실행-인터페이스"></a>
+
+## 빠른 시작
+
+아래 명령은 현재 스냅샷의 기존 실행 인터페이스를 점검한다. `validation list` 출력은 최종 16개 선정 목록과 다를 수 있다.
+
+실험 데이터는 [proxy-task-bench-data](https://drive.google.com/drive/folders/1FXi_UlvUnvrlfBj7YryFY0dmoE7uoZes?usp=drive_link)에서 받는다.
+다운로드한 압축 파일은 함께 제공된 `SHA256SUMS.txt`로 검증한다.
+압축을 푼 뒤 태스크별 데이터 폴더의 상위 경로를 `PROXY_DATA_ROOT`로 export한다.
+
+개인 저장소를 clone한 상위 경로에서 아래와 같이 프로젝트 폴더로 이동한다. `check`는 CUDA 환경·자산 점검이며 학습하지 않는다.
 
 ```bash
+cd KAIST-Intern-Proxy-Task-Bench
 python -m validation list
 python -m validation check --task regbench --model transformer
-python -m validation run --task regbench --model transformer \
-  --profile smoke --seeds 0 --out artifacts/regbench-smoke
+CUDA_VISIBLE_DEVICES="" python -m unittest discover -s tests -v
 ```
 
-전체 실험은 `--profile full`을 명시해야 시작한다. smoke는 성능 근거가 아니다.
-데이터·외부 코드 준비, 기준/후보 비교, EvoScientist 실행 지시와 평가 한계는
-[연동 가이드](docs/EVOSCIENTIST.md)를 따른다.
-기존 결과를 새 프로토콜의 실측 결과로 자동 가져오지 않는다.
+## 한계
 
-## 기존 태스크 실행기
-
-    ./setup.sh zinc              # 태스크 하나만 준비 (인자 없으면 전체)
-    ./run.sh zinc gine 0         # <task> <model> <seed>
-
-## 태스크
-
-| 태스크 | 내용 | 실행 |
-|---|---|---|
-| `zinc` | ZINC-12K 분자 그래프 회귀 (GCN / GINE / GraphGPS) | `./run.sh zinc gine 0` |
-| `g2p` | 자소→음소 변환 | `./run.sh g2p <model> 0` |
-| `regbench` | 정규언어 인식 | `./run.sh regbench <model> 0` |
-| `parity` | Parity 언어 인식 | `./run.sh parity full` |
-| `tomita5` `tomita6` | Tomita 문법 5 / 6 | `./run.sh tomita5 full` |
-| `fflm` | 형식언어 LM 재현 실험 | `./run.sh fflm` |
-
-모델 선택지와 상세는 각 디렉터리의 README.md 참조.
-
-## 설계 원칙
-
-- **태스크는 독립적이다.** 서로 import 하지 않고 `common/`(seed 고정, GPU 가드)만
-  공유한다. 한 태스크만 떼어내 쓸 수 있다.
-- **설치도 태스크 단위다.** `./setup.sh zinc` 는 ZINC 에 필요한 것만 준비한다.
-- **데이터·체크포인트는 커밋하지 않는다.** `setup.sh` 와 각 태스크의
-  `prepare_data` 로 복원한다.
-
-## 구조
-
-    .
-    |- run.sh                    통합 실행 진입점
-    |- setup.sh                  태스크별 환경·데이터 준비
-    |- environment.md            검증된 환경, 학습 시간 해석 시 주의
-    |- third_party/              외부 저장소 고정 커밋 + 패치
-    `- proxy_tasks/
-       |- common/                seed 고정, GPU 가드 (공용)
-       |- zinc/ g2p/ regbench/   자체 구현
-       |- formal_languages/      parity / tomita 하네스
-       |- fflm/                  형식언어 LM 재현 패키지
-       |- results/<task>/        history.json
-       `- analysis/              표·그래프 생성
-
-## 결과 — ZINC-12K
-
-train 10,000 / val 1,000 / test 1,000, Test MAE (낮을수록 좋음).
-공통 설정: 4 layers, batch 128, lr 1e-3, AdamW, ReduceLROnPlateau
-(factor 0.5, patience 10, min_lr 1e-5), L1 loss.
-seed 0/1/2 의 mean ± std (ddof=0). Test MAE 는 validation MAE 가 가장 낮은
-체크포인트로 측정하며, test 데이터로 하이퍼파라미터를 고르지 않는다.
-
-| 모델 | 구조 | 파라미터 | 200 epoch | 500 epoch |
-|---|---|---|---|---|
-| GCN | GNN (edge feature 미사용) | 110,201 | 0.4300 ± 0.0034 | 0.4320 ± 0.0069 |
-| GINE | GNN (edge feature 사용) | 163,791 | 0.3219 ± 0.0045 | 0.2820 ± 0.0182 |
-| GraphGPS | GNN + Transformer 하이브리드 | 168,181 | 실험 진행 중 | 실험 진행 중 |
-
-GraphGPS 는 순수 Transformer 가 아니다. 각 레이어가 local message
-passing(GINEConv) 과 global multi-head self-attention 을 결합한다.
-파라미터 예산을 GINE(163,791) 에 ±10% 안으로 맞추기 위해 hidden dimension 을
-60 으로 두었다(GINE 은 110). 파라미터 수는 맞췄지만 표현 폭은 다르다 —
-둘을 동시에 맞추는 것은 구조상 불가능하므로 해석 시 고려할 것.
-
-학습 시간 비교 전에 environment.md 를 읽을 것. 동시 실행 여부에 따라
-같은 설정에서도 epoch 당 시간이 2.7배까지 차이났다.
-
-## 참고 문헌
-
-- Dwivedi, Joshi, Laurent, Bengio, Bresson, *Benchmarking Graph Neural Networks*, arXiv:2003.00982
-- Hu, Liu, Gomes, Zitnik, Liang, Pande, Leskovec, *Strategies for Pre-training Graph Neural Networks*, ICLR 2020
-- Rampasek, Galkin, Dwivedi, Luu, Wolf, Beaini, *Recipe for a General, Powerful, Scalable Graph Transformer*, NeurIPS 2022, arXiv:2205.12454
-- Bhattamishra, Ahuja, Goyal, *On the Ability and Limitations of Transformers to Recognize Formal Languages*, EMNLP 2020, arXiv:2009.11264
+- v1은 태스크마다 transformer 구현이 달랐다.
+- 결과·데이터는 저장소에 포함하지 않는다.
+- 최종 16개 선정 목록과 기존 스냅샷의 구현·프로토콜 사이에 차이가 있다.
+- Tier 2는 언어·비언어 과제가 섞여 있으므로 Tier 3 예측 근거는 과제별로 검토한다.
