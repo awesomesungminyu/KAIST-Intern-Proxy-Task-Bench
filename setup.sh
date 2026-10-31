@@ -2,7 +2,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 case "${1:-}" in
-  parity)
+  parity|formal)
     tfl_target="$PWD/third_party/tfl"
     tfl_commit=$(awk '{print $3}' third_party/tfl.commit)
     if [ ! -d "$tfl_target" ]; then
@@ -22,7 +22,7 @@ case "${1:-}" in
     python -m pip install --no-deps --target "$PWD/third_party/fla_vendor" flash-linear-attention==0.3.1 einops==0.8.1
     ;;
   *)
-    echo 'Usage: bash setup.sh parity | retnet' >&2
+    echo 'Usage: bash setup.sh formal | parity | retnet' >&2
     exit 2
     ;;
 esac

@@ -4,7 +4,6 @@ import json
 from pathlib import Path
 import shutil
 import tempfile
-import zipfile
 
 from proxy_tasks.common.paths import data_root
 from .runner import load_protocol
@@ -13,14 +12,15 @@ from .runner import load_protocol
 SOURCES = {
     'T1-R1-05': ['mad_tsc/t-C_vs-16_sl-32_ntr-12800_nte-1280_km-1_vm-1_mq-1_fn-0#0_nvs-0_ntc-0_s-12345/train'],
     'T1-R0-04': ['parity', 'Parity'],
+    'T1-R0-05': ['tomita5', 'Tomita-5'],
     'T2-R1-11': ['t2k_mnist'],
     'T2-R3-05': ['round4/R10', 'round4/T2-R3-05'],
     'T2-R4-02': ['round4_diversity/T2-R4-02', 'speech_commands_v0.02'],
-    'T2-R2-07': ['round2/n10_beijing/x', 'round2/n10_beijing'],
+    'T2-R3-02': ['round3/R6', 'round3/T2-R3-02'],
     'T2-R1-04': ['t2d_protein/stability'],
     'T2-R1-09': ['t2i_enwik8'],
     'T2-R1-08': ['t2h_imdb'],
-    'T2-R2-02': ['round2/t2m_lipo'],
+    'T2-R2-01': ['round2/t2x_snli'],
 }
 
 
@@ -88,23 +88,16 @@ def prepare_task(source, destination, task, spec):
         if all((source / name).is_file() for name in assets):
             for name in assets:
                 shutil.copy2(source / name, stage / name)
-        elif task in {'T2-R3-05', 'T2-R1-08', 'T2-R2-02'}:
+        elif task in {'T2-R3-05', 'T2-R1-08', 'T2-R3-02', 'T2-R2-01'}:
             raw = {'T2-R3-05': ['imgs.npz', 'labels.npz'], 'T2-R1-08': ['train.parquet'],
-                   'T2-R2-02': ['Lipophilicity.csv']}[task]
+                   'T2-R3-02': ['emnist-letters-train-images-idx3-ubyte.gz', 'emnist-letters-train-labels-idx1-ubyte.gz'],
+                   'T2-R2-01': ['train.parquet', 'validation.parquet']}[task]
             for name in raw:
                 shutil.copy2(source / name, stage / name)
             from proxy_tasks.final16.catalog import build_part
             part = build_part(task)
             part.data_dir_override = stage
             part.prepare()
-        elif task == 'T2-R2-07':
-            name = assets[0]
-            with zipfile.ZipFile(source / 'beijing_pm25.zip') as archive:
-                matches = [p for p in archive.namelist() if Path(p).name == name]
-                if len(matches) != 1:
-                    raise ValueError('Expected one Beijing PM2.5 CSV in supplied archive')
-                with archive.open(matches[0]) as stream, (stage / name).open('wb') as out:
-                    shutil.copyfileobj(stream, out)
         elif task == 'T2-R4-02':
             speech_cache(source, stage)
         else:

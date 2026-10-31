@@ -34,7 +34,7 @@ The aim is to screen candidates before large-scale training using initial-state 
 ### Tier 1 · Synthetic tasks · Transformer lose
 
 - **Parity**: Parity
-- **Modular Arithmetic**: Modular arithmetic
+- **Tomita 5**: Regular-language parity tracking
 - **Cycle Navigation**: Cycle navigation
 - **Random Automaton**: Automaton state tracking
 
@@ -43,14 +43,14 @@ The aim is to screen candidates before large-scale training using initial-state 
 - **Permuted MNIST**: Permuted image classification
 - **Permuted Kuzushiji-49**: Permuted image classification
 - **Speech Commands (raw waveform)\***: Speech classification
-- **Beijing PM2.5\***: Air-quality forecasting
+- **Permuted EMNIST (letters)†**: Permuted handwriting classification
 
 ### Tier 2 · Real data · Transformer lose
 
 - **TAPE Stability**: Protein stability
 - **enwik8**: Byte-level language modeling
 - **IMDB (byte-level)**: Sentiment classification
-- **Lipophilicity (SMILES)\***: Molecular property prediction
+- **SNLI (byte-level)†**: Natural-language inference
 
 ### Tier 3
 
@@ -68,17 +68,19 @@ Win/loss labels come from comparing the Transformer with the LSTM. The ranking a
 | [T1-R2-02 · String Matching](tasks/T1-R2-02/README.md) | Tokens | `accuracy` ↑ | Generated at runtime |
 | [T1-R0-07 · RegBench](tasks/T1-R0-07/README.md) | Tokens | `next_token_acc` ↑ | Generated at runtime |
 | [T1-R0-04 · Parity](tasks/T1-R0-04/README.md) | Tokens | `mean_best_val_accuracy` ↑ | Files |
-| [T1-R2-03 · Modular Arithmetic](tasks/T1-R2-03/README.md) | Tokens | `accuracy_id50_ex50` ↑ | Generated at runtime |
+| [T1-R0-05 · Tomita 5](tasks/T1-R0-05/README.md) | Tokens | `mean_best_val_accuracy` ↑ | Files |
 | [T1-R2-04 · Cycle Navigation](tasks/T1-R2-04/README.md) | Tokens | `accuracy_id50_ex50` ↑ | Generated at runtime |
 | [T1-R2-05 · Random Automaton](tasks/T1-R2-05/README.md) | Tokens | `last_state_accuracy_id50_ex50` ↑ | Generated at runtime |
 | [T2-R1-11 · Permuted MNIST](tasks/T2-R1-11/README.md) | Image sequences | `accuracy` ↑ | Files |
 | [T2-R3-05 · Permuted Kuzushiji-49](tasks/T2-R3-05/README.md) | Image sequences | `accuracy` ↑ | Files |
 | [T2-R4-02 · Speech Commands (raw waveform)\*](tasks/T2-R4-02/README.md) | Continuous values | `accuracy` ↑ | Files |
-| [T2-R2-07 · Beijing PM2.5\*](tasks/T2-R2-07/README.md) | Continuous values | `mse_ctx_id50_long50` ↓ | Files |
+| [T2-R3-02 · Permuted EMNIST (letters)†](tasks/T2-R3-02/README.md) | Image sequences | `accuracy` ↑ | Files |
 | [T2-R1-04 · TAPE Stability](tasks/T2-R1-04/README.md) | Amino acid sequences | `spearman_valid` ↑ | Files |
 | [T2-R1-09 · enwik8](tasks/T2-R1-09/README.md) | Bytes | `val_bpc` ↓ | Files |
 | [T2-R1-08 · IMDB (byte-level)](tasks/T2-R1-08/README.md) | Bytes | `accuracy` ↑ | Files |
-| [T2-R2-02 · Lipophilicity (SMILES)\*](tasks/T2-R2-02/README.md) | SMILES tokens | `rmse_valid` ↓ | Files |
+| [T2-R2-01 · SNLI (byte-level)†](tasks/T2-R2-01/README.md) | Bytes | `accuracy` ↑ | Files |
+
+\* S5 confirmed: Speech Commands only (Transformer/LSTM checked over three seeds). † Reserve (diversity excess): EMNIST and SNLI. Tomita 5 replaces Modular Arithmetic using the original round-0 three-seed results. [Final v3 scores](results/final_pool_table_20261031_v3.md).
 
 ## Quick start
 
@@ -99,7 +101,7 @@ The example installs the CUDA 12.4 build. Consult the [official installation tab
 
 **Data: [drive_upload_20261030 (Google Drive)](https://drive.google.com/drive/folders/1KAhMI1h7CzB8pR4h6JvhyoG4rD_1dH7l)**
 
-Of the 16 tasks, 6 generate their data at run time, so there is nothing to download. The other 10 are prepared from 4 bundles downloaded from a single Google Drive folder. See [data preparation](docs/DATA.md) for downloads, checksums, and extraction.
+Of the 16 tasks, 5 generate data at run time and 11 need supplied files. The four existing Drive bundles cover 8 of those 11 tasks; Tomita 5, EMNIST and SNLI need the six additional files listed in [data preparation](docs/DATA.md). No new archive was created.
 
 ```bash
 # Prepare files from the directory containing your extracted downloads.
@@ -112,7 +114,7 @@ python -m validation run --task T1-R2-02 --model cs_transformer --profile smoke 
 ```
 
 Defaults are `data/<task ID>/` for inputs and `artifacts/<task ID>/<model>/<run ID>/` for outputs. Use `--data-root` or the optional settings in `.env.example` to relocate storage. `.env` is not loaded automatically.
-Prepare Parity's external runner with `bash setup.sh parity`, and RetNet's CUDA kernel with `bash setup.sh retnet`.
+Prepare the shared Parity/Tomita 5 external runner with `bash setup.sh formal`, and RetNet's CUDA kernel with `bash setup.sh retnet`.
 
 ```bash
 # Full training budget; choose a new output directory.
@@ -131,11 +133,11 @@ See [models](docs/MODELS.md) for architecture changes and matched comparisons, a
 
 ## Known issues
 
-- If any of the four bundles (`proxy-data-final-pool-{mad,parity,small,speech_commands}.tar.gz`) is missing from the Drive folder, request it from the folder owner. Tasks that need its data cannot be prepared without it.
+- The existing bundles omit the six files for Tomita 5, EMNIST and SNLI. See [the upload list](docs/DRIVE_ADDITIONS_20261031.csv); these three tasks need those files before preparation.
 
 ## Limitations
 
 - Selection, imports, and one-step training checks do not establish full-training performance or validate every model/task combination.
 - Results, datasets, and checkpoints are excluded from Git.
-- RegBench evaluates a repeatedly observed development stream. Parity averages the best accuracy per bin and does not represent one selected checkpoint.
+- RegBench evaluates a repeatedly observed development stream. Parity and Tomita 5 average the best accuracy per bin and does not represent one selected checkpoint.
 - Tiers 0 and 3 describe the wider validation framework. This repository executes only the final 16 Tier 1 and Tier 2 tasks.

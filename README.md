@@ -34,7 +34,7 @@ Transformer 대안 구조를 합성 과제와 소규모 실제 데이터로 평�
 ### Tier 1 · 합성 과제 · Transformer 패
 
 - **Parity**: 패리티
-- **Modular Arithmetic**: 모듈러 연산
+- **Tomita 5**: 정규언어의 짝홀 상태 추적
 - **Cycle Navigation**: 순환 경로 탐색
 - **Random Automaton**: 오토마톤 상태 추적
 
@@ -43,14 +43,14 @@ Transformer 대안 구조를 합성 과제와 소규모 실제 데이터로 평�
 - **Permuted MNIST**: 순열 이미지 분류
 - **Permuted Kuzushiji-49**: 순열 이미지 분류
 - **Speech Commands (raw waveform)\***: 음성 분류
-- **Beijing PM2.5\***: 대기 시계열 예측
+- **Permuted EMNIST (letters)†**: 순열 손글씨 분류
 
 ### Tier 2 · 실제 데이터 · Transformer 패
 
 - **TAPE Stability**: 단백질 안정성
 - **enwik8**: 바이트 언어 모델링
 - **IMDB (byte-level)**: 감성 분류
-- **Lipophilicity (SMILES)\***: 분자 물성 예측
+- **SNLI (byte-level)†**: 문장 쌍 자연어 추론
 
 ### Tier 3
 
@@ -68,17 +68,19 @@ Transformer 대안 구조를 합성 과제와 소규모 실제 데이터로 평�
 | [T1-R2-02 · String Matching](tasks/T1-R2-02/README.md) | 토큰 | `accuracy` ↑ | 실행 시 생성 |
 | [T1-R0-07 · RegBench](tasks/T1-R0-07/README.md) | 토큰 | `next_token_acc` ↑ | 실행 시 생성 |
 | [T1-R0-04 · Parity](tasks/T1-R0-04/README.md) | 토큰 | `mean_best_val_accuracy` ↑ | 파일 |
-| [T1-R2-03 · Modular Arithmetic](tasks/T1-R2-03/README.md) | 토큰 | `accuracy_id50_ex50` ↑ | 실행 시 생성 |
+| [T1-R0-05 · Tomita 5](tasks/T1-R0-05/README.md) | 토큰 | `mean_best_val_accuracy` ↑ | 파일 |
 | [T1-R2-04 · Cycle Navigation](tasks/T1-R2-04/README.md) | 토큰 | `accuracy_id50_ex50` ↑ | 실행 시 생성 |
 | [T1-R2-05 · Random Automaton](tasks/T1-R2-05/README.md) | 토큰 | `last_state_accuracy_id50_ex50` ↑ | 실행 시 생성 |
 | [T2-R1-11 · Permuted MNIST](tasks/T2-R1-11/README.md) | 이미지 시퀀스 | `accuracy` ↑ | 파일 |
 | [T2-R3-05 · Permuted Kuzushiji-49](tasks/T2-R3-05/README.md) | 이미지 시퀀스 | `accuracy` ↑ | 파일 |
 | [T2-R4-02 · Speech Commands (raw waveform)\*](tasks/T2-R4-02/README.md) | 연속값 | `accuracy` ↑ | 파일 |
-| [T2-R2-07 · Beijing PM2.5\*](tasks/T2-R2-07/README.md) | 연속값 | `mse_ctx_id50_long50` ↓ | 파일 |
+| [T2-R3-02 · Permuted EMNIST (letters)†](tasks/T2-R3-02/README.md) | 이미지 시퀀스 | `accuracy` ↑ | 파일 |
 | [T2-R1-04 · TAPE Stability](tasks/T2-R1-04/README.md) | 아미노산 서열 | `spearman_valid` ↑ | 파일 |
 | [T2-R1-09 · enwik8](tasks/T2-R1-09/README.md) | 바이트 | `val_bpc` ↓ | 파일 |
 | [T2-R1-08 · IMDB (byte-level)](tasks/T2-R1-08/README.md) | 바이트 | `accuracy` ↑ | 파일 |
-| [T2-R2-02 · Lipophilicity (SMILES)\*](tasks/T2-R2-02/README.md) | SMILES 토큰 | `rmse_valid` ↓ | 파일 |
+| [T2-R2-01 · SNLI (byte-level)†](tasks/T2-R2-01/README.md) | 바이트 | `accuracy` ↑ | 파일 |
+
+\* S5 확정은 Speech Commands에만 해당한다(T/L 3시드 확인). † EMNIST·SNLI는 예비(다양성 초과)다. Tomita 5는 기존 라운드0·3시드 결과로 Modular Arithmetic을 교체했다. [최종 v3 점수](results/final_pool_table_20261031_v3.md).
 
 ## 빠른 시작
 
@@ -99,7 +101,7 @@ PyTorch 설치 예시는 CUDA 12.4 빌드다. 다른 드라이버 환경은 [공
 
 **데이터: [drive_upload_20261030 (Google Drive)](https://drive.google.com/drive/folders/1KAhMI1h7CzB8pR4h6JvhyoG4rD_1dH7l)**
 
-16개 과제 중 6개는 실행할 때 데이터를 생성하므로 받을 것이 없다. 나머지 10개는 Google Drive 폴더 하나에서 묶음 4개를 받아 준비한다. 다운로드할 파일과 체크섬 검증·압축 해제 방법은 [데이터 준비](docs/DATA.md)에 있다.
+16개 과제 중 생성형 5개는 실행 시 데이터를 만든다. 나머지 11개는 파일이 필요하다. 기존 Drive 묶음 4개는 이 중 8개 과제를 지원하며, Tomita 5·EMNIST·SNLI용 추가 파일 6개가 필요하다. [데이터 준비](docs/DATA.md)에 목록과 해시를 적었다. 새 묶음은 만들지 않았다.
 
 ```bash
 # 다운로드한 압축 파일을 풀어 둔 폴더에서 입력을 준비한다.
@@ -113,7 +115,7 @@ python -m validation run --task T1-R2-02 --model cs_transformer --profile smoke 
 
 기본 데이터 위치는 `data/<과제 ID>/`, 결과 위치는 `artifacts/<과제 ID>/<모델>/<실행 ID>/`다. 다른 저장장치는 `--data-root` 또는 `.env.example`의 선택 설정으로 지정한다. `.env`는 자동으로 읽지 않는다.
 
-Parity는 `bash setup.sh parity`, RetNet은 `bash setup.sh retnet`으로 외부 실행기·커널을 먼저 준비한다.
+Parity와 Tomita 5는 `bash setup.sh formal`, RetNet은 `bash setup.sh retnet`으로 외부 실행기·커널을 먼저 준비한다.
 
 ```bash
 # 전체 예산 실행: 저장 폴더는 새 경로를 사용한다.
@@ -132,11 +134,11 @@ python scripts/smoke_tasks.py --data-root data --device cuda
 
 ## 알려진 문제
 
-- Drive 폴더에서 묶음 4개(`proxy-data-final-pool-{mad,parity,small,speech_commands}.tar.gz`) 중 보이지 않는 것이 있으면 폴더 소유자에게 요청해야 한다. 해당 데이터가 필요한 과제는 준비할 수 없다.
+- 기존 묶음에는 Tomita 5·EMNIST·SNLI용 파일 6개가 없다. [추가 업로드 목록](docs/DRIVE_ADDITIONS_20261031.csv)의 파일이 준비돼야 이 세 과제를 실행할 수 있다.
 
 ## 한계
 
 - 16개 과제 선정과 import·학습 1스텝 검증은 전체 학습·모든 모델 조합의 성능 검증 완료를 뜻하지 않는다.
 - 결과·데이터·체크포인트는 Git에 포함하지 않는다.
-- RegBench는 반복 관측한 개발 스트림을 평가한다. Parity는 bin별 최고 정확도의 평균이며 단일 체크포인트의 점수가 아니다.
+- RegBench는 반복 관측한 개발 스트림을 평가한다. Parity와 Tomita 5는 bin별 최고 정확도의 평균이며 단일 체크포인트의 점수가 아니다.
 - Tier 0·3은 검증 체계 설명용이며 이 저장소의 실행 목록에는 Tier 1·2의 최종 16개만 포함한다.

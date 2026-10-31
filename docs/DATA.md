@@ -1,50 +1,50 @@
-# 데이터 준비
+# 데이터 준비 — 최종 v3
 
-16개 과제 중 6개는 실행할 때 데이터를 생성하므로 받을 것이 없다. 나머지 10개는 Google Drive 폴더 하나에서 묶음 4개를 받아 준비한다.
+생성형 5개 / 나머지 11개다. 생성형은 Histogram, String Matching, RegBench, Cycle Navigation, Random Automaton이다. Tomita 5는 기존 코퍼스를 재사용하므로 파일이 필요하다.
 
-## 1. 받을 파일
+## 1. 기존 묶음과 추가 파일
 
-[drive_upload_20261030 (Google Drive)](https://drive.google.com/drive/folders/1KAhMI1h7CzB8pR4h6JvhyoG4rD_1dH7l) 폴더에서 아래 5개 파일을 모두 받아 저장소의 `downloads/`에 넣는다.
+[drive_upload_20261030 (Google Drive)](https://drive.google.com/drive/folders/1KAhMI1h7CzB8pR4h6JvhyoG4rD_1dH7l) 폴더의 기존 묶음은 아래와 같다. 네 묶음과 기존 SHA256SUMS.txt는 변경하지 않았다.
 
-| 파일 | 크기 | 들어 있는 과제 |
+| 파일 | 크기 | 내용과 v3 사용 여부 |
 |---|---|---|
-| `proxy-data-final-pool-small.tar.gz` | 153 MB | Permuted MNIST, Permuted Kuzushiji-49, Beijing PM2.5, TAPE Stability, enwik8, IMDB, Lipophilicity |
-| `proxy-data-final-pool-speech_commands.tar.gz` | 2.43 GB | Speech Commands (원 파형) |
-| `proxy-data-final-pool-mad.tar.gz` | 327 KB (327,195 B) | MAD Compression 캐시 |
-| `proxy-data-final-pool-parity.tar.gz` | 280 KB (279,977 B) | Parity 코퍼스 |
-| `SHA256SUMS.txt` | 413 B | 위 4개 묶음의 체크섬 |
+| `proxy-data-final-pool-small.tar.gz` | 152,684,158 B | MNIST, Kuzushiji49, TAPE Stability, enwik8, IMDB. Beijing·Lipophilicity도 들어 있지만 v3에서는 사용하지 않음 |
+| `proxy-data-final-pool-speech_commands.tar.gz` | 2,427,893,343 B | Speech Commands 원 파형 |
+| `proxy-data-final-pool-mad.tar.gz` | 327,195 B | MAD Compression 캐시 |
+| `proxy-data-final-pool-parity.tar.gz` | 279,977 B | Parity 코퍼스 |
+| `SHA256SUMS.txt` | 기존 파일 유지 | 위4개 묶음 해시 |
 
-파일이 보이지 않거나 접근 권한이 없으면 폴더 소유자에게 요청한다. 다른 데이터나 임의로 만든 입력으로 대체하지 않는다.
+Lipophilicity 점검: small 안의 CSV는 복원 원본과 동일(SHA256 `aed41590cb30609d51d8e08ad3ff06495a76e80e211358801f596b10da69bacd`)하여 이상 없음. small-v2는 만들지 않았다.
+
+**아래6개 파일은 기존 묶음에 없으므로 Drive에 별도 추가해야 한다. 새 묶음을 만들지 않는다.** [파일별 SHA256·크기](DRIVE_ADDITIONS_20261031.csv). 받은 파일은 `downloads/extracted/` 아래 다음 상대 경로에 둔다.
+
+| 상대 경로 | 크기(B) | 용도 |
+|---|---:|---|
+| `T1-R0-05/train_corpus.pk` | 870567 | T1-R0-05 |
+| `T1-R0-05/val_corpus_bins.pk` | 577782 | T1-R0-05 |
+| `T2-R3-02/train_x.npy` | 97843328 | T2-R3-02 |
+| `T2-R3-02/train_y.npy` | 998528 | T2-R3-02 |
+| `T2-R2-01/train.parquet` | 19614612 | T2-R2-01 |
+| `T2-R2-01/validation.parquet` | 413157 | T2-R2-01 |
 
 ## 2. 검증 · 압축 해제 · 준비
 
-저장소 루트에서 실행한다.
-
 ```bash
-# 1) 체크섬 검증 — 4개 모두 OK가 나와야 한다
 (cd downloads && sha256sum -c SHA256SUMS.txt)
-
-# 2) 압축 해제
 mkdir -p downloads/extracted
 for f in downloads/proxy-data-final-pool-*.tar.gz; do
   tar -xzf "$f" -C downloads/extracted
 done
-
-# 3) 과제별 폴더로 정리하고 전처리
+# 추가6파일을 위 표의 downloads/extracted/<ID>/ 경로에 놓는다.
 python -m validation prepare --source downloads/extracted --data-root data
-
-# 4) 16개 과제가 모두 준비됐는지 확인
 python -m validation data --data-root data
 ```
 
-- `prepare`는 받은 파일을 과제 ID별 폴더로 복사하고 필요한 전처리를 한다. 다운로드나 학습은 하지 않고, 원자료도 바꾸지 않는다.
-- 이미 준비된 과제는 다시 하지 않는다. 불완전한 폴더는 덮어쓰지 않는다.
-- 과제 하나만 준비하려면 `--task T2-R3-05`처럼 지정한다.
-- Speech Commands는 16 kHz 원 파형을 2 kHz, 길이 2,000으로 바꾸고 학습 데이터 통계로 정규화한다. 원 파형과 변환 결과를 함께 둘 디스크 공간과 수 GB의 메모리가 필요하다.
+추가 파일은 CSV의 SHA256과 대조한다. `prepare`는 원자료를 바꾸거나 다운로드·학습하지 않는다. 이미 완료한 폴더를 재사용하고 불완전한 폴더를 덮어쓰지 않는다. `--task <ID>`로 하나씩 준비할 수 있다. 추가6파일이 없으면 해당3과제만 준비에 실패하며 나머지는 계속 처리한다.
 
-## 3. 준비가 끝난 뒤의 구조
+## 3. 필요한 파일
 
-모든 파일은 `--data-root` 아래 `<과제 ID>/` 폴더에 있다. 기본값은 저장소의 `data/`이다. 다른 디스크를 쓰려면 `--data-root`로 위치를 넘기거나 `PROXY_DATA_ROOT`를 설정한다. `check`, `run`, `data`, `prepare` 모두 같은 `--data-root`를 받는다. `.env.example`은 선택 설정이며, `.env`는 자동으로 읽지 않는다.
+모든 과제는 `--data-root/<ID>/`를 사용한다. 기본값은 `data/`, 환경변수는 `PROXY_DATA_ROOT`다. `.env`를 자동으로 읽지 않는다.
 
 | ID | 과제 | 필요한 파일 |
 |---|---|---|
@@ -53,29 +53,36 @@ python -m validation data --data-root data
 | T1-R2-02 | String Matching | 없음 (실행 시 생성) |
 | T1-R0-07 | RegBench | 없음 (실행 시 생성) |
 | T1-R0-04 | Parity | `train_corpus.pk`, `val_corpus_bins.pk` |
-| T1-R2-03 | Modular Arithmetic | 없음 (실행 시 생성) |
+| T1-R0-05 | Tomita 5 | `train_corpus.pk`, `val_corpus_bins.pk` |
 | T1-R2-04 | Cycle Navigation | 없음 (실행 시 생성) |
 | T1-R2-05 | Random Automaton | 없음 (실행 시 생성) |
 | T2-R1-11 | Permuted MNIST | `train-images-idx3-ubyte.gz`, `train-labels-idx1-ubyte.gz` |
 | T2-R3-05 | Permuted Kuzushiji-49 | `train_x.npy`, `train_y.npy` |
-| T2-R4-02 | Speech Commands | `train_x.npy`, `train_y.npy`, `val_x.npy`, `val_y.npy` |
-| T2-R2-07 | Beijing PM2.5 | `PRSA_data_2010.1.1-2014.12.31.csv` |
+| T2-R4-02 | Speech Commands (raw waveform) | `train_x.npy`, `train_y.npy`, `val_x.npy`, `val_y.npy` |
+| T2-R3-02 | Permuted EMNIST (letters) | `train_x.npy`, `train_y.npy` |
 | T2-R1-04 | TAPE Stability | `train.csv`, `valid.csv` |
 | T2-R1-09 | enwik8 | `enwik8.zip` |
 | T2-R1-08 | IMDB (byte-level) | `train_x.npy`, `train_y.npy`, `val_x.npy`, `val_y.npy` |
-| T2-R2-02 | Lipophilicity | `Lipophilicity.csv`, `split.npz` |
+| T2-R2-01 | SNLI (byte-level) | `train_x.npy`, `train_y.npy`, `val_x.npy`, `val_y.npy`, `meta.json` |
 
-## 4. 데이터 분할
+EMNIST는 upright 원화소 배열을 받아 seed0 위치 순열과 학습 통계 표준화를 적용한다. 공식 letters IDX gzip 두 파일을 공급하면 전치 및1→0 레이블 변환으로 같은 배열을 준비할 수도 있다. SNLI는 원본 parquet 두 파일에서 label−1을 제외하고 `premise + 0x1F + hypothesis`를 UTF-8 바이트+1 토큰으로 바꾼다. 길이는256이며 hypothesis를 보존하고 긴 premise의 앞부분을 자른다. 테스트 세트는 쓰지 않는다.
 
-| 과제 | 학습 / 검증 | 분할 방법 |
+## 4. 분할
+
+| 과제 | 학습 / 검증 | 규칙 |
 |---|---|---|
-| Permuted MNIST | 55,000 / 5,000 | 학습 이미지에서 5,000개를 seed 1로 검증용 분리. 픽셀 순열은 seed 0 |
-| Permuted Kuzushiji-49 | 227,365 / 5,000 | 위와 같음 |
-| Speech Commands | 84,843 / 9,981 | 공식 train/validation 목록. test(11,005개)는 사용하지 않음 |
-| IMDB | 22,500 / 2,500 | 학습 리뷰의 10%를 seed 0으로 검증용 분리 |
-| Lipophilicity | 3,360 / 420 | 제공된 분할 파일을 재사용. 없으면 Bemis–Murcko scaffold 80/10/10으로 고정 분할. test는 평가하지 않음 |
-| TAPE Stability | 53,614 / 2,512 | 공식 분할. test는 평가하지 않음 |
-| Beijing PM2.5 (T2-R2-07) | 29,739 구간 / 7,952 구간 | 시간순 분할: 학습은 2013-12-31 23시까지(2010~2013년), 검증은 2014년. 입력 48시간으로 다음 24시간의 PM2.5를 예측하며, 검증 입력은 48시간·192시간 두 길이를 사용한다. PM2.5 결측은 직전 관측값으로 채우고 최초 결측은 학습 구간의 관측 평균으로 채운다. 예측 대상 24시간 중 원래 결측값이 하나라도 있는 구간은 학습·검증에서 제외한다. |
-| enwik8 (T2-R1-09) | 학습 풀 90M 바이트 / 검증 3,906 구간 | 표준 90M/5M/5M 분할을 사용하지 않는다. 처음 90M 바이트에서 학습 입력을 뽑고 바로 다음 1M 바이트(0-based `[90,000,000, 91,000,000)`)만 검증한다. 검증 입력은 256바이트씩 겹치지 않게 나누며, 다음 토큰 정답을 위해 구간마다 총 257바이트를 읽는다. 나머지 9M 바이트는 사용하지 않는다. |
+| Tomita 5 | 10,000 / 2,000×2 bins | 기존 라운드0 코퍼스. 학습 길이2~50, 검증4~50와52~100. bin별 독립 최고 epoch 정확도의 평균 |
+| Parity | 제공된 코퍼스 | 기존 코퍼스와 검증 bins를 그대로 재사용. bin별 독립 최고 정확도 평균 |
+| MAD Compression | 11,520 / 1,280 | 제공된12,800개 캐시에서 마지막10%를 검증으로 사용 |
+| Histogram / String Matching / Cycle / Random Automaton | 실행 시 생성 | 코드에 고정된 학습 생성기와 별도 검증 길이·seed 규칙 |
+| RegBench | 생성한 학습 / 반복 관측 개발 스트림 | 평가 스트림을 최종 독립 test로 해석하지 않음 |
+| Permuted MNIST | 55,000 / 5,000 | 공식 학습 풀에서 seed1 검증 분리, 위치 순열seed0 |
+| Permuted EMNIST letters | 119,800 / 5,000 | 공식 학습124,800, seed1 검증 분리, transpose로 upright, 위치 순열seed0. 공식 test 미사용 |
+| Permuted Kuzushiji49 | 227,365 / 5,000 | 공식 학습 풀에서 seed1 검증 분리, 위치 순열seed0 |
+| Speech Commands | 84,843 / 9,981 | 공식 train/validation, test11,005 미사용. 16kHz→2kHz·길이2000, 학습 통계 표준화 |
+| SNLI bytes | 549,367 / 9,842 | 공식 train/validation에서 label−1 제거, 공식 test 미사용 |
+| TAPE Stability | 53,614 / 2,512 | 공식 train/valid, test 미사용 |
+| IMDB bytes | 22,500 / 2,500 | 공식 train에서 seed0로10% 검증 분리, 길이2048 |
+| enwik8 | 처음90M 바이트 / 다음1M 바이트 | `[90,000,000,91,000,000)`의 검증을 길이256·비중첩3,906구간으로 평가. 나머지9M 미사용 |
 
-실제 데이터 과제의 최종 test 세트는 평가에 쓰지 않는다. RegBench의 `test` 스트림은 반복 관측하는 개발용 지표이며, 최종 test 세트와 구분한다.
+Speech Commands만 S5 확정 표시(*)를 쓴다. EMNIST와 SNLI는 예비(다양성 초과)이며 파일 배포 여부와 판정 상태를 혼동하지 않는다.

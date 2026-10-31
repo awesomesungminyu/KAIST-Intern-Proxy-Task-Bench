@@ -17,8 +17,8 @@ from proxy_tasks.final16.catalog import build_part
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED = {
     'T1-R1-05', 'T1-R2-01', 'T1-R2-02', 'T1-R0-07', 'T1-R0-04',
-    'T1-R2-03', 'T1-R2-04', 'T1-R2-05', 'T2-R1-11', 'T2-R3-05',
-    'T2-R4-02', 'T2-R2-07', 'T2-R1-04', 'T2-R1-09', 'T2-R1-08', 'T2-R2-02',
+    'T1-R0-05', 'T1-R2-04', 'T1-R2-05', 'T2-R1-11', 'T2-R3-05',
+    'T2-R4-02', 'T2-R3-02', 'T2-R1-04', 'T2-R1-09', 'T2-R1-08', 'T2-R2-01',
 }
 torch.set_num_threads(1)
 
@@ -77,7 +77,7 @@ class FinalSelectionTests(unittest.TestCase):
 
 class SyntheticExecutionTests(unittest.TestCase):
     def test_selected_generated_tasks_have_finite_forward_and_backward(self):
-        for cid in ['T1-R2-01', 'T1-R2-02', 'T1-R2-03', 'T1-R2-04', 'T1-R2-05']:
+        for cid in ['T1-R2-01', 'T1-R2-02', 'T1-R2-04', 'T1-R2-05']:
             with self.subTest(task=cid):
                 part = build_part(cid)
                 part.batch_size = 2
@@ -108,13 +108,12 @@ class SyntheticExecutionTests(unittest.TestCase):
             self.assertEqual(tuple(output.shape), (2, 32, 16))
             self.assertTrue(torch.isfinite(part.loss(output, batch)))
 
-    def test_modular_arithmetic_labels(self):
-        part = build_part('T1-R2-03')
-        tokens, labels = part.make(torch.Generator().manual_seed(7), 20, 10)
-        operators = {5: '+', 6: '-', 7: '*'}
-        for row, label in zip(tokens.tolist(), labels.tolist()):
-            expression = ''.join(str(value) if value < 5 else operators[value] for value in row[:-1])
-            self.assertEqual(eval(expression, {'__builtins__': {}}) % 5, label)
+    def test_tomita5_reuses_formal_adapter_and_original_evaluation(self):
+        spec = runner.load_protocol('T1-R0-05')[1]
+        self.assertEqual(spec['dataset'], 'Tomita-5')
+        self.assertEqual(spec['adapter'], 'formal')
+        self.assertEqual(spec['selection'], 'independent_best_epoch_per_bin')
+        self.assertEqual(spec['assets'], ['train_corpus.pk', 'val_corpus_bins.pk'])
 
     def test_cycle_navigation_labels(self):
         part = build_part('T1-R2-04')

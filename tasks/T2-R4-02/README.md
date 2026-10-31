@@ -1,5 +1,7 @@
 # T2-R4-02 · Speech Commands (raw waveform)\*
 
+S5 확정: Transformer/LSTM 3시드 승 방향 확인. 다른7개 구조는 기존 seed0 결과를 유지한다.
+
 | 항목 | 내용 |
 |---|---|
 | Tier | 2 |

@@ -220,13 +220,9 @@
         "val_corpus_bins.pk"
       ]
     },
-    "T1-R2-03": {
-      "adapter": "part",
-      "module": "generated.state_tracking",
-      "part_class": "ModArith",
-      "steps": 35200,
-      "full": [],
-      "smoke": [],
+    "T1-R0-05": {
+      "adapter": "formal",
+      "dataset": "Tomita-5",
       "models": [
         "cs_transformer",
         "cs_gqa",
@@ -238,19 +234,35 @@
         "cs_s4d",
         "cs_retnet"
       ],
+      "metric": "mean_best_val_accuracy",
+      "direction": "maximize",
+      "split": "diagnostic_validation_bins",
+      "selection": "independent_best_epoch_per_bin",
+      "limitations": [
+        "Each bin can select a different epoch. The average is a diagnostic, not the score of one selected checkpoint or a final test.",
+        "The pinned upstream can stop early at mean validation accuracy >= 0.999; epochs specify a maximum budget."
+      ],
+      "full": [
+        "-epochs",
+        "100"
+      ],
+      "smoke": [
+        "-epochs",
+        "2"
+      ],
       "runtime": {
         "torch": "2.5.1",
         "packages": []
       },
-      "metric": "accuracy_id50_ex50",
-      "direction": "maximize",
-      "split": "validation",
-      "selection": "final_step",
-      "name": "Modular Arithmetic",
+      "name": "Tomita 5",
       "tier": 1,
       "transformer_label": "lose",
-      "assets": [],
-      "limitations": []
+      "assets": [
+        "train_corpus.pk",
+        "val_corpus_bins.pk"
+      ],
+      "selection_status": "selected_replacement",
+      "replacement_reason": "Modular Arithmetic 3시드 동률(LSTM seed 2 수렴 실패)"
     },
     "T1-R2-04": {
       "adapter": "part",
@@ -421,13 +433,14 @@
         "val_x.npy",
         "val_y.npy"
       ],
-      "limitations": []
+      "limitations": [],
+      "selection_status": "S5_confirmed"
     },
-    "T2-R2-07": {
+    "T2-R3-02": {
       "adapter": "part",
-      "module": "forecast",
-      "part_class": "BeijingPM25",
-      "steps": 23233,
+      "module": "emnist",
+      "part_class": "EmnistLetters",
+      "steps": 2600,
       "full": [],
       "smoke": [],
       "models": [
@@ -445,17 +458,21 @@
         "torch": "2.5.1",
         "packages": []
       },
-      "metric": "mse_ctx_id50_long50",
-      "direction": "minimize",
+      "metric": "accuracy",
+      "direction": "maximize",
       "split": "validation",
       "selection": "final_step",
-      "name": "Beijing PM2.5*",
+      "name": "Permuted EMNIST (letters)",
       "tier": 2,
       "transformer_label": "win",
       "assets": [
-        "PRSA_data_2010.1.1-2014.12.31.csv"
+        "train_x.npy",
+        "train_y.npy"
       ],
-      "limitations": []
+      "limitations": [
+        "Reserve: the handwriting-image family exceeds the diversity limit."
+      ],
+      "selection_status": "reserve_diversity_excess"
     },
     "T2-R1-04": {
       "adapter": "part",
@@ -563,11 +580,11 @@
       ],
       "limitations": []
     },
-    "T2-R2-02": {
+    "T2-R2-01": {
       "adapter": "part",
-      "module": "lipophilicity",
-      "part_class": "Lipophilicity",
-      "steps": 2625,
+      "module": "snli",
+      "part_class": "SnliBytes",
+      "steps": 9500,
       "full": [],
       "smoke": [],
       "models": [
@@ -585,18 +602,25 @@
         "torch": "2.5.1",
         "packages": []
       },
-      "metric": "rmse_valid",
-      "direction": "minimize",
+      "metric": "accuracy",
+      "direction": "maximize",
       "split": "validation",
       "selection": "final_step",
-      "name": "Lipophilicity (SMILES)*",
+      "name": "SNLI (byte-level)",
       "tier": 2,
       "transformer_label": "lose",
       "assets": [
-        "Lipophilicity.csv",
-        "split.npz"
+        "train_x.npy",
+        "train_y.npy",
+        "val_x.npy",
+        "val_y.npy",
+        "meta.json"
       ],
-      "limitations": []
+      "limitations": [
+        "Reserve: the natural-language-text family exceeds the diversity limit."
+      ],
+      "selection_status": "reserve_diversity_excess"
     }
-  }
+  },
+  "selection_version": "final_pool_table_20261031_v3"
 }

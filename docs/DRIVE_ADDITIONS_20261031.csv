@@ -1,0 +1,7 @@
+task,file,bytes,sha256,destination
+T1-R0-05,train_corpus.pk,870567,40d1f325ce323171c5fb8f154abde276a1c23a5b47ebce4304cb5ed7ac5415ae,T1-R0-05/train_corpus.pk
+T1-R0-05,val_corpus_bins.pk,577782,3943f8e5ba0d419e1afc32080768c9abdc9608613b24b3b9e0809b00214d4c52,T1-R0-05/val_corpus_bins.pk
+T2-R3-02,train_x.npy,97843328,6ee6f047ef1ad504d7cbec2102e3030676e73b25b4d3e82b3e4b928bf156c327,T2-R3-02/train_x.npy
+T2-R3-02,train_y.npy,998528,9b4aa42e917ffae285d1a4f8286a38ba7d1930236e6917cf5635812d6bcd2c2f,T2-R3-02/train_y.npy
+T2-R2-01,train.parquet,19614612,ef9a7b25d97390a62aeda7abe26aec8640600f50b818eaeb9107097d60ac6620,T2-R2-01/train.parquet
+T2-R2-01,validation.parquet,413157,00f5ed8deaed007fef3022f0215b287efbab815b1bb31ac3f3ff4f4129d41ffe,T2-R2-01/validation.parquet
