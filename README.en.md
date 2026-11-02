@@ -50,7 +50,7 @@ The aim is to screen candidates before large-scale training using initial-state 
 - **TAPE Stability**: Protein stability
 - **enwik8**: Byte-level language modeling
 - **IMDB (byte-level)**: Sentiment classification
-- **SNLI (byte-level)†**: Natural-language inference
+- **Lipophilicity (SMILES)**: Molecular lipophilicity regression
 
 ### Tier 3
 
@@ -78,9 +78,9 @@ Win/loss labels come from comparing the Transformer with the LSTM. The ranking a
 | [T2-R1-04 · TAPE Stability](tasks/T2-R1-04/README.md) | Amino acid sequences | `spearman_valid` ↑ | Files |
 | [T2-R1-09 · enwik8](tasks/T2-R1-09/README.md) | Bytes | `val_bpc` ↓ | Files |
 | [T2-R1-08 · IMDB (byte-level)](tasks/T2-R1-08/README.md) | Bytes | `accuracy` ↑ | Files |
-| [T2-R2-01 · SNLI (byte-level)†](tasks/T2-R2-01/README.md) | Bytes | `accuracy` ↑ | Files |
+| [T2-R2-02 · Lipophilicity (SMILES)](tasks/T2-R2-02/README.md) | SMILES characters | `rmse_valid` ↓ | Files |
 
-\* S5 confirmed: Speech Commands only (Transformer/LSTM checked over three seeds). † Reserve (diversity excess): EMNIST and SNLI. Tomita 5 replaces Modular Arithmetic using the original round-0 three-seed results. [Final v3 scores](results/final_pool_table_20261031_v3.md).
+\* S5 confirmed: Speech Commands only (Transformer/LSTM checked over three seeds). † Reserve (diversity excess): EMNIST only. Tomita 5 replaces Modular Arithmetic using the original round-0 three-seed results. [Final v4 scores](results/final_pool_table_20261102_v4.md). Lipophilicity is included by the domain-priority rule (discrimination ratio 3.47, below the threshold of 5). See [docs/PREREG_DOMAIN_PRIORITY.md](docs/PREREG_DOMAIN_PRIORITY.md).
 
 ## Quick start
 
@@ -101,7 +101,7 @@ The example installs the CUDA 12.4 build. Consult the [official installation tab
 
 **Data: [drive_upload_20261030 (Google Drive)](https://drive.google.com/drive/folders/1KAhMI1h7CzB8pR4h6JvhyoG4rD_1dH7l)**
 
-Of the 16 tasks, 5 generate data at run time and 11 need supplied files. The four existing Drive bundles cover 8 of those 11 tasks; Tomita 5, EMNIST and SNLI need the six additional files listed in [data preparation](docs/DATA.md). No new archive was created.
+Of the 16 tasks, 5 generate data at runtime and 11 need supplied files. Use five Drive bundles (the four existing bundles plus additions). The additions bundle contains four files for Tomita 5 and EMNIST. See [data preparation](docs/DATA.md).
 
 ```bash
 # Prepare files from the directory containing your extracted downloads.
@@ -133,7 +133,7 @@ See [models](docs/MODELS.md) for architecture changes and matched comparisons, a
 
 ## Known issues
 
-- The existing bundles omit the six files for Tomita 5, EMNIST and SNLI. See [the upload list](docs/DRIVE_ADDITIONS_20261031.csv); these three tasks need those files before preparation.
+- The additions bundle and updated SHA256SUMS.txt are prepared on the server; this does not establish that they have been uploaded to Drive. See [the upload list](docs/DRIVE_ADDITIONS_20261031.csv).
 
 ## Limitations
 

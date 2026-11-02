@@ -11,7 +11,7 @@
 | 평가 | `validation` / `final_step` |
 | 구현 | [proxy_tasks/final16/emnist.py](../../proxy_tasks/final16/emnist.py) |
 
-실행 설정: [protocol.json](../../validation/protocol.json). 최종 점수: [v3 표](../../results/final_pool_table_20261031_v3.md).
+실행 설정: [protocol.json](../../validation/protocol.json). 최종 점수: [v4 표](../../results/final_pool_table_20261102_v4.md).
 
 ## 데이터
 

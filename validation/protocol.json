@@ -580,11 +580,11 @@
       ],
       "limitations": []
     },
-    "T2-R2-01": {
+    "T2-R2-02": {
       "adapter": "part",
-      "module": "snli",
-      "part_class": "SnliBytes",
-      "steps": 9500,
+      "module": "lipophilicity",
+      "part_class": "Lipophilicity",
+      "steps": 2625,
       "full": [],
       "smoke": [],
       "models": [
@@ -602,25 +602,22 @@
         "torch": "2.5.1",
         "packages": []
       },
-      "metric": "accuracy",
-      "direction": "maximize",
+      "metric": "rmse_valid",
+      "direction": "minimize",
       "split": "validation",
       "selection": "final_step",
-      "name": "SNLI (byte-level)",
+      "name": "Lipophilicity (SMILES)",
       "tier": 2,
       "transformer_label": "lose",
       "assets": [
-        "train_x.npy",
-        "train_y.npy",
-        "val_x.npy",
-        "val_y.npy",
-        "meta.json"
+        "Lipophilicity.csv",
+        "split.npz"
       ],
       "limitations": [
-        "Reserve: the natural-language-text family exceeds the diversity limit."
+        "도메인 우선 규칙으로 포함(판별비 3.47, 기준 5 미달). docs/PREREG_DOMAIN_PRIORITY.md 참고"
       ],
-      "selection_status": "reserve_diversity_excess"
+      "selection_status": "selected_domain_priority"
     }
   },
-  "selection_version": "final_pool_table_20261031_v3"
+  "selection_version": "final_pool_table_20261102_v4"
 }

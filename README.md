@@ -50,7 +50,7 @@ Transformer 대안 구조를 합성 과제와 소규모 실제 데이터로 평�
 - **TAPE Stability**: 단백질 안정성
 - **enwik8**: 바이트 언어 모델링
 - **IMDB (byte-level)**: 감성 분류
-- **SNLI (byte-level)†**: 문장 쌍 자연어 추론
+- **Lipophilicity (SMILES)**: 분자 지용성 회귀
 
 ### Tier 3
 
@@ -78,9 +78,9 @@ Transformer 대안 구조를 합성 과제와 소규모 실제 데이터로 평�
 | [T2-R1-04 · TAPE Stability](tasks/T2-R1-04/README.md) | 아미노산 서열 | `spearman_valid` ↑ | 파일 |
 | [T2-R1-09 · enwik8](tasks/T2-R1-09/README.md) | 바이트 | `val_bpc` ↓ | 파일 |
 | [T2-R1-08 · IMDB (byte-level)](tasks/T2-R1-08/README.md) | 바이트 | `accuracy` ↑ | 파일 |
-| [T2-R2-01 · SNLI (byte-level)†](tasks/T2-R2-01/README.md) | 바이트 | `accuracy` ↑ | 파일 |
+| [T2-R2-02 · Lipophilicity (SMILES)](tasks/T2-R2-02/README.md) | SMILES 문자 | `rmse_valid` ↓ | 파일 |
 
-\* S5 확정은 Speech Commands에만 해당한다(T/L 3시드 확인). † EMNIST·SNLI는 예비(다양성 초과)다. Tomita 5는 기존 라운드0·3시드 결과로 Modular Arithmetic을 교체했다. [최종 v3 점수](results/final_pool_table_20261031_v3.md).
+\* S5 확정은 Speech Commands에만 해당한다(T/L 3시드 확인). † EMNIST는 예비(다양성 초과)다. Tomita 5는 기존 라운드0·3시드 결과로 Modular Arithmetic을 교체했다. [최종 v4 점수](results/final_pool_table_20261102_v4.md). Lipophilicity: 도메인 우선 규칙으로 포함(판별비 3.47, 기준 5 미달). [docs/PREREG_DOMAIN_PRIORITY.md](docs/PREREG_DOMAIN_PRIORITY.md) 참고.
 
 ## 빠른 시작
 
@@ -101,7 +101,7 @@ PyTorch 설치 예시는 CUDA 12.4 빌드다. 다른 드라이버 환경은 [공
 
 **데이터: [drive_upload_20261030 (Google Drive)](https://drive.google.com/drive/folders/1KAhMI1h7CzB8pR4h6JvhyoG4rD_1dH7l)**
 
-16개 과제 중 생성형 5개는 실행 시 데이터를 만든다. 나머지 11개는 파일이 필요하다. 기존 Drive 묶음 4개는 이 중 8개 과제를 지원하며, Tomita 5·EMNIST·SNLI용 추가 파일 6개가 필요하다. [데이터 준비](docs/DATA.md)에 목록과 해시를 적었다. 새 묶음은 만들지 않았다.
+16개 과제 중 생성형 5개는 실행 시 데이터를 만든다. 나머지 11개는 파일이 필요하다. Drive 묶음 5개(기존 4개 + additions)로 준비한다. additions에는 Tomita 5·EMNIST용 파일 4개가 들어 있다. [데이터 준비](docs/DATA.md)에 목록과 해시를 적었다.
 
 ```bash
 # 다운로드한 압축 파일을 풀어 둔 폴더에서 입력을 준비한다.
@@ -134,7 +134,7 @@ python scripts/smoke_tasks.py --data-root data --device cuda
 
 ## 알려진 문제
 
-- 기존 묶음에는 Tomita 5·EMNIST·SNLI용 파일 6개가 없다. [추가 업로드 목록](docs/DRIVE_ADDITIONS_20261031.csv)의 파일이 준비돼야 이 세 과제를 실행할 수 있다.
+- 새 additions 묶음과 SHA256SUMS.txt는 서버에서 준비했다. 실제 Drive 업로드 완료를 뜻하지 않는다. [추가 업로드 목록](docs/DRIVE_ADDITIONS_20261031.csv).
 
 ## 한계
 
