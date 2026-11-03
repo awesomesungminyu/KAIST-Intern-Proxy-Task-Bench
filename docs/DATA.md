@@ -4,7 +4,7 @@
 
 ## 1. 기존 묶음과 추가 파일
 
-[drive_upload_20261030 (Google Drive)](https://drive.google.com/drive/folders/1KAhMI1h7CzB8pR4h6JvhyoG4rD_1dH7l) 폴더의 기존 묶음은 아래와 같다. 기존 4개 묶음은 그대로 두고 additions와 5개 묶음용 SHA256SUMS.txt를 준비했다. 서버 사본이며 Drive 업로드 완료를 뜻하지 않는다.
+[drive_upload_20261030 (Google Drive)](https://drive.google.com/drive/folders/1KAhMI1h7CzB8pR4h6JvhyoG4rD_1dH7l) 폴더의 기존 묶음은 아래와 같다. 기존 4개 묶음은 그대로 두고 additions와 5개 묶음용 SHA256SUMS.txt를 추가했다. Sam이 additions와 새 SHA256SUMS.txt의 Drive 업로드를 완료했다.
 
 | 파일 | 크기 | 내용과 v4 사용 여부 |
 |---|---|---|

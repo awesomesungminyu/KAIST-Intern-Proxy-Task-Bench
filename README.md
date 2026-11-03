@@ -59,6 +59,8 @@ Transformer 대안 구조를 합성 과제와 소규모 실제 데이터로 평�
 최종 과제는 **Tier 1 8개 + Tier 2 8개 = 총 16개**다. Tier 0과 Tier 3은 이 개수에 포함하지 않는다.
 승·패는 Transformer와 LSTM을 비교한 결과다. 9개 구조 전체의 순위는 과제마다 다르다.
 
+16개 모두 transformer·lstm 3시드로 승패 확인(2026-11-03). [3시드 확인 표](results/seed3_confirm_20261103/confirmation.md) · [Tier 0 재검증](docs/TIER0.md). 9구조 전체의 3시드 결과는 아직 미완료다.
+
 ## 테스트 대상
 
 | 태스크 | 입력 | 지표(↑ 높을수록, ↓ 낮을수록 좋음) | 데이터 |
@@ -78,9 +80,9 @@ Transformer 대안 구조를 합성 과제와 소규모 실제 데이터로 평�
 | [T2-R1-04 · TAPE Stability](tasks/T2-R1-04/README.md) | 아미노산 서열 | `spearman_valid` ↑ | 파일 |
 | [T2-R1-09 · enwik8](tasks/T2-R1-09/README.md) | 바이트 | `val_bpc` ↓ | 파일 |
 | [T2-R1-08 · IMDB (byte-level)](tasks/T2-R1-08/README.md) | 바이트 | `accuracy` ↑ | 파일 |
-| [T2-R2-02 · Lipophilicity (SMILES)](tasks/T2-R2-02/README.md) | SMILES 문자 | `rmse_valid` ↓ | 파일 |
+| [T2-R2-02 · Lipophilicity (SMILES)‡](tasks/T2-R2-02/README.md) | SMILES 문자 | `rmse_valid` ↓ | 파일 |
 
-\* S5 확정은 Speech Commands에만 해당한다(T/L 3시드 확인). † EMNIST는 예비(다양성 초과)다. Tomita 5는 기존 라운드0·3시드 결과로 Modular Arithmetic을 교체했다. [최종 v4 점수](results/final_pool_table_20261102_v4.md). Lipophilicity: 도메인 우선 규칙으로 포함(판별비 3.47, 기준 5 미달). [docs/PREREG_DOMAIN_PRIORITY.md](docs/PREREG_DOMAIN_PRIORITY.md) 참고.
+\* S5 확정은 Speech Commands에만 해당한다(T/L 3시드 확인). † EMNIST는 예비(다양성 초과)다. Tomita 5는 기존 라운드0·3시드 결과로 Modular Arithmetic을 교체했다. [최종 v4 점수](results/final_pool_table_20261102_v4.md). ‡ Lipophilicity: 도메인 우선 규칙으로 포함(판별비 3.47, 기준 5 미달). [docs/PREREG_DOMAIN_PRIORITY.md](docs/PREREG_DOMAIN_PRIORITY.md) 참고.
 
 ## 빠른 시작
 
@@ -134,11 +136,11 @@ python scripts/smoke_tasks.py --data-root data --device cuda
 
 ## 알려진 문제
 
-- 새 additions 묶음과 SHA256SUMS.txt는 서버에서 준비했다. 실제 Drive 업로드 완료를 뜻하지 않는다. [추가 업로드 목록](docs/DRIVE_ADDITIONS_20261031.csv).
+- additions 묶음과 새 SHA256SUMS.txt는 Sam이 Drive 업로드를 완료했다. [추가 업로드 목록](docs/DRIVE_ADDITIONS_20261031.csv).
 
 ## 한계
 
 - 16개 과제 선정과 import·학습 1스텝 검증은 전체 학습·모든 모델 조합의 성능 검증 완료를 뜻하지 않는다.
-- 결과·데이터·체크포인트는 Git에 포함하지 않는다.
+- 결과 요약 표와 그림은 Git에 포함한다. 데이터 원자료와 체크포인트는 포함하지 않는다.
 - RegBench는 반복 관측한 개발 스트림을 평가한다. Parity와 Tomita 5는 bin별 최고 정확도의 평균이며 단일 체크포인트의 점수가 아니다.
 - Tier 0·3은 검증 체계 설명용이며 이 저장소의 실행 목록에는 Tier 1·2의 최종 16개만 포함한다.

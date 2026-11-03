@@ -59,6 +59,8 @@ The aim is to screen candidates before large-scale training using initial-state 
 The final selection contains **8 Tier 1 tasks + 8 Tier 2 tasks = 16 tasks**. Tier 0 and Tier 3 are outside this count.
 Win/loss labels come from comparing the Transformer with the LSTM. The ranking across all nine architectures differs by task.
 
+All 16 tasks have win/loss labels confirmed with three seeds each for transformer and lstm (2026-11-03). [Three-seed confirmation](results/seed3_confirm_20261103/confirmation.md) · [Tier 0 rerun](docs/TIER0.md). Three-seed results across all nine architectures are still incomplete.
+
 ## Task interfaces
 
 | Task | Input | Metric (↑ higher is better; ↓ lower is better) | Data |
@@ -78,9 +80,9 @@ Win/loss labels come from comparing the Transformer with the LSTM. The ranking a
 | [T2-R1-04 · TAPE Stability](tasks/T2-R1-04/README.md) | Amino acid sequences | `spearman_valid` ↑ | Files |
 | [T2-R1-09 · enwik8](tasks/T2-R1-09/README.md) | Bytes | `val_bpc` ↓ | Files |
 | [T2-R1-08 · IMDB (byte-level)](tasks/T2-R1-08/README.md) | Bytes | `accuracy` ↑ | Files |
-| [T2-R2-02 · Lipophilicity (SMILES)](tasks/T2-R2-02/README.md) | SMILES characters | `rmse_valid` ↓ | Files |
+| [T2-R2-02 · Lipophilicity (SMILES)‡](tasks/T2-R2-02/README.md) | SMILES characters | `rmse_valid` ↓ | Files |
 
-\* S5 confirmed: Speech Commands only (Transformer/LSTM checked over three seeds). † Reserve (diversity excess): EMNIST only. Tomita 5 replaces Modular Arithmetic using the original round-0 three-seed results. [Final v4 scores](results/final_pool_table_20261102_v4.md). Lipophilicity is included by the domain-priority rule (discrimination ratio 3.47, below the threshold of 5). See [docs/PREREG_DOMAIN_PRIORITY.md](docs/PREREG_DOMAIN_PRIORITY.md).
+\* S5 confirmed: Speech Commands only (Transformer/LSTM checked over three seeds). † Reserve (diversity excess): EMNIST only. Tomita 5 replaces Modular Arithmetic using the original round-0 three-seed results. [Final v4 scores](results/final_pool_table_20261102_v4.md). ‡ Lipophilicity is included by the domain-priority rule (discrimination ratio 3.47, below the threshold of 5). See [docs/PREREG_DOMAIN_PRIORITY.md](docs/PREREG_DOMAIN_PRIORITY.md).
 
 ## Quick start
 
@@ -133,11 +135,11 @@ See [models](docs/MODELS.md) for architecture changes and matched comparisons, a
 
 ## Known issues
 
-- The additions bundle and updated SHA256SUMS.txt are prepared on the server; this does not establish that they have been uploaded to Drive. See [the upload list](docs/DRIVE_ADDITIONS_20261031.csv).
+- Sam has uploaded the additions bundle and updated SHA256SUMS.txt to Drive. See [the upload list](docs/DRIVE_ADDITIONS_20261031.csv).
 
 ## Limitations
 
 - Selection, imports, and one-step training checks do not establish full-training performance or validate every model/task combination.
-- Results, datasets, and checkpoints are excluded from Git.
+- Result summary tables and figures are included in Git. Dataset files and checkpoints are excluded.
 - RegBench evaluates a repeatedly observed development stream. Parity and Tomita 5 average the best accuracy per bin and does not represent one selected checkpoint.
 - Tiers 0 and 3 describe the wider validation framework. This repository executes only the final 16 Tier 1 and Tier 2 tasks.
