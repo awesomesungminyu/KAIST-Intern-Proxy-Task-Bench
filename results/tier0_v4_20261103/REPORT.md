@@ -284,4 +284,4 @@ CUDA_VISIBLE_DEVICES는빈문자열로고정했다. 논리코어20, cgroup실제
 
 유의하지 않다는 결과가 무관함을 뜻하지는 않는다. 구조9개와과제별배치1개이므로검정력이제한되며, 160개보정도강한문턱이다. 초기화3시드의변동도적은표본에서추정했다. 이전은11지표×4개집계순위(44검정), 이번은10지표×16과제(160검정)이므로보정가족과입력조건이같지않다.
 
-[히트맵 PNG](rho_heatmap.png) · [전체 상관 CSV](correlation.csv) · [초기화 점수 CSV](tier0_scores.csv)
+[히트맵 PNG](rho_heatmap.png) · [전체 상관 CSV](correlation.csv) · 초기화 점수 CSV: 서버 `/workspace/tier0_v4_20261103/tier0_scores.csv` (이 공개 요약에는 미포함)
