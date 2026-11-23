@@ -1,0 +1,84 @@
+{
+  "version": "2026-11-23",
+  "tasks": {
+    "promoters": {
+      "name": "Human non-TATA promoter classification",
+      "source": "https://huggingface.co/datasets/genomic-benchmarks/genomic-benchmarks",
+      "license": "CC BY 4.0",
+      "length": 251,
+      "metric": "accuracy",
+      "direction": "maximize",
+      "input": "ACGTN IDs, 0 padding",
+      "steps": 8121,
+      "batch": 64,
+      "d_model": 128,
+      "layers": 2,
+      "heads": 4,
+      "classes": 2,
+      "vocab": 6,
+      "splits": {
+        "x_train": [
+          24387,
+          251
+        ],
+        "y_train": [
+          24387
+        ],
+        "x_val": [
+          2710,
+          251
+        ],
+        "y_val": [
+          2710
+        ],
+        "x_test": [
+          9034,
+          251
+        ],
+        "y_test": [
+          9034
+        ]
+      },
+      "details": "Benchmark v1 official test held out. Fixed stratified 10% of official training split used for validation. Classification of provided natural sequences.",
+      "id": "promoters",
+      "tier": 2,
+      "assets": [
+        "arrays.npz"
+      ]
+    },
+    "bach": {
+      "name": "DCMLab Bach chorales",
+      "source": "https://github.com/DCMLab/bach_chorales",
+      "license": "CC0 1.0",
+      "length": 128,
+      "metric": "NLL (nats per next frame)",
+      "direction": "minimize",
+      "input": "128 MIDI-pitch binary flags per sixteenth note",
+      "steps": 15925,
+      "batch": 64,
+      "d_model": 128,
+      "layers": 2,
+      "heads": 4,
+      "splits": {
+        "train": {
+          "chorales": 280,
+          "frames": 60264
+        },
+        "val": {
+          "chorales": 35,
+          "frames": 7124
+        },
+        "test": {
+          "chorales": 35,
+          "frames": 7700
+        }
+      },
+      "details": "CC0 Bach alternative to JSB archive. Quantize score note spans to sixteenth-note grid, roll polyphonic pitch presence, exact roll deduplication before fixed 80/10/10 by chorale. Next-frame summed Bernoulli NLL over pitches, then averaged across valid time positions.",
+      "id": "bach",
+      "tier": 2,
+      "assets": [
+        "arrays.npz"
+      ]
+    }
+  }
+}

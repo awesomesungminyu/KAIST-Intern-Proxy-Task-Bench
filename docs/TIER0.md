@@ -33,6 +33,6 @@ plain과 synflow는 각각 15/16 과제에서 초기화에 따라 구조 순위�
 
 ## 결과와 출처
 
-[실행 보고서](../results/tier0_v4_20261103/REPORT.md), [상관 CSV](../results/tier0_v4_20261103/correlation.csv), [ρ 히트맵](../results/tier0_v4_20261103/rho_heatmap.png), [Transformer·LSTM 3시드 확인 표](../results/seed3_confirm_20261103/confirmation.md).
+상세 자료는 [Drive 결과 목록](../drive_upload_20261123/README.md)을 참고한다.
 
 Krishnakumar et al., [NAS-Bench-Suite-Zero: Accelerating Research on Zero Cost Proxies](https://papers.neurips.cc/paper_files/paper/2022/hash/b3835dd49b7d5bb062aecccc14d8a675-Abstract-Datasets_and_Benchmarks.html), NeurIPS 2022 Datasets and Benchmarks Track. 이 논문은 지표 출처이며 위 v4 실험 결과의 출처는 이 저장소의 실행 보고서다.

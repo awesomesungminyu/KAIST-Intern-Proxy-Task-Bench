@@ -1,6 +1,7 @@
 """Execute only the final sixteen tasks. Listing requires the Python standard library."""
 import argparse
 from datetime import datetime, timezone
+from contextlib import nullcontext
 import json
 import os
 from pathlib import Path
@@ -36,10 +37,13 @@ def asset_paths(args, spec):
 def identities(args, spec):
     source = {str(p.relative_to(ROOT)): p for folder in ['proxy_tasks', 'validation']
               for p in (ROOT / folder).rglob('*.py') if '__pycache__' not in p.parts}
+    if getattr(args, 'mixer', None):
+        source['candidate_mixer'] = Path(args.mixer.rpartition(':')[0])
     if spec['adapter'] == 'formal':
         source['external_tfl'] = args.tfl_root / 'src'
     evaluation = {k: v for k, v in source.items()
                   if 'common_set/' not in k and not k.endswith('/models.py')}
+    evaluation.pop('candidate_mixer', None)
     evaluation['protocol'] = PROTOCOL
     if spec['adapter'] == 'formal':
         evaluation.pop('external_tfl')
@@ -49,7 +53,7 @@ def identities(args, spec):
 
 
 def preflight(args, spec):
-    if args.model not in spec['models']:
+    if args.model not in spec['models'] and not getattr(args, 'mixer', None):
         raise ValueError(f'Unsupported model: {args.model}')
     assets = asset_paths(args, spec)
     missing = [p.name for p in assets.values() if not p.is_file()]
@@ -63,9 +67,14 @@ def preflight(args, spec):
             raise ValueError('TFL source commit does not match third_party/tfl.commit')
         if 'cs_mixer' not in (args.tfl_root / 'src/args.py').read_text():
             raise ValueError('TFL common-set patch is missing; run setup.sh parity')
-    environment = json.loads(command_output([args.python, '-c',
-        "import json,torch; assert torch.cuda.is_available(), 'CUDA unavailable'; "
-        "print(json.dumps(dict(torch=torch.__version__, cuda=torch.version.cuda, gpu=torch.cuda.get_device_name(0))))"]))
+    device = getattr(args, 'device', 'cuda')
+    probe = "import json,torch; "
+    if device == 'cuda':
+        probe += "assert torch.cuda.is_available(), 'CUDA unavailable'; "
+        probe += "print(json.dumps(dict(torch=torch.__version__, cuda=torch.version.cuda, gpu=torch.cuda.get_device_name(0))))"
+    else:
+        probe += "print(json.dumps(dict(torch=torch.__version__, cuda=None, gpu=None, device='cpu')))"
+    environment = json.loads(command_output([args.python, '-c', probe]))
     if environment['torch'].split('+')[0] != spec['runtime']['torch']:
         raise ValueError('This configuration requires torch ' + spec['runtime']['torch'])
     if args.model == 'cs_retnet':
@@ -79,6 +88,12 @@ def build_command(args, spec, seed, destination):
     native = destination / 'native'
     env = os.environ.copy()
     env.update(PYTHONHASHSEED=str(seed), OMP_NUM_THREADS='1', MKL_NUM_THREADS='1', PYTHONDONTWRITEBYTECODE='1')
+    if getattr(args, 'mixer', None):
+        env['PROXY_CANDIDATE_MIXER'] = args.mixer
+    if getattr(args, 'one_step', False):
+        return [args.python, '-m', 'validation.cell', '--task', args.task, '--model', args.model,
+                '--seed', str(seed), '--data-root', str(args.data_root), '--tfl-root', str(args.tfl_root),
+                '--out', str(native), '--device', args.device], ROOT, env
     if spec['adapter'] == 'part':
         env['PROXY_TASK_DATA_DIR'] = str(data_base(args, spec))
         return [args.python, '-m', 'proxy_tasks.final16.train', '--task', args.task,
@@ -102,6 +117,11 @@ def build_command(args, spec, seed, destination):
 
 
 def extract_metrics(args, spec, native, seed):
+    if getattr(args, 'one_step', False):
+        result = json.loads((native / 'result.json').read_text())
+        if (result['status'], result['task'], result['model'], result['seed'], result['steps']) != ('done', args.task, args.model, seed, 1):
+            raise ValueError('Incomplete or mismatched one-step smoke')
+        return {}
     if spec['adapter'] == 'part':
         result = json.loads((native / 'result.json').read_text())
         expected = min(3, spec['steps']) if args.profile == 'smoke' else spec['steps']
@@ -141,8 +161,9 @@ def run(args, spec):
                    selection=spec['selection'], limitations=spec.get('limitations', []))
         started = time.monotonic()
         try:
-            with gpu_lock():
-                require_idle_gpu()
+            with (gpu_lock() if getattr(args, 'device', 'cuda') == 'cuda' else nullcontext()):
+                if getattr(args, 'device', 'cuda') == 'cuda' and not getattr(args, 'allow_busy_gpu', False):
+                    require_idle_gpu()
                 row['provenance'] = preflight(args, spec)
                 command, cwd, env = build_command(args, spec, seed, destination)
                 write_json(destination / 'manifest.json', dict(command=command, cwd=str(cwd), **row))
@@ -194,8 +215,13 @@ def main(argv=None):
     command = actions.add_parser('compare')
     command.add_argument('--baseline', required=True, type=Path)
     command.add_argument('--candidate', required=True, type=Path)
+    from .suite import add_commands
+    add_commands(actions)
     args = parser.parse_args(argv)
     try:
+        if args.action in {'precheck', 'suite', 'report'}:
+            from .suite import dispatch
+            return dispatch(args)
         if args.action == 'list':
             print(PROTOCOL.read_text())
         elif args.action == 'prepare':

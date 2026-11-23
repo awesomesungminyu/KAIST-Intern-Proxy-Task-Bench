@@ -1,145 +1,49 @@
-# proxy-task-bench
+# Proxy Task Bench
+
+For EvoScientist integration, use [kaist_evo_proxy](https://github.com/awesomesungminyu/kaist_evo_proxy).
 
 [한국어](README.md) · English
 
-A benchmark of 16 synthetic and small real-data tasks for evaluating Transformer alternatives. EvoScientist can use it through shell commands.
+Evaluate mixers on eight synthetic Tier 1 tasks and ten dataset-based Tier 2 tasks. Lipophilicity replaces SNLI to cover chemistry. Genomics and Bach are provided as a separate extension.
 
-## Why this exists
+### Tier 1
 
-Testing every new architecture directly with large-scale training is expensive.
-The aim is to screen candidates before large-scale training using initial-state metrics, synthetic unit tests, and small-scale real-data tasks in successive tiers.
+| ID | Task | Input | Metric | Data |
+|---|---|---|---|---|
+| T1-R1-05 | MAD Compression | tokens | token_accuracy ↑ | file |
+| T1-R0-07 | RegBench | tokens | next_token_acc ↑ | generated |
+| T1-R2-02 | String Matching | tokens | accuracy ↑ | generated |
+| T1-R2-01 | Positional Histogram | tokens | slot_accuracy ↑ | generated |
+| T1-R2-05 | Random Automaton | tokens | last_state_accuracy_id50_ex50 ↑ | generated |
+| T1-R2-04 | Cycle Navigation | tokens | accuracy_id50_ex50 ↑ | generated |
+| T1-R0-04 | Parity | tokens | mean_best_val_accuracy ↑ | file |
+| T1-R0-05 | Tomita 5 | tokens | mean_best_val_accuracy ↑ | file |
 
-## Tiers 0–3
+### Tier 2
 
-| Tier | Name | What it measures | Cost |
-|---|---|---|---|
-| 0 | Zero-cost | Initial-state metrics without training | Seconds |
-| 1 | Synthetic unit tests | One isolated capability at a time | Minutes |
-| 2 | Small-scale real data | Task performance at a reduced scale | Hours |
-| 3 | ETRI large-scale autoregressive LM | Large-scale autoregressive LM performance | Large-scale training |
+| ID | Task | Input | Metric | Data |
+|---|---|---|---|---|
+| T2-R1-11 | Permuted MNIST | continuous sequence | accuracy ↑ | file |
+| T2-R3-05 | Permuted Kuzushiji-49 | continuous sequence | accuracy ↑ | file |
+| T2-R4-02 | Speech Commands (raw waveform) | continuous sequence | accuracy ↑ | file |
+| T2-R3-02 | Permuted EMNIST (letters) | continuous sequence | accuracy ↑ | file |
+| T2-R1-04 | TAPE Stability | amino acid tokens | spearman_valid ↑ | file |
+| T2-R1-09 | enwik8 | bytes | val_bpc ↓ | file |
+| T2-R1-08 | IMDB (byte-level) | bytes | accuracy ↑ | file |
+| T2-R2-02 | Lipophilicity (SMILES) | SMILES tokens | rmse_valid ↓ | file |
+| promoters | Human non-TATA promoter classification | ACGTN IDs, 0 padding | accuracy ↑ | file |
+| bach | DCMLab Bach chorales | 128 MIDI-pitch binary flags per sixteenth note | NLL (nats per next frame) ↓ | file |
 
-## Tasks by tier
+## Data
 
-### Tier 0
-
-- **tier0**: Compute metrics without training
-
-### Tier 1 · Synthetic tasks · Transformer win
-
-- **MAD Compression**: Compression
-- **Positional Histogram**: Positional frequencies
-- **String Matching**: String matching
-- **RegBench**: Regular-language ICL
-
-### Tier 1 · Synthetic tasks · Transformer lose
-
-- **Parity**: Parity
-- **Tomita 5**: Regular-language parity tracking
-- **Cycle Navigation**: Cycle navigation
-- **Random Automaton**: Automaton state tracking
-
-### Tier 2 · Real data · Transformer win
-
-- **Permuted MNIST**: Permuted image classification
-- **Permuted Kuzushiji-49**: Permuted image classification
-- **Speech Commands (raw waveform)\***: Speech classification
-- **Permuted EMNIST (letters)†**: Permuted handwriting classification
-
-### Tier 2 · Real data · Transformer lose
-
-- **TAPE Stability**: Protein stability
-- **enwik8**: Byte-level language modeling
-- **IMDB (byte-level)**: Sentiment classification
-- **Lipophilicity (SMILES)**: Molecular lipophilicity regression
-
-### Tier 3
-
-- **(ETRI)**: Large-scale autoregressive LM
-
-The final selection contains **8 Tier 1 tasks + 8 Tier 2 tasks = 16 tasks**. Tier 0 and Tier 3 are outside this count.
-Win/loss labels come from comparing the Transformer with the LSTM. The ranking across all nine architectures differs by task.
-
-All 16 tasks have win/loss labels confirmed with three seeds each for transformer and lstm (2026-11-03). [Three-seed confirmation](results/seed3_confirm_20261103/confirmation.md) · [Tier 0 rerun](docs/TIER0.md). Three-seed results across all nine architectures are still incomplete.
-
-## Task interfaces
-
-| Task | Input | Metric (↑ higher is better; ↓ lower is better) | Data |
-|---|---|---|---|
-| [T1-R1-05 · MAD Compression](tasks/T1-R1-05/README.md) | Tokens | `token_accuracy` ↑ | Files: synthetic cache |
-| [T1-R2-01 · Positional Histogram](tasks/T1-R2-01/README.md) | Tokens | `slot_accuracy` ↑ | Generated at runtime |
-| [T1-R2-02 · String Matching](tasks/T1-R2-02/README.md) | Tokens | `accuracy` ↑ | Generated at runtime |
-| [T1-R0-07 · RegBench](tasks/T1-R0-07/README.md) | Tokens | `next_token_acc` ↑ | Generated at runtime |
-| [T1-R0-04 · Parity](tasks/T1-R0-04/README.md) | Tokens | `mean_best_val_accuracy` ↑ | Files |
-| [T1-R0-05 · Tomita 5](tasks/T1-R0-05/README.md) | Tokens | `mean_best_val_accuracy` ↑ | Files |
-| [T1-R2-04 · Cycle Navigation](tasks/T1-R2-04/README.md) | Tokens | `accuracy_id50_ex50` ↑ | Generated at runtime |
-| [T1-R2-05 · Random Automaton](tasks/T1-R2-05/README.md) | Tokens | `last_state_accuracy_id50_ex50` ↑ | Generated at runtime |
-| [T2-R1-11 · Permuted MNIST](tasks/T2-R1-11/README.md) | Image sequences | `accuracy` ↑ | Files |
-| [T2-R3-05 · Permuted Kuzushiji-49](tasks/T2-R3-05/README.md) | Image sequences | `accuracy` ↑ | Files |
-| [T2-R4-02 · Speech Commands (raw waveform)\*](tasks/T2-R4-02/README.md) | Continuous values | `accuracy` ↑ | Files |
-| [T2-R3-02 · Permuted EMNIST (letters)†](tasks/T2-R3-02/README.md) | Image sequences | `accuracy` ↑ | Files |
-| [T2-R1-04 · TAPE Stability](tasks/T2-R1-04/README.md) | Amino acid sequences | `spearman_valid` ↑ | Files |
-| [T2-R1-09 · enwik8](tasks/T2-R1-09/README.md) | Bytes | `val_bpc` ↓ | Files |
-| [T2-R1-08 · IMDB (byte-level)](tasks/T2-R1-08/README.md) | Bytes | `accuracy` ↑ | Files |
-| [T2-R2-02 · Lipophilicity (SMILES)‡](tasks/T2-R2-02/README.md) | SMILES characters | `rmse_valid` ↓ | Files |
-
-\* S5 confirmed: Speech Commands only (Transformer/LSTM checked over three seeds). † Reserve (diversity excess): EMNIST only. Tomita 5 replaces Modular Arithmetic using the original round-0 three-seed results. [Final v4 scores](results/final_pool_table_20261102_v4.md). ‡ Lipophilicity is included by the domain-priority rule (discrimination ratio 3.47, below the threshold of 5). See [docs/PREREG_DOMAIN_PRIORITY.md](docs/PREREG_DOMAIN_PRIORITY.md).
-
-## Quick start
-
-Use Linux, Python 3.11, and an NVIDIA CUDA GPU. Listing tasks and running CPU contract tests do not require a GPU.
+Extract the [four original and supplemental bundles](drive_upload_20261123/README.md) into a single directory.
 
 ```bash
-git clone https://github.com/awesomesungminyu/KAIST-Intern-Proxy-Task-Bench.git
-cd KAIST-Intern-Proxy-Task-Bench
-python3.11 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu124
-python -m pip install -r requirements.txt
-python -m validation list
+pip install -r requirements.txt
+bash setup.sh formal
+bash setup.sh retnet
+python -m validation prepare --source incoming --data-root data
+python -m release_tasks data --source incoming --data-root data
 ```
 
-The example installs the CUDA 12.4 build. Consult the [official installation table](https://pytorch.org/get-started/previous-versions/#v251) for other driver setups, keeping PyTorch 2.5.1.
-
-**Data: [drive_upload_20261030 (Google Drive)](https://drive.google.com/drive/folders/1KAhMI1h7CzB8pR4h6JvhyoG4rD_1dH7l)**
-
-Of the 16 tasks, 5 generate data at runtime and 11 need supplied files. Use five Drive bundles (the four existing bundles plus additions). The additions bundle contains four files for Tomita 5 and EMNIST. See [data preparation](docs/DATA.md).
-
-```bash
-# Prepare files from the directory containing your extracted downloads.
-python -m validation prepare --source downloads/extracted --data-root data
-# Check data availability without CUDA.
-python -m validation data --data-root data
-# Start with a generated task that needs no downloaded data.
-python -m validation check --task T1-R2-02 --model cs_transformer
-python -m validation run --task T1-R2-02 --model cs_transformer --profile smoke --seeds 0
-```
-
-Defaults are `data/<task ID>/` for inputs and `artifacts/<task ID>/<model>/<run ID>/` for outputs. Use `--data-root` or the optional settings in `.env.example` to relocate storage. `.env` is not loaded automatically.
-Prepare the shared Parity/Tomita 5 external runner with `bash setup.sh formal`, and RetNet's CUDA kernel with `bash setup.sh retnet`.
-
-```bash
-# Full training budget; choose a new output directory.
-python -m validation run --task T1-R2-02 --model cs_transformer \
-  --profile full --seeds 0 1 2 --out artifacts/string-matching-full
-# Compare completed runs with the same task, data, settings, and seeds.
-python -m validation compare --baseline artifacts/baseline --candidate artifacts/candidate
-# CPU contract tests
-CUDA_VISIBLE_DEVICES="" python -m unittest discover -s tests -v
-# Import and train one Transformer step on each of the 16 tasks, after preparing data.
-python scripts/smoke_tasks.py --data-root data --device cuda
-```
-
-`check` inspects files and the runtime. Smoke and one-step checks are execution checks, not performance evidence. Only completed `full` runs with result status `done` can be compared.
-See [models](docs/MODELS.md) for architecture changes and matched comparisons, and the [EvoScientist guide](docs/EVOSCIENTIST.md) for agent instructions.
-
-## Known issues
-
-- Sam has uploaded the additions bundle and updated SHA256SUMS.txt to Drive. See [the upload list](docs/DRIVE_ADDITIONS_20261031.csv).
-
-## Limitations
-
-- Selection, imports, and one-step training checks do not establish full-training performance or validate every model/task combination.
-- Result summary tables and figures are included in Git. Dataset files and checkpoints are excluded.
-- RegBench evaluates a repeatedly observed development stream. Parity and Tomita 5 average the best accuracy per bin and does not represent one selected checkpoint.
-- Tiers 0 and 3 describe the wider validation framework. This repository executes only the final 16 Tier 1 and Tier 2 tasks.
+The frozen `validation/protocol.json` still defines the original 16 tasks. Genomics and Bach use the [extension protocol](release_tasks/protocol.json).
