@@ -1,6 +1,6 @@
 # Dataset and results downloads
 
-Drive folder: <DRIVE_LINK>
+Drive folder: [Download folder](https://drive.google.com/drive/folders/1SceShb6mBJXSaWDNzq6VrOgVajY-4ru0?usp=sharing)
 
 | File | Bytes | SHA-256 | Supports | Role |
 |---|---:|---|---|---|
@@ -14,13 +14,12 @@ Drive folder: <DRIVE_LINK>
 | `proxy-data-lipophilicity.tar.gz` | 6952 | `c6eac263c8a50b3090c87d64c0c4a774d3b9c3d5cc3e1f657fd3b678a2862e7b` | Lipophilicity frozen split; combine with small | supplement |
 | `proxy-data-promoters.tar.gz` | 2567887 | `72245e300b5fc124e10b31c365766cc9ad0a7d16ef9690dc764fe0dd473ba42e` | Genomics (Human non-TATA promoters) | New |
 | `proxy-data-bach.tar.gz` | 160200 | `984d96459d66b55a85116bdbb4276371dfae773d7e0f30bd0543ecd8407530c2` | Bach chorales | New |
-| `results_20261123_detail.tar.gz` | 571848 | `95dd8a83da75a77c202e615c60d65b78860f6b86a2c6646eea7f5e25cf0505b4` | Detailed results and resource tables | Results only |
 
-Verify each archive against the SHA-256 above. Extract the four existing data archives first, then the six supplements, into the same directory. Keep the paths inside each archive. The older combined additions archive is redundant when using these supplements.
+Verify each archive against the SHA-256 above. Extract small, MAD and parity, then the six supplements into the same directory. The original Speech Commands WAV archive is optional when using the frozen Speech cache. Keep the paths inside each archive. The older combined additions archive is redundant when using these supplements.
 
 The four existing archives cover eight file-backed tasks. Tomita 5, Permuted EMNIST, and the frozen Lipophilicity split require supplements. Genomics and Bach require the new archives. The Speech cache supplement keeps the exact evaluated float arrays; recomputing from the original raw Speech archive can differ slightly. The other five tasks generate data at runtime.
 
-All data archives are below 4 GB. The results archive is optional and is not an input to data preparation. Genomics arrays are derived from Genomic Benchmarks (CC BY 4.0); Bach arrays are derived from DCMLab Bach Chorales (CC0 1.0).
+All data archives are below 4 GB. Detailed results are kept in private storage. Genomics arrays are derived from Genomic Benchmarks (CC BY 4.0); Bach arrays are derived from DCMLab Bach Chorales (CC0 1.0).
 
 Historical run reports and the detailed score tables are kept in a separate
 restricted supplement (`B_restricted_snapshot.tar.gz`). No install or data

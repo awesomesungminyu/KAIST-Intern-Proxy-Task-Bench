@@ -1,6 +1,6 @@
 # Proxy Task Bench
 
-EvoScientist와 연결하려면 [kaist_evo_proxy](https://github.com/awesomesungminyu/kaist_evo_proxy)를 사용합니다.
+EvoScientist와 연결하려면 [kaist_evo_proxy](https://github.com/awesomesungminyu/kaist_evo_proxy)를 사용합니다. 데이터는 [Drive 폴더](https://drive.google.com/drive/folders/1SceShb6mBJXSaWDNzq6VrOgVajY-4ru0?usp=sharing) 또는 어댑터의 `evo-proxy data --download`에서 받을 수 있습니다.
 
 한국어 · [English](README.en.md)
 
