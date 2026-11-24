@@ -7,3 +7,11 @@ artifacts/
 third_party/tfl/
 third_party/fla_vendor/
 downloads/
+
+*.tar.gz
+*.log
+*.pt
+*.pth
+*.parquet
+events.jsonl
+results/

@@ -20,6 +20,12 @@ import torch
 from torch import nn
 
 from .mixers import NAMES, OFFICIAL_WIDTH, make_mixer
+from . import plugins
+
+def build_mixer(name, d_model, n_heads, l_max, width=None, retention_backend="auto"):
+    if plugins.current(name):
+        return plugins.make_candidate(name, d_model, n_heads, l_max)
+    return make_mixer(name, d_model, n_heads, l_max, width, retention_backend)
 
 PARAM_TOLERANCE = 0.10
 
@@ -80,11 +86,11 @@ def mixer_width(mixer, d_model, n_heads, l_max):
 class Backbone(nn.Module):
     def __init__(self, mixer, d_model, n_layers, n_heads, l_max, retention_backend="auto"):
         super().__init__()
-        if mixer not in NAMES:
+        if mixer not in NAMES and not plugins.current(mixer):
             raise ValueError(f"unknown common-set mixer: {mixer}; known: {NAMES}")
         width = mixer_width(mixer, d_model, n_heads, l_max)
         self.mixer, self.width = mixer, width
-        self.blocks = nn.ModuleList([Block(d_model, make_mixer(mixer, d_model, n_heads, l_max, width, retention_backend))
+        self.blocks = nn.ModuleList([Block(d_model, build_mixer(mixer, d_model, n_heads, l_max, width, retention_backend))
                                      for _ in range(n_layers)])
         self.norm = RMSNorm(d_model)
 

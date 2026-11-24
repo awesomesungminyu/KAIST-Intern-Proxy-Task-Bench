@@ -2,7 +2,7 @@ torch==2.5.1
 numpy<2
 scipy
 pandas
-pyarrow
+pyarrow==20.0.0
 rdkit
 transformers==4.39.3
 tensorboardX

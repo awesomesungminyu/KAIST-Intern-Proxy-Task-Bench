@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "profile": "smoke_metadata",
+  "protocol_sha256": "91fc8a651c957bd05e8396de1f0db17652fb67587404b852c3ef75f805628d9c",
+  "normalization": {
+    "formula": "Smoke has no numerical scores",
+    "ideal": "Unavailable",
+    "source": "Frozen task metadata only; use an external baseline for scored reports"
+  },
+  "tasks": {
+    "T1-R1-05": {
+      "name": "MAD Compression",
+      "tier": 1,
+      "incomplete": true
+    },
+    "T1-R2-01": {
+      "name": "Positional Histogram",
+      "tier": 1,
+      "incomplete": true
+    },
+    "T1-R2-02": {
+      "name": "String Matching",
+      "tier": 1,
+      "incomplete": true
+    },
+    "T1-R0-07": {
+      "name": "RegBench",
+      "tier": 1,
+      "incomplete": true
+    },
+    "T1-R0-04": {
+      "name": "Parity",
+      "tier": 1,
+      "incomplete": true
+    },
+    "T1-R0-05": {
+      "name": "Tomita 5",
+      "tier": 1,
+      "incomplete": true
+    },
+    "T1-R2-04": {
+      "name": "Cycle Navigation",
+      "tier": 1,
+      "incomplete": true
+    },
+    "T1-R2-05": {
+      "name": "Random Automaton",
+      "tier": 1,
+      "incomplete": true
+    },
+    "T2-R1-11": {
+      "name": "Permuted MNIST",
+      "tier": 2,
+      "incomplete": true
+    },
+    "T2-R3-05": {
+      "name": "Permuted Kuzushiji-49",
+      "tier": 2,
+      "incomplete": true
+    },
+    "T2-R4-02": {
+      "name": "Speech Commands (raw waveform)*",
+      "tier": 2,
+      "incomplete": true
+    },
+    "T2-R3-02": {
+      "name": "Permuted EMNIST (letters)",
+      "tier": 2,
+      "incomplete": true
+    },
+    "T2-R1-04": {
+      "name": "TAPE Stability",
+      "tier": 2,
+      "incomplete": true
+    },
+    "T2-R1-09": {
+      "name": "enwik8",
+      "tier": 2,
+      "incomplete": true
+    },
+    "T2-R1-08": {
+      "name": "IMDB (byte-level)",
+      "tier": 2,
+      "incomplete": true
+    },
+    "T2-R2-02": {
+      "name": "Lipophilicity (SMILES)",
+      "tier": 2,
+      "incomplete": true
+    }
+  }
+}
